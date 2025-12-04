@@ -1,0 +1,5 @@
+# Redirects para URLs limpias
+/legal  /legal.html  200
+
+# Redirect www to non-www
+https://www.joarciniegas.cloud/*  https://joarciniegas.cloud/:splat  301

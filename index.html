@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizMind AI Agency | We Build AI Agents That Actually Grow Your Business</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7c3aed;
+            --accent: #f0f;
+            --success: #10b981;
+            --dark: #030014;
+            --dark-card: rgba(15, 15, 35, 0.6);
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #7c3aed 50%, #f0f 100%);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--dark); color: #fff; overflow-x: hidden; }
+        
+        /* ============ BACKGROUND LAYERS ============ */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        /* Fluid Canvas */
+        #fluid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            pointer-events: none;
+        }
+        
+        /* Grid Pattern with Radial Fade */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+            z-index: 1;
+        }
+        
+        /* Dot Pattern */
+        .dot-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(124, 58, 237, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+            z-index: 1;
+        }
+        
+        /* Particles Canvas */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* Meteors Canvas */
+        #meteors-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        /* Glowing Dots Canvas */
+        #glow-dots-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        /* Energy Waves */
+        .energy-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            border-radius: 50%;
+            animation: energyPulse 8s ease-out infinite;
+        }
+        .energy-wave:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; }
+        .energy-wave:nth-child(2) { width: 400px; height: 400px; animation-delay: 2s; }
+        .energy-wave:nth-child(3) { width: 600px; height: 600px; animation-delay: 4s; }
+        .energy-wave:nth-child(4) { width: 800px; height: 800px; animation-delay: 6s; }
+        
+        @keyframes energyPulse {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; border-color: rgba(0, 240, 255, 0.3); }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; border-color: rgba(124, 58, 237, 0); }
+        }
+        
+        /* Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            animation: orbFloat 25s ease-in-out infinite;
+        }
+        .orb-1 { width: 700px; height: 700px; background: rgba(0,240,255,0.1); top: -300px; right: -200px; }
+        .orb-2 { width: 600px; height: 600px; background: rgba(124,58,237,0.1); bottom: -200px; left: -200px; animation-delay: -12s; }
+        .orb-3 { width: 500px; height: 500px; background: rgba(255,0,255,0.06); top: 40%; left: 30%; animation-delay: -6s; }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,30px) scale(0.95); } }
+        
+        /* Scanline effect */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        /* Noise texture overlay */
+        .noise-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            z-index: 5;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* ============ NAVIGATION ============ */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
+        nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 45px; height: 45px; }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta { padding: 10px 25px; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+        .nav-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gradient-1); transition: left 0.3s; z-index: -1; }
+        .nav-cta:hover { color: var(--dark); border-color: transparent; }
+        .nav-cta:hover::before { left: 0; }
+        
+        /* ============ HERO ============ */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; padding: 120px 50px 80px; }
+        .hero-content { max-width: 1400px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
+        .hero-text { z-index: 2; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); border-radius: 25px; font-size: 0.8rem; color: var(--secondary); margin-bottom: 25px; }
+        .hero-badge .pulse { width: 8px; height: 8px; background: var(--secondary); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(124,58,237,0.7); } 50% { opacity: 0.8; box-shadow: 0 0 0 10px rgba(124,58,237,0); } }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 15px; }
+        .hero h1 .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 20px; }
+        .typing-container { font-family: 'Space Mono', monospace; font-size: 0.95rem; color: var(--primary); margin-bottom: 25px; min-height: 50px; padding: 12px 18px; background: rgba(0,240,255,0.03); border-left: 3px solid var(--primary); border-radius: 0 8px 8px 0; }
+        .typing-cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--primary); margin-left: 2px; animation: blink 0.7s infinite; vertical-align: middle; }
+        @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+        .hero-description { font-size: 1.1rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 35px; }
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-primary { padding: 14px 35px; background: var(--gradient-1); border: none; color: var(--dark); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 700; border-radius: 25px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,240,255,0.25); }
+        .btn-secondary { padding: 14px 35px; background: transparent; border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        
+        /* Hero Visual */
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+        .brain-container { position: relative; width: 500px; height: 500px; }
+        .brain-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 180px; height: 180px; background: var(--gradient-1); border-radius: 50%; filter: blur(50px); animation: coreGlow 4s ease-in-out infinite; }
+        @keyframes coreGlow { 0%,100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 0.7; transform: translate(-50%,-50%) scale(1.15); } }
+        .orbit-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); border: 1px solid rgba(0,240,255,0.15); border-radius: 50%; }
+        .orbit-ring:nth-child(1) { width: 240px; height: 240px; animation: spin 12s linear infinite; }
+        .orbit-ring:nth-child(2) { width: 360px; height: 360px; animation: spin 18s linear infinite reverse; border-color: rgba(124,58,237,0.15); }
+        .orbit-ring:nth-child(3) { width: 480px; height: 480px; animation: spin 26s linear infinite; border-color: rgba(255,0,255,0.14); }
+        @keyframes spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+        .orbit-node { position: absolute; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); }
+        .floating-card { position: absolute; padding: 12px 16px; background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 12px; animation: float 5s ease-in-out infinite; }
+        .floating-card.card-1 { top: 20%; right: 32px; }
+        .floating-card.card-2 { bottom: 12%; left: 24px; animation-delay: -1.5s; }
+        .floating-card.card-3 { top: 18%; left: 24px; animation-delay: -3s; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .card-icon { font-size: 1.3rem; margin-bottom: 4px; }
+        .card-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+        .card-value { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--primary); }
+        
+        .scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,0.4); font-size: 0.7rem; letter-spacing: 2px; }
+        .scroll-mouse { width: 22px; height: 36px; border: 2px solid rgba(255,255,255,0.2); border-radius: 11px; position: relative; }
+        .scroll-mouse::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 3px; height: 6px; background: var(--primary); border-radius: 2px; animation: scrollDown 1.5s infinite; }
+        @keyframes scrollDown { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(12px); } }
+        
+        /* ============ SECTIONS ============ */
+        .integrations-banner { position: relative; z-index: 2; padding: 40px 50px; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); }
+        .integrations-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+        .integrations-text h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 500; letter-spacing: 2px; }
+        .integrations-logos { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .integration-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.6); font-size: 0.95rem; font-weight: 500; transition: all 0.3s; }
+        .integration-item:hover { color: var(--primary); }
+        
+        .stats-section { position: relative; z-index: 2; padding: 80px 50px; }
+        .stats-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .stat-card { text-align: center; padding: 35px 25px; background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 20px; transition: all 0.4s; }
+        .stat-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,240,255,0.1); }
+        .stat-number { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 8px; }
+        
+        .section { position: relative; z-index: 2; padding: 100px 50px; }
+        .section-header { text-align: center; max-width: 800px; margin: 0 auto 70px; }
+        .section-tag { display: inline-block; padding: 8px 18px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.25); border-radius: 25px; font-size: 0.8rem; color: var(--secondary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 18px; line-height: 1.2; }
+        .section-title .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-description { font-size: 1.05rem; color: rgba(255,255,255,0.6); line-height: 1.8; }
+        
+        .features-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .feature-card { padding: 35px; background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 20px; transition: all 0.4s; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-1); transform: scaleX(0); transition: transform 0.4s; }
+        .feature-card:hover { transform: translateY(-8px); border-color: rgba(0,240,255,0.25); }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .feature-icon { width: 60px; height: 60px; background: rgba(0,240,255,0.08); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; }
+        .feature-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+        .feature-description { color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 0.95rem; }
+        
+        .products-section { background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.03) 50%, transparent 100%); }
+        .products-grid { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .product-card { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 50px; background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 25px; align-items: center; transition: all 0.4s; }
+        .product-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 25px 50px rgba(124,58,237,0.1); }
+        .product-card.reverse { direction: rtl; }
+        .product-card.reverse > * { direction: ltr; }
+        .product-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; margin-bottom: 18px; font-weight: 600; }
+        .product-badge.flagship { background: rgba(255,0,255,0.15); color: var(--accent); border: 1px solid rgba(255,0,255,0.3); }
+        .product-badge.custom { background: rgba(0,240,255,0.15); color: var(--primary); border: 1px solid rgba(0,240,255,0.3); }
+        .product-badge.marketing { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+        .product-name { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 18px; }
+        .product-name span { color: var(--primary); }
+        .product-description { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 20px; }
+        .product-features { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .product-feature { padding: 8px 14px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+        .product-visual { display: flex; align-items: center; justify-content: center; position: relative; min-height: 280px; }
+        .product-glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
+        .product-icon-large { font-size: 7rem; position: relative; z-index: 2; }
+        
+        .marquee-section { padding: 20px 0; overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); }
+        .marquee-track { display: flex; animation: marquee 30s linear infinite; }
+        .marquee-content { display: flex; gap: 60px; padding-right: 60px; flex-shrink: 0; }
+        .marquee-item { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.4); white-space: nowrap; letter-spacing: 2px; }
+        .marquee-item span { color: var(--primary); }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .dealermind-section { background: linear-gradient(180deg, transparent 0%, rgba(0,240,255,0.02) 50%, transparent 100%); }
+        .dealermind-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .dealermind-card { padding: 35px; background: var(--dark-card); border: 1px solid var(--glass-border); border-radius: 20px; transition: all 0.4s; }
+        .dealermind-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .dealermind-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 15px; color: var(--primary); }
+        .dealermind-card p { color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 0.95rem; }
+        
+        .pricing-section { background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.03) 50%, transparent 100%); }
+        .pricing-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; align-items: stretch; }
+        .pricing-card { padding: 40px 35px; background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 25px; transition: all 0.4s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .pricing-card.featured { border-color: var(--secondary); transform: scale(1.02); }
+        .pricing-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-1); }
+        .pricing-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .pricing-card.featured:hover { transform: scale(1.02) translateY(-10px); }
+        .pricing-badge { position: absolute; top: 20px; right: 20px; padding: 5px 12px; background: var(--gradient-1); border-radius: 15px; font-size: 0.7rem; font-weight: 700; color: var(--dark); }
+        .pricing-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .pricing-name { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+        .pricing-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 25px; line-height: 1.5; }
+        .pricing-price { margin-bottom: 25px; }
+        .pricing-amount { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 800; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .pricing-period { font-size: 1rem; color: rgba(255,255,255,0.5); }
+        .pricing-features { list-style: none; margin-bottom: 30px; flex-grow: 1; }
+        .pricing-features li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; color: rgba(255,255,255,0.8); font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .pricing-features li:last-child { border-bottom: none; }
+        .pricing-check { color: var(--success); font-weight: bold; }
+        .pricing-cta { width: 100%; padding: 14px; border-radius: 25px; font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s; text-align: center; text-decoration: none; display: block; }
+        .pricing-cta.primary { background: var(--gradient-1); border: none; color: var(--dark); }
+        .pricing-cta.primary:hover { box-shadow: 0 10px 30px rgba(0,240,255,0.3); }
+        .pricing-cta.secondary { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .pricing-cta.secondary:hover { background: rgba(0,240,255,0.1); }
+        
+        .about-section { background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 50%, transparent 100%); }
+        .about-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-frame { width: 100%; aspect-ratio: 1; background: var(--gradient-1); border-radius: 30px; padding: 3px; }
+        .about-inner { width: 100%; height: 100%; background: var(--dark); border-radius: 28px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .about-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 2px 2px, rgba(0,240,255,0.1) 1px, transparent 0); background-size: 25px 25px; }
+        .about-logo-large { position: relative; z-index: 2; }
+        .about-logo-large svg { width: 180px; height: 180px; }
+        .about-content h2 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 25px; line-height: 1.3; }
+        .about-content p { color: rgba(255,255,255,0.7); line-height: 1.9; margin-bottom: 18px; font-size: 1.05rem; }
+        .about-highlights { margin-top: 35px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .highlight-item { display: flex; align-items: center; gap: 12px; }
+        .highlight-icon { width: 45px; height: 45px; background: rgba(0,240,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .highlight-text { font-size: 0.95rem; color: rgba(255,255,255,0.8); }
+        
+        .contact-section { background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.03) 50%, transparent 100%); }
+        .contact-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; }
+        .contact-info h2 { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 20px; }
+        .contact-info > p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 35px; }
+        .contact-details { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item { display: flex; align-items: flex-start; gap: 15px; }
+        .contact-icon { width: 50px; height: 50px; background: rgba(0,240,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+        .contact-text h4 { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; margin-bottom: 5px; color: var(--primary); }
+        .contact-text p { color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.5; }
+        .contact-text a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
+        .contact-text a:hover { color: var(--primary); }
+        .contact-form { background: var(--dark-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 25px; padding: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1rem; transition: all 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); background: rgba(0,240,255,0.03); }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-submit { width: 100%; padding: 16px; background: var(--gradient-1); border: none; border-radius: 25px; color: var(--dark); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .form-submit:hover { box-shadow: 0 15px 35px rgba(0,240,255,0.3); transform: translateY(-2px); }
+        
+        footer { position: relative; z-index: 2; padding: 70px 50px 35px; border-top: 1px solid var(--glass-border); background: rgba(0,0,0,0.4); }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
+        .footer-brand { max-width: 280px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+        .footer-logo svg { width: 35px; height: 35px; }
+        .footer-logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: rgba(255,255,255,0.5); line-height: 1.7; font-size: 0.9rem; margin-bottom: 20px; }
+        .social-links { display: flex; gap: 12px; }
+        .social-link { width: 38px; height: 38px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .social-link:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); }
+        .footer-column h4 { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; margin-bottom: 20px; color: #fff; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 10px; }
+        .footer-column a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-column a:hover { color: var(--primary); }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+        .footer-legal { display: flex; gap: 25px; }
+        .footer-legal a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+        .footer-legal a:hover { color: var(--primary); }
+        
+        .mobile-menu-btn { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        
+        @media (max-width: 1200px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-visual { order: -1; }
+            .brain-container { width: 350px; height: 350px; }
+            .hero-buttons { justify-content: center; }
+            .features-grid, .dealermind-grid, .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .product-card { grid-template-columns: 1fr; }
+            .product-card.reverse { direction: ltr; }
+            .about-container, .contact-container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 12px 20px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero { padding: 100px 20px 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .section { padding: 70px 20px; }
+            .section-title { font-size: 1.8rem; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .features-grid, .dealermind-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .integrations-content { flex-direction: column; text-align: center; }
+        }
+
+                        .contact-status {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.contact-status.success {
+    color: #4ade80;
+}
+
+.contact-status.error {
+    color: #f97373;
+}
+
+.contact-status.sending {
+    color: #38bdf8;
+}
+
+
+
+        .neon-cursor-main,
+.neon-cursor-trail,
+.neon-cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* puntico principal */
+.neon-cursor-main {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow:
+        0 0 8px  rgba(255, 255, 255, 0.9),
+        0 0 18px #00f0ff,   /* primary */
+        0 0 32px #7c3aed,   /* secondary */
+        0 0 46px #ff00ff;   /* accent */
+    transition: transform 0.08s ease-out, box-shadow 0.2s ease-out;
+}
+
+/* círculo que sigue un poco más lento */
+.neon-cursor-trail {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 2px solid #00f0ff; /* primary */
+    box-shadow:
+        0 0 18px #00f0ff,
+        0 0 34px #7c3aed,
+        0 0 52px #ff00ff;
+    transition: transform 0.22s ease-out, opacity 0.25s ease-out;
+}
+
+/* glow grande alrededor */
+.neon-cursor-glow {
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    background: radial-gradient(
+        circle,
+        rgba(0, 240, 255, 0.45) 0%,   /* primary */
+        rgba(124, 58, 237, 0.35) 40%, /* secondary */
+        rgba(240, 0, 255, 0.00) 70%   /* accent fade */
+    );
+    filter: blur(3px);
+    opacity: 0.55;
+    transition: transform 0.35s ease-out, opacity 0.3s ease-out;
+}
+
+/* ocultar cuando el mouse sale de la ventana */
+body.cursor-hidden .neon-cursor-main,
+body.cursor-hidden .neon-cursor-trail,
+body.cursor-hidden .neon-cursor-glow {
+    opacity: 0;
+}
+
+/* hover en elementos interactivos */
+body.cursor-hover .neon-cursor-main {
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 1),
+        0 0 22px #00f0ff,
+        0 0 40px #7c3aed,
+        0 0 60px #ff00ff;
+}
+
+body.cursor-hover .neon-cursor-trail {
+    box-shadow:
+        0 0 24px #00f0ff,
+        0 0 46px #7c3aed,
+        0 0 70px #ff00ff;
+}
+/* click: hacer el punto más compacto */
+body.cursor-click .neon-cursor-main {
+    transform: translate3d(var(--cursor-x, -50%), var(--cursor-y, -50%), 0) scale(0.85);
+}
+
+    /* Toast flotante para mensajes del formulario */
+.form-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: rgba(0, 240, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+  z-index: 9999;
+}
+.form-toast.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-10px);
+}
+.form-toast.success {
+  background: rgba(34,197,94,0.3);
+}
+.form-toast.error {
+  background: rgba(239,68,68,0.3);
+}
+.form-toast.sending {
+  background: rgba(56,189,248,0.3);
+}
+
+    </style>
+</head>
+<body>
+    <!-- NEON CURSOR -->
+    <div class="neon-cursor-main"></div>
+    <div class="neon-cursor-trail"></div>
+    <div class="neon-cursor-glow"></div>
+
+    <!-- AQUÍ SIGUE TODO TU CONTENIDO EXISTENTE -->
+
+    <!-- ============ BACKGROUND LAYERS ============ -->
+    <div class="bg-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div class="grid-pattern"></div>
+        <div class="dot-pattern"></div>
+        <canvas id="particles-canvas"></canvas>
+        <canvas id="meteors-canvas"></canvas>
+        <canvas id="glow-dots-canvas"></canvas>
+        <div class="energy-wave"></div>
+        <div class="energy-wave"></div>
+        <div class="energy-wave"></div>
+        <div class="energy-wave"></div>
+        <canvas id="fluid-canvas"></canvas>
+        <div class="scanlines"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 50 50" fill="none"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M25 5C15 5 8 12 8 22C8 28 11 33 16 36L16 42C16 44 18 46 20 46H30C32 46 34 44 34 42V36C39 33 42 28 42 22C42 12 35 5 25 5Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="32" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="25" cy="28" r="3" fill="url(#logoGrad)"/><line x1="18" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="32" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="18" y1="18" x2="32" y2="18" stroke="url(#logoGrad)" stroke-width="1"/></svg>
+            </div>
+            <div><div class="logo-text">BizMind</div><div class="logo-tagline">AI Agency</div></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Solutions</a></li>
+            <li><a href="#dealermind">DealerMind</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Chat With AI</button>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge"><span class="pulse"></span> Unleashing the Potential of AI</div>
+                <h1>We Build the <span class="gradient">AI Agents</span> That Actually Grow Your Business.</h1>
+                <h2 class="hero-subtitle">Meet DealerMind™ & BizMind™. Your AI Co-Workers.</h2>
+                <div class="typing-container"><span class="typing-text"></span><span class="typing-cursor"></span></div>
+                <p class="hero-description">We connect all your customer channels. Your website, WhatsApp API, Facebook Messenger, and Telegram integrate directly into your sales, support, and CRM systems. 24/7 automation that never sleeps.</p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn-primary"><span>🚀</span> Get Started</a>
+                    <a href="#contact" class="btn-secondary"><span>💬</span> Chat With Our AI</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="brain-container">
+                    <div class="brain-core"></div>
+                    <div class="orbit-ring"><div class="orbit-node" style="top:0;left:50%;transform:translate(-50%,-50%);"></div></div>
+                    <div class="orbit-ring"><div class="orbit-node" style="top:50%;right:0;transform:translate(50%,-50%);"></div></div>
+                    <div class="orbit-ring"><div class="orbit-node" style="bottom:0;left:50%;transform:translate(-50%,50%);"></div></div>
+                    <div class="floating-card card-1"><div class="card-icon">🤖</div><div class="card-label">AI Agents</div><div class="card-value">24/7</div></div>
+                    <div class="floating-card card-2"><div class="card-icon">💰</div><div class="card-label">Annual Savings</div><div class="card-value">$45K+</div></div>
+                    <div class="floating-card card-3"><div class="card-icon">⚡</div><div class="card-label">Automation</div><div class="card-value">95%</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator"><div class="scroll-mouse"></div>SCROLL</div>
+    </section>
+
+    <div class="integrations-banner">
+        <div class="integrations-content">
+            <div class="integrations-text"><h3>SEAMLESS INTEGRATIONS</h3></div>
+            <div class="integrations-logos">
+                <div class="integration-item">💬 WhatsApp</div>
+                <div class="integration-item">📘 Facebook</div>
+                <div class="integration-item">📸 Instagram</div>
+                <div class="integration-item">✈️ Telegram</div>
+                <div class="integration-item">🔍 Google</div>
+                <div class="integration-item">📊 CRM</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card"><div class="stat-number" data-target="95" data-suffix="%">0</div><div class="stat-label">Task Automation</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="45" data-prefix="$" data-suffix="K+">0</div><div class="stat-label">Annual Savings</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="631" data-suffix="+">0</div><div class="stat-label">Integrations</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="24" data-suffix="/7">0</div><div class="stat-label">Always Online</div></div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="section-header">
+            <div class="section-tag">Features</div>
+            <h2 class="section-title">Innovative Features of Our <span class="gradient">AI Solutions</span></h2>
+            <p class="section-description">Why hire for repetitive tasks? Invest in a digital employee that works 24/7, without the salary or overhead.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card"><div class="feature-icon">🤖</div><h3 class="feature-title">AI Sales Agents</h3><p class="feature-description">Intelligent agents that qualify leads, answer questions, and book appointments automatically. Your 24/7 sales team.</p></div>
+            <div class="feature-card"><div class="feature-icon">💬</div><h3 class="feature-title">Multi-Channel Support</h3><p class="feature-description">Connect WhatsApp, Facebook Messenger, Telegram, and your website. All conversations in one dashboard.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔗</div><h3 class="feature-title">CRM Integration</h3><p class="feature-description">Seamless connection with your existing CRM and business systems. Every lead captured, every action tracked.</p></div>
+            <div class="feature-card"><div class="feature-icon">📊</div><h3 class="feature-title">Live Analytics</h3><p class="feature-description">Real-time insights into customer interactions, conversion rates, and agent performance.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title">Instant Response</h3><p class="feature-description">No customer waits. Every inquiry gets an immediate, intelligent response that moves them through your funnel.</p></div>
+            <div class="feature-card"><div class="feature-icon">🎯</div><h3 class="feature-title">Lead Qualification</h3><p class="feature-description">AI-powered lead scoring. Your human team only talks to prospects ready to buy.</p></div>
+        </div>
+    </section>
+
+    <section class="section products-section" id="products">
+        <div class="section-header">
+            <div class="section-tag">Our Solutions</div>
+            <h2 class="section-title">AI Products <span class="gradient">Ready to Deploy</span></h2>
+            <p class="section-description">From industry-specific solutions to fully custom AI agents, we build the digital workforce your business needs.</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-info">
+                    <div class="product-badge flagship">⭐ FLAGSHIP PRODUCT</div>
+                    <h3 class="product-name">Dealer<span>Mind™</span></h3>
+                    <p class="product-description">Our premier, industry-specific platform. DealerMind is built to generate and qualify leads for auto dealers. It answers detailed inventory questions, runs 24/7, and books qualified test-drive appointments directly from your ads or website.</p>
+                    <div class="product-features">
+                        <span class="product-feature">24/7 AI Sales Agent</span>
+                        <span class="product-feature">Live Inventory</span>
+                        <span class="product-feature">Auto-Booking</span>
+                        <span class="product-feature">DealerCenter Sync</span>
+                    </div>
+                    <a href="#pricing" class="btn-primary">View DealerMind Plans</a>
+                </div>
+                <div class="product-visual"><div class="product-glow" style="background:var(--gradient-1);"></div><div class="product-icon-large">🚗</div></div>
+            </div>
+            <div class="product-card reverse">
+                <div class="product-info">
+                    <div class="product-badge custom">🛠️ CUSTOM BUILT</div>
+                    <h3 class="product-name">Biz<span>Mind™</span></h3>
+                    <p class="product-description">For businesses beyond the auto industry, we build your 'digital employee' from scratch. We analyze your unique workflow and train an AI agent to handle your specific sales, support, or marketing tasks.</p>
+                    <div class="product-features">
+                        <span class="product-feature">Custom AI Agent</span>
+                        <span class="product-feature">Sales & Support</span>
+                        <span class="product-feature">System Integration</span>
+                        <span class="product-feature">Multi-Channel</span>
+                    </div>
+                    <a href="#contact" class="btn-secondary">Get a Custom Quote</a>
+                </div>
+                <div class="product-visual"><div class="product-glow" style="background:linear-gradient(135deg,#00f0ff,#7c3aed);"></div><div class="product-icon-large">🧠</div></div>
+            </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <div class="product-badge marketing">📈 FULL SERVICE</div>
+                    <h3 class="product-name">Expert <span>Facebook Ads</span></h3>
+                    <p class="product-description">We don't just run ads; we build high-intent Facebook ad funnels specifically designed to connect to your AI agent. Stop wasting ad spend on junk leads or slow follow-ups.</p>
+                    <div class="product-features">
+                        <span class="product-feature">Ad Campaigns</span>
+                        <span class="product-feature">Lead Funnels</span>
+                        <span class="product-feature">A/B Testing</span>
+                        <span class="product-feature">AI Integration</span>
+                    </div>
+                    <a href="#contact" class="btn-secondary">Start My Campaigns</a>
+                </div>
+                <div class="product-visual"><div class="product-glow" style="background:linear-gradient(135deg,#10b981,#00f0ff);"></div><div class="product-icon-large">📊</div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-item">AI Solutions for Business</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Connect & Convert</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Scale with Intelligence</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Your Digital Workforce</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">BizMind AI</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">DealerMind Revolution</span><span class="marquee-item"><span>/</span></span>
+            </div>
+            <div class="marquee-content">
+                <span class="marquee-item">AI Solutions for Business</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Connect & Convert</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Scale with Intelligence</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">Your Digital Workforce</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">BizMind AI</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item">DealerMind Revolution</span><span class="marquee-item"><span>/</span></span>
+            </div>
+        </div>
+    </div>
+
+    <section class="section dealermind-section" id="dealermind">
+        <div class="section-header">
+            <div class="section-tag">DealerMind™</div>
+            <h2 class="section-title">Your DealerCenter Inventory, <span class="gradient">Now 24/7 Automated</span></h2>
+            <p class="section-description">The complete AI sales solution for automotive dealerships.</p>
+        </div>
+        <div class="dealermind-grid">
+            <div class="dealermind-card"><h3>🔄 DealerCenter to Facebook</h3><p>Our system monitors your DealerCenter inventory 24/7. When a new car hits your lot, our agent instantly posts it to your Fan Page with photos, specs, and a link.</p></div>
+            <div class="dealermind-card"><h3>🔗 Live DealerCenter Integration</h3><p>Customers can ask, "Do you have that 2024 red SUV?" and get an accurate, instant answer with pricing, specs, and availability 24/7.</p></div>
+            <div class="dealermind-card"><h3>📸 Live Visuals & Auto-Booking</h3><p>The agent pulls photos from your live inventory and sends them in chat. Then books the test-drive appointment without a human touching a keyboard.</p></div>
+        </div>
+    </section>
+
+    <section class="section pricing-section" id="pricing">
+        <div class="section-header">
+            <div class="section-tag">Pricing</div>
+            <h2 class="section-title">Invest in Your <span class="gradient">Digital Workforce</span></h2>
+            <p class="section-description">Full service, hosting & 24/7 operation. A fraction of one employee's salary.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-icon">📈</div>
+                <h3 class="pricing-name">AI-Driven Ads</h3>
+                <p class="pricing-tagline">(Plus Ad Spend). We run the Facebook Ads that feed your AI.</p>
+                <div class="pricing-price"><span class="pricing-amount">$300</span><span class="pricing-period">/mo</span></div>
+                <ul class="pricing-features">
+                    <li><span class="pricing-check">✓</span> Expert Facebook Ad Campaigns</li>
+                    <li><span class="pricing-check">✓</span> Direct-to-Agent Lead Funnels</li>
+                    <li><span class="pricing-check">✓</span> A/B Testing & Optimization</li>
+                    <li><span class="pricing-check">✓</span> Full Performance Reporting</li>
+                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
+                </ul>
+                <a href="#contact" class="pricing-cta secondary">Start My Campaigns</a>
+            </div>
+            <div class="pricing-card featured">
+                <div class="pricing-badge">RECOMMENDED</div>
+                <div class="pricing-icon">🧠</div>
+                <h3 class="pricing-name">BizMind™</h3>
+                <p class="pricing-tagline">Full service, hosting & 24/7 operation. Replaces countless hours of manual work.</p>
+                <div class="pricing-price"><span class="pricing-amount">$500</span><span class="pricing-period">/mo</span></div>
+                <ul class="pricing-features">
+                    <li><span class="pricing-check">✓</span> Custom AI Agent</li>
+                    <li><span class="pricing-check">✓</span> Sales and Support Automation</li>
+                    <li><span class="pricing-check">✓</span> System Integration</li>
+                    <li><span class="pricing-check">✓</span> Includes Hosting & Full Support</li>
+                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
+                </ul>
+                <a href="#contact" class="pricing-cta primary">Build My Agent</a>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-icon">🚗</div>
+                <h3 class="pricing-name">DealerMind™</h3>
+                <p class="pricing-tagline">Full service, hosting & 24/7 operation. A fraction of one sales agent's salary.</p>
+                <div class="pricing-price"><span class="pricing-amount">$1000</span><span class="pricing-period">/mo</span></div>
+                <ul class="pricing-features">
+                    <li><span class="pricing-check">✓</span> AI Sales Agent for Auto Dealers</li>
+                    <li><span class="pricing-check">✓</span> 24/7 Lead Qualification & Booking</li>
+                    <li><span class="pricing-check">✓</span> Full CRM & Inventory Integration</li>
+                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
+                    <li><span class="pricing-check">✓</span> Dedicated Server & Priority Support</li>
+                </ul>
+                <a href="#contact" class="pricing-cta secondary">Get DealerMind™</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about-section" id="about">
+        <div class="about-container">
+            <div class="about-visual">
+                <div class="about-frame">
+                    <div class="about-inner">
+                        <div class="about-pattern"></div>
+                        <div class="about-logo-large">
+                            <svg viewBox="0 0 200 200" fill="none"><defs><linearGradient id="aboutGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M100 20C55 20 25 55 25 95C25 125 40 150 65 165V180C65 188 72 195 80 195H120C128 195 135 188 135 180V165C160 150 175 125 175 95C175 55 145 20 100 20Z" stroke="url(#aboutGrad)" stroke-width="4" fill="none"/><circle cx="70" cy="70" r="12" fill="url(#aboutGrad)"/><circle cx="130" cy="70" r="12" fill="url(#aboutGrad)"/><circle cx="100" cy="110" r="14" fill="url(#aboutGrad)"/><line x1="70" y1="70" x2="100" y2="110" stroke="url(#aboutGrad)" stroke-width="2"/><line x1="130" y1="70" x2="100" y2="110" stroke="url(#aboutGrad)" stroke-width="2"/><line x1="70" y1="70" x2="130" y2="70" stroke="url(#aboutGrad)" stroke-width="2"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-content">
+                <div class="section-tag">About Us</div>
+                <h2>We Are BizMind™. Your <span class="gradient">Real-World AI Partners.</span></h2>
+                <p>Forget the academic definitions. AI is a tool, and our job is to make it work for you. We are a technology agency focused on one goal: automating your business to drive real growth and save you time.</p>
+                <p>We specialize in practical solutions. From our powerful DealerMind™ platform to custom AI agents, we build the "digital employees" that handle your sales, support, and marketing.</p>
+                <div class="about-highlights">
+                    <div class="highlight-item"><div class="highlight-icon">🎯</div><div class="highlight-text">Results-Driven</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">⚡</div><div class="highlight-text">24/7 Operation</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">🔒</div><div class="highlight-text">Secure & Reliable</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">🤝</div><div class="highlight-text">Full Support</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="section-tag">Contact</div>
+                <h2>Ready to Build Your <span class="gradient">Digital Workforce?</span></h2>
+                <p>Let's talk. Whether you're ready to build or just have questions about automation, our team is standing by.</p>
+                <div class="contact-details">
+                    <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4>Call Center</h4><p><a href="tel:+17868164553">+1 (786) 816-4553</a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4>Our Location</h4><p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="/cdn-cgi/l/email-protection#d5bcbbb3ba95bfbab4a7b6bcbbbcb0b2b4a6fbb6b9baa0b1"><span class="__cf_email__" data-cfemail="cca5a2aaa38ca6a3adbeafa5a2a5a9abadbfe2afa0a3b9a8">[email&#160;protected]</span></a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4>Support Hours</h4><p>Mon-Fri: 9AM-6PM CST</p></div></div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;">Get in Touch</h3>
+            
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input id="email" name="email" type="email" placeholder="your@email.com" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+                    </div>
+            
+                    <button type="submit" class="form-submit" id="contact-submit">Send a Message</button>
+                    <p id="contact-status" class="contact-status"></p>
+                </form>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg viewBox="0 0 50 50" fill="none" width="35" height="35"><defs><linearGradient id="fGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M25 5C15 5 8 12 8 22C8 28 11 33 16 36L16 42C16 44 18 46 20 46H30C32 46 34 44 34 42V36C39 33 42 28 42 22C42 12 35 5 25 5Z" stroke="url(#fGrad)" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="3" fill="url(#fGrad)"/><circle cx="32" cy="18" r="3" fill="url(#fGrad)"/><circle cx="25" cy="28" r="3" fill="url(#fGrad)"/></svg>
+                    <span class="footer-logo-text">BizMind</span>
+                </div>
+                <p>Transforming businesses through intelligent automation and AI-powered solutions.</p>
+                <div class="social-links"><a href="#" class="social-link">in</a><a href="#" class="social-link">𝕏</a><a href="#" class="social-link">fb</a></div>
+            </div>
+            <div class="footer-column"><h4>Products</h4><ul><li><a href="#dealermind">DealerMind™</a></li><li><a href="#products">BizMind™</a></li><li><a href="#products">AI Ad Campaigns</a></li></ul></div>
+            <div class="footer-column"><h4>Services</h4><ul><li><a href="#">AI Agents</a></li><li><a href="#">Lead Qualification</a></li><li><a href="#">CRM Integration</a></li></ul></div>
+            <div class="footer-column"><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#contact">Contact</a></li><li><a href="#">Legal Info</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 BizMind. All rights reserved.</p>
+            <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Legal Information</a></div>
+        </div>
+    </footer>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>    
+    // ===================== PARTICLES =====================
+    const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
+    let particles = [], mouseX = 0, mouseY = 0;
+    function resizeP() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
+    resizeP(); window.addEventListener('resize', resizeP);
+    class Particle { constructor() { this.x = Math.random() * pCanvas.width; this.y = Math.random() * pCanvas.height; this.size = Math.random() * 1.5 + 0.3; this.speedX = (Math.random() - 0.5) * 0.3; this.speedY = (Math.random() - 0.5) * 0.3; this.opacity = Math.random() * 0.3 + 0.1; }
+        update() { this.x += this.speedX; this.y += this.speedY; const dx = mouseX - this.x, dy = mouseY - this.y, d = Math.sqrt(dx*dx+dy*dy); if(d < 100) { this.x -= dx * 0.01; this.y -= dy * 0.01; } if(this.x < 0) this.x = pCanvas.width; if(this.x > pCanvas.width) this.x = 0; if(this.y < 0) this.y = pCanvas.height; if(this.y > pCanvas.height) this.y = 0; }
+        draw() { pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); pCtx.fillStyle = `rgba(0,240,255,${this.opacity})`; pCtx.fill(); }
+    }
+    for(let i = 0; i < 50; i++) particles.push(new Particle());
+    function connectP() { for(let i = 0; i < particles.length; i++) for(let j = i+1; j < particles.length; j++) { const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, d = Math.sqrt(dx*dx+dy*dy); if(d < 80) { pCtx.beginPath(); pCtx.moveTo(particles[i].x, particles[i].y); pCtx.lineTo(particles[j].x, particles[j].y); pCtx.strokeStyle = `rgba(0,240,255,${(80-d)/80*0.08})`; pCtx.lineWidth = 0.5; pCtx.stroke(); } } }
+    function animP() { pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height); particles.forEach(p => { p.update(); p.draw(); }); connectP(); requestAnimationFrame(animP); }
+    animP();
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+    
+    // ===================== METEORS =====================
+    const mCanvas = document.getElementById('meteors-canvas'), mCtx = mCanvas.getContext('2d');
+    function resizeM() { mCanvas.width = window.innerWidth; mCanvas.height = window.innerHeight; }
+    resizeM(); window.addEventListener('resize', resizeM);
+    let meteors = [];
+    class Meteor { constructor() { this.reset(); }
+        reset() { this.x = Math.random() * mCanvas.width * 1.5; this.y = -10; this.length = Math.random() * 80 + 40; this.speed = Math.random() * 8 + 4; this.opacity = Math.random() * 0.5 + 0.2; }
+        update() { this.x -= this.speed * 0.7; this.y += this.speed; if(this.y > mCanvas.height + 100) this.reset(); }
+        draw() { const grad = mCtx.createLinearGradient(this.x, this.y, this.x + this.length * 0.7, this.y - this.length); grad.addColorStop(0, `rgba(0,240,255,${this.opacity})`); grad.addColorStop(1, 'rgba(0,240,255,0)'); mCtx.beginPath(); mCtx.moveTo(this.x, this.y); mCtx.lineTo(this.x + this.length * 0.7, this.y - this.length); mCtx.strokeStyle = grad; mCtx.lineWidth = 1.5; mCtx.stroke(); }
+    }
+    for(let i = 0; i < 8; i++) { const m = new Meteor(); m.y = Math.random() * mCanvas.height; meteors.push(m); }
+    function animM() { mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height); meteors.forEach(m => { m.update(); m.draw(); }); if(Math.random() > 0.98 && meteors.length < 15) meteors.push(new Meteor()); requestAnimationFrame(animM); }
+    animM();
+    
+    // ===================== GLOWING DOTS =====================
+    const gCanvas = document.getElementById('glow-dots-canvas'), gCtx = gCanvas.getContext('2d');
+    function resizeG() { gCanvas.width = window.innerWidth; gCanvas.height = window.innerHeight; }
+    resizeG(); window.addEventListener('resize', resizeG);
+    let glowDots = [];
+    class GlowDot { constructor() { this.x = Math.random() * gCanvas.width; this.y = Math.random() * gCanvas.height; this.baseSize = Math.random() * 2 + 1; this.phase = Math.random() * Math.PI * 2; this.speed = Math.random() * 0.02 + 0.01; this.color = ['#00f0ff', '#7c3aed', '#f0f'][Math.floor(Math.random() * 3)]; }
+        update() { this.phase += this.speed; }
+        draw() { const size = this.baseSize * (1 + Math.sin(this.phase) * 0.5); const opacity = 0.3 + Math.sin(this.phase) * 0.3; gCtx.beginPath(); gCtx.arc(this.x, this.y, size, 0, Math.PI * 2); gCtx.fillStyle = this.color; gCtx.globalAlpha = opacity; gCtx.shadowBlur = 15; gCtx.shadowColor = this.color; gCtx.fill(); gCtx.globalAlpha = 1; gCtx.shadowBlur = 0; }
+    }
+    for(let i = 0; i < 40; i++) glowDots.push(new GlowDot());
+    function animG() { gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height); glowDots.forEach(d => { d.update(); d.draw(); }); requestAnimationFrame(animG); }
+    animG();
+    
+    // ===================== TYPING =====================
+    const typingTexts = ['> Initializing AI systems...', '> DealerMind™: Online 24/7', '> Lead qualification: Active', '> Appointment booking: Ready', '> const success = AI.transform(business);'];
+    let textIdx = 0, charIdx = 0, isDeleting = false;
+    const typingEl = document.querySelector('.typing-text');
+    function typeEffect() { const txt = typingTexts[textIdx]; if(isDeleting) { typingEl.textContent = txt.substring(0, charIdx - 1); charIdx--; } else { typingEl.textContent = txt.substring(0, charIdx + 1); charIdx++; } let speed = isDeleting ? 25 : 60; if(!isDeleting && charIdx === txt.length) { speed = 2000; isDeleting = true; } else if(isDeleting && charIdx === 0) { isDeleting = false; textIdx = (textIdx + 1) % typingTexts.length; speed = 400; } setTimeout(typeEffect, speed); }
+    typeEffect();
+    
+    // ===================== COUNTERS =====================
+    const counterObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) { const c = e.target, t = parseInt(c.dataset.target), pre = c.dataset.prefix || '', suf = c.dataset.suffix || ''; let cur = 0; const inc = t / 40, timer = setInterval(() => { cur += inc; if(cur >= t) { c.textContent = pre + t + suf; clearInterval(timer); } else { c.textContent = pre + Math.floor(cur) + suf; } }, 40); counterObs.unobserve(c); } }); }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(c => counterObs.observe(c));
+    
+    // ===================== SCROLL ANIMATIONS =====================
+    const scrollObs = new IntersectionObserver(entries => { entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }, i * 80); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.feature-card,.product-card,.dealermind-card,.pricing-card,.contact-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(25px)'; el.style.transition = 'opacity 0.5s,transform 0.5s'; scrollObs.observe(el); });
+    
+    // ===================== NAV =====================
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+ </script>
+ <script>
+  (function () {
+    const main  = document.querySelector('.neon-cursor-main');
+    const trail = document.querySelector('.neon-cursor-trail');
+    const glow  = document.querySelector('.neon-cursor-glow');
+
+    if (!main || !trail || !glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let isClicking = false;
+
+    function updatePosition(x, y) {
+      // tamaños:
+      // main:  10px  -> offset 5
+      // trail: 26px  -> offset 13
+      // glow:  60px  -> offset 30
+      const mainX  = x - 5;
+      const mainY  = y - 5;
+      const trailX = x - 13;
+      const trailY = y - 13;
+      const glowX  = x - 30;
+      const glowY  = y - 30;
+
+      const mainScale = isClicking ? 0.85 : 1;
+
+      main.style.transform  = `translate3d(${mainX}px, ${mainY}px, 0) scale(${mainScale})`;
+      trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0)`;
+      glow.style.transform  = `translate3d(${glowX}px, ${glowY}px, 0)`;
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      updatePosition(mouseX, mouseY);
+      document.body.classList.remove('cursor-hidden');
+    });
+
+    window.addEventListener('mouseleave', () => {
+      document.body.classList.add('cursor-hidden');
+    });
+
+    window.addEventListener('mouseenter', (e) => {
+      document.body.classList.remove('cursor-hidden');
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      updatePosition(mouseX, mouseY);
+    });
+
+    window.addEventListener('mousedown', () => {
+      isClicking = true;
+      document.body.classList.add('cursor-click');
+      updatePosition(mouseX, mouseY);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isClicking = false;
+      document.body.classList.remove('cursor-click');
+      updatePosition(mouseX, mouseY);
+    });
+
+    const hoverSelector = 'a, button, input, textarea, [data-hover="true"], .btn-primary, .btn-secondary';
+
+    window.addEventListener('mouseover', (e) => {
+      if (e.target.matches(hoverSelector)) {
+        document.body.classList.add('cursor-hover');
+      }
+    });
+
+    window.addEventListener('mouseout', (e) => {
+      if (e.target.matches(hoverSelector)) {
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+
+    // posicion inicial centrada
+    updatePosition(mouseX, mouseY);
+  })();
+</script>
+<script>
+    (function () {
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+
+        const statusEl = document.getElementById('contact-status');
+        const submitBtn = document.getElementById('contact-submit');
+
+        // 🔴 CAMBIA ESTA URL POR TU WEBHOOK DE N8N
+        const WEBHOOK_URL = 'https://TU-DOMINIO-N8N/webhook/contacto-bizmind';
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                fullName: form.fullName.value.trim(),
+                email: form.email.value.trim(),
+                subject: form.subject.value.trim(),
+                message: form.message.value.trim(),
+                source: 'bizmind-website'
+            };
+
+            statusEl.textContent = 'Sending...';
+            statusEl.classList.remove('success', 'error');
+            statusEl.classList.add('sending');
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error('Request failed');
+
+                statusEl.textContent = 'Thanks! We will contact you shortly.';
+                statusEl.classList.remove('sending');
+                statusEl.classList.add('success');
+                form.reset();
+            } catch (err) {
+                statusEl.textContent = 'There was an error. Please try again or email info@joarciniegas.cloud';
+                statusEl.classList.remove('sending');
+                statusEl.classList.add('error');
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    })();
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("#contact-form");
+        const msgBox = document.createElement("div");
+        msgBox.className = "form-toast";
+        document.body.appendChild(msgBox);
+
+        // CAMBIA ESTA URL si ya tienes un webhook o endpoint
+        const WEBHOOK_URL = "https://tu-dominio-n8n/webhook/contacto";
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            msgBox.textContent = "Enviando...";
+            msgBox.classList.add("visible", "sending");
+
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            try {
+                const res = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (!res.ok) throw new Error("Error al enviar");
+
+                msgBox.textContent = "✅ ¡Mensaje enviado con éxito!";
+                msgBox.classList.remove("sending");
+                msgBox.classList.add("success");
+                form.reset();
+            } catch (err) {
+                msgBox.textContent = "⚠️ No se pudo enviar. Intenta de nuevo.";

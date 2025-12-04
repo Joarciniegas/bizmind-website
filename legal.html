@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Information | BizMind AI Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7c3aed;
+            --accent: #f0f;
+            --success: #10b981;
+            --dark: #030014;
+            --dark-card: rgba(15, 15, 35, 0.6);
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #7c3aed 50%, #f0f 100%);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--dark); color: #fff; overflow-x: hidden; }
+        
+        /* ============ BACKGROUND LAYERS ============ */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        /* Grid Pattern */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+            z-index: 1;
+        }
+        
+        /* Dot Pattern */
+        .dot-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(124, 58, 237, 0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 80%);
+            z-index: 1;
+        }
+        
+        /* Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            animation: orbFloat 25s ease-in-out infinite;
+        }
+        .orb-1 { width: 700px; height: 700px; background: rgba(0,240,255,0.1); top: -300px; right: -200px; }
+        .orb-2 { width: 600px; height: 600px; background: rgba(124,58,237,0.1); bottom: -200px; left: -200px; animation-delay: -12s; }
+        .orb-3 { width: 500px; height: 500px; background: rgba(255,0,255,0.06); top: 40%; left: 30%; animation-delay: -6s; }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,30px) scale(0.95); } }
+        
+        /* Particles Canvas */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        /* Scanlines */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* ============ NAVIGATION ============ */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
+        nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ============ MAIN CONTENT ============ */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            padding: 120px 50px 80px;
+        }
+
+        .legal-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .legal-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .legal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 30px;
+        }
+
+        .last-updated {
+            display: inline-block;
+            padding: 8px 18px;
+            background: rgba(124,58,237,0.15);
+            border: 1px solid rgba(124,58,237,0.25);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        /* Contact Card */
+        .contact-card {
+            padding: 35px;
+            background: var(--dark-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            transition: all 0.4s;
+        }
+
+        .contact-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,240,255,0.1);
+        }
+
+        .contact-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-item h3 {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-item p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        /* Legal Sections */
+        .legal-section {
+            padding: 40px;
+            background: var(--dark-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            transition: all 0.4s;
+        }
+
+        .legal-section:hover {
+            border-color: rgba(124,58,237,0.3);
+        }
+
+        .legal-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .legal-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-1);
+        }
+
+        .legal-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin: 30px 0 15px 0;
+            color: var(--secondary);
+        }
+
+        .legal-section h4 {
+            font-size: 1.1rem;
+            margin: 20px 0 12px 0;
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+        }
+
+        .legal-section p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .legal-section ul {
+            list-style: none;
+            margin: 15px 0;
+            padding-left: 0;
+        }
+
+        .legal-section ul li {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .legal-section ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .product-box {
+            padding: 25px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .product-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .product-box h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            margin: 0 0 12px 0;
+        }
+
+        .product-box p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .legal-footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .legal-footer p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .legal-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 100px 25px 60px;
+            }
+            .legal-title {
+                font-size: 2rem;
+            }
+            .legal-section {
+                padding: 25px;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Layers -->
+    <div class="bg-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div class="grid-pattern"></div>
+        <div class="dot-pattern"></div>
+        <canvas id="particles-canvas"></canvas>
+        <div class="scanlines"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 50 50" fill="none"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M25 5C15 5 8 12 8 22C8 28 11 33 16 36L16 42C16 44 18 46 20 46H30C32 46 34 44 34 42V36C39 33 42 28 42 22C42 12 35 5 25 5Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="32" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="25" cy="28" r="3" fill="url(#logoGrad)"/><line x1="18" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="32" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="18" y1="18" x2="32" y2="18" stroke="url(#logoGrad)" stroke-width="1"/></svg>
+            </div>
+            <div>
+                <div class="logo-text">BizMind</div>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#products">Products</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/legal" style="color: var(--primary);">Legal</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="legal-container">
+            <!-- Header -->
+            <div class="legal-header">
+                <h1 class="legal-title">Legal Information</h1>
+                <p class="legal-subtitle">AI-Powered Business Automation Solutions</p>
+                <span class="last-updated">Last Updated: December 2, 2024</span>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="contact-card">
+                <h2>Contact Information</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <h3>Address</h3>
+                        <p>21515 Pebble Pine Ct<br>Cypress, TX 77433<br>United States</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Website</h3>
+                        <p><a href="https://joarciniegas.cloud" target="_blank">joarciniegas.cloud</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Support Hours</h3>
+                        <p>Monday - Friday: 9 AM - 6 PM CST<br>Response time: Within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About BizMind -->
+            <div class="legal-section">
+                <h2>About BizMind</h2>
+                <p>BizMind, created by Jorge Arciniegas, provides intelligent automation solutions for businesses, specializing in the automotive dealership industry. Our suite of AI-powered tools streamlines operations, enhances customer engagement, and automates marketing workflows.</p>
+                
+                <h3>Our Products</h3>
+                <div class="products-grid">
+                    <div class="product-box">
+                        <h4>DealerMind</h4>
+                        <p>Comprehensive CRM and management platform designed specifically for automotive dealerships.</p>
+                    </div>
+                    <div class="product-box">
+                        <h4>VisionMind</h4>
+                        <p>Automated social media content creation from WhatsApp and Telegram. Uses AI vision to process vehicle images and generate professional posts and stories.</p>
+                    </div>
+                    <div class="product-box">
+                        <h4>Agent AI</h4>
+                        <p>Intelligent conversational assistants for customer service, lead qualification, and automated follow-ups.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms of Service -->
+            <div class="legal-section">
+                <h2>Terms of Service</h2>
+                
+                <h3>1. Acceptance of Terms</h3>
+                <p>By using BizMind services, you agree to these Terms of Service. If you disagree, discontinue use immediately.</p>
+
+                <h3>2. Services Provided</h3>
+                <p>BizMind provides:</p>
+                <ul>
+                    <li>AI-powered automation for marketing and operations</li>
+                    <li>Social media content generation and posting</li>
+                    <li>CRM and customer management tools</li>
+                    <li>Integration with third-party platforms (Canva, Facebook, Instagram, WhatsApp, Telegram)</li>
+                </ul>
+                <p>The system processes images, detects vehicles, creates engaging copy, applies branding, and publishes to social platforms automatically.</p>
+
+                <h3>3. User Responsibilities</h3>
+                <p>Users agree to:</p>
+                <ul>
+                    <li>Provide accurate information during registration and setup</li>
+                    <li>Use services only for lawful purposes</li>
+                    <li>Not upload offensive, harmful, or copyrighted content without authorization</li>
+                    <li>Obtain necessary permissions before processing customer data or images</li>
+                    <li>Comply with all applicable laws and third-party platform policies</li>
+                    <li>Keep login credentials secure and confidential</li>
+                </ul>
+
+                <h3>4. Intellectual Property</h3>
+                <p>All BizMind software remains the exclusive property of Jorge Arciniegas / BizMind. Clients retain ownership of their data and content processed through our services.</p>
+
+                <h3>5. Data Usage and Privacy</h3>
+                <p>We collect and process data as described in our Privacy Policy. By using our services, you consent to such processing. We do not sell customer data to third parties.</p>
+
+                <h3>6. Third-Party Services</h3>
+                <p>Our services integrate with third-party platforms (Canva, Facebook, Instagram, Google, WhatsApp, Telegram). Use of these services is subject to their respective terms. We are not responsible for third-party service disruptions or policy changes.</p>
+
+                <h3>7. Service Availability</h3>
+                <p>We strive to maintain 99% uptime but cannot guarantee uninterrupted service. Scheduled maintenance will be communicated in advance when possible. We are not liable for service interruptions caused by third-party provider outages.</p>
+
+                <h3>8. Fees and Payment</h3>
+                <p>Service fees are communicated during onboarding. Payment terms are typically monthly or annual. Late payments may result in service suspension. Refunds are handled on a case-by-case basis.</p>
+
+                <h3>9. Limitation of Liability</h3>
+                <p>BizMind shall not be liable for:</p>
+                <ul>
+                    <li>Indirect, incidental, or consequential damages</li>
+                    <li>Loss of profits, data, or business opportunities</li>
+                    <li>Damages exceeding fees paid in the preceding 12 months</li>
+                    <li>Issues arising from misuse of services or third-party platform policies</li>
+                </ul>
+
+                <h3>10. Indemnification</h3>
+                <p>Clients agree to indemnify BizMind against claims arising from their use of services, including copyright infringement, privacy violations, or misuse of third-party platforms.</p>
+
+                <h3>11. Termination</h3>
+                <p>Either party may terminate services with 30 days written notice. We reserve the right to immediately suspend services for violations of these terms. Upon termination, clients have 30 days to export their data.</p>
+
+                <h3>12. Modifications</h3>
+                <p>We may update these terms at any time. Significant changes will be communicated via email. Continued use constitutes acceptance of modified terms.</p>
+
+                <h3>13. Governing Law</h3>
+                <p>These terms are governed by the laws of the State of Texas, United States. Any disputes shall be resolved in the courts of Harris County, Texas.</p>
+
+                <h3>14. Contact for Legal Matters</h3>
+                <p>For questions about these terms, contact: <a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p>
+            </div>
+
+            <!-- Privacy Policy -->
+            <div class="legal-section">
+                <h2>Privacy Policy</h2>
+                
+                <h3>1. Introduction</h3>
+                <p>BizMind ("we," "us," or "our") respects your privacy. This policy explains how we collect, use, and protect information when you use our services.</p>
+
+                <h3>2. Information We Collect</h3>
+                
+                <h4>2.1 Information You Provide</h4>
+                <ul>
+                    <li>Account information (name, email, company name, phone number)</li>
+                    <li>Business information (dealership name, address, social media accounts)</li>
+                    <li>Vehicle images and descriptions uploaded to our services</li>
+                    <li>Customer information you choose to process through our systems</li>
+                </ul>
+
+                <h4>2.2 Automatically Collected Information</h4>
+                <ul>
+                    <li>Usage data (features accessed, time spent, frequency of use)</li>
+                    <li>Device information (IP address, browser type, operating system)</li>
+                    <li>Log data (errors, system events, performance metrics)</li>
+                </ul>
+
+                <h4>2.3 Information from Third Parties</h4>
+                <ul>
+                    <li>Social media engagement metrics (Facebook, Instagram)</li>
+                    <li>WhatsApp/Telegram message metadata</li>
+                    <li>Canva template usage data</li>
+                </ul>
+
+                <h3>3. How We Use Your Information</h3>
+                <p>We use collected information to:</p>
+                <ul>
+                    <li>Provide and improve our services</li>
+                    <li>Process and publish social media content</li>
+                    <li>Analyze service performance and usage patterns</li>
+                    <li>Communicate with you about service updates and support</li>
+                    <li>Detect and prevent fraud or misuse</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
+
+                <h3>4. Information Sharing</h3>
+                <p>We share information only with:</p>
+                <ul>
+                    <li>Third-party service providers necessary for operations (Canva, Facebook, Instagram, Google)</li>
+                    <li>Law enforcement or government agencies when required by law</li>
+                </ul>
+                <p><strong>We do NOT sell your data to third parties.</strong></p>
+
+                <h3>5. Data Security</h3>
+                <p>We implement industry-standard security measures including:</p>
+                <ul>
+                    <li>Encryption of data in transit (TLS/SSL)</li>
+                    <li>Secure storage with access controls</li>
+                    <li>Regular security audits</li>
+                    <li>Employee training on data protection</li>
+                </ul>
+
+                <h3>6. Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your data</li>
+                    <li>Correct inaccurate information</li>
+                    <li>Request deletion of your data</li>
+                    <li>Export your data</li>
+                    <li>Opt-out of marketing communications</li>
+                </ul>
+                <p>To exercise these rights, contact: <a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p>
+
+                <h3>7. Data Retention</h3>
+                <p>We retain data for as long as your account is active, plus:</p>
+                <ul>
+                    <li>30 days for account recovery</li>
+                    <li>Up to 1 year for legal compliance</li>
+                </ul>
+
+                <h3>8. Cookies and Tracking</h3>
+                <p>We use cookies for:</p>
+                <ul>
+                    <li>Authentication and security</li>
+                    <li>User preferences</li>
+                    <li>Analytics (via Google Analytics)</li>
+                </ul>
+                <p>You can control cookies through your browser settings.</p>
+
+                <h3>9. Third-Party Links</h3>
+                <p>Our services may contain links to third-party websites. We are not responsible for the privacy practices of these sites. We encourage you to review their privacy policies.</p>
+
+                <h3>10. Children's Privacy</h3>
+                <p>Our services are not intended for children under 13. We do not knowingly collect data from children. If we become aware of such collection, we will delete it immediately.</p>
+
+                <h3>11. International Data Transfers</h3>
+                <p>Data may be transferred to and processed in the United States or other countries where our service providers operate. By using our services, you consent to such transfers.</p>
+
+                <h3>12. Changes to This Policy</h3>
+                <p>We may update this Privacy Policy periodically. Significant changes will be communicated via email. The "Last Updated" date at the top indicates when the policy was last revised.</p>
+
+                <h3>13. Contact Us</h3>
+                <p>For privacy-related questions or concerns, contact: <a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p>
+            </div>
+
+            <!-- Acceptable Use Policy -->
+            <div class="legal-section">
+                <h2>Acceptable Use Policy</h2>
+                
+                <h3>Prohibited Activities</h3>
+                <p>When using BizMind services, you may NOT:</p>
+                <ul>
+                    <li>Upload offensive, harmful, or illegal content</li>
+                    <li>Violate intellectual property rights</li>
+                    <li>Attempt to hack, disrupt, or compromise system security</li>
+                    <li>Use services for spam or unsolicited marketing</li>
+                    <li>Impersonate others or create fake accounts</li>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Use services to harm minors in any way</li>
+                    <li>Engage in fraudulent activities</li>
+                </ul>
+
+                <h3>Enforcement</h3>
+                <p>Violations may result in:</p>
+                <ul>
+                    <li>Warning or account suspension</li>
+                    <li>Immediate termination without refund</li>
+                    <li>Legal action if necessary</li>
+                    <li>Reporting to relevant authorities</li>
+                </ul>
+
+                <h3>Reporting Violations</h3>
+                <p>To report violations of this policy, contact: <a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p>
+            </div>
+
+            <!-- Footer -->
+            <div class="legal-footer">
+                <p>&copy; 2024 BizMind. All rights reserved. | <a href="mailto:info@joarciniegas.cloud">Contact Us</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Particles Animation -->
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < 120) {
+                    const force = (120 - dist) / 120;
+                    this.x -= dx * force * 0.015;
+                    this.y -= dy * force * 0.015;
+                }
+                
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,240,255,${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0,240,255,${(100 - dist) / 100 * 0.12})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
