@@ -103,17 +103,23 @@
             z-index: 5;
         }
 
-        /* ============ NAVIGATION ============ */
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
-        nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
+        /* ============ IGATION ============ */
+         { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
+        .scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-icon { width: 45px; height: 45px; }
         .logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; gap: 35px; list-style: none; }
-        .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
+        .logo-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; }
+        .-links { display: flex; gap: 35px; list-style: none; }
+        .-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
         .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
         .nav-links a:hover { color: var(--primary); }
         .nav-links a:hover::after { width: 100%; }
+        .nav-cta { padding: 10px 25px; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+        .nav-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gradient-1); transition: left 0.3s; z-index: -1; }
+        .nav-cta:hover { color: var(--dark); border-color: transparent; }
+        .nav-cta:hover::before { left: 0; }
+        .mobile-menu-btn { display: none; }
 
         /* ============ MAIN CONTENT ============ */
         .main-content {
@@ -375,6 +381,7 @@
             </div>
             <div>
                 <div class="logo-text">BizMind</div>
+                <div class="logo-tagline">AI Agency</div>
             </div>
         </a>
             <ul class="nav-links">
