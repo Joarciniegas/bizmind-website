@@ -368,7 +368,7 @@
         .footer-column li { margin-bottom: 10px; }
         .footer-column a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
         .footer-column a:hover { color: var(--primary); }
-        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; }
         .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
         .footer-legal { display: flex; gap: 25px; }
         .footer-legal a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
@@ -867,12 +867,17 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
         <!-- Footer -->
-        <div class="footer-bottom" style="text-align: center; padding: 30px 0; border-top: 1px solid rgba(255,255,255,0.1);">
-    <p>&copy; 2026 BizMind. All rights reserved.</p>
-    <p><a href="/legal.html#privacy" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> | <a href="/legal.html#terms" style="color: var(--primary); text-decoration: none;">Terms of Service</a> | <a href="mailto:info@joarciniegas.cloud" style="color: var(--primary); text-decoration: none;">Contact Us</a></p>
-        </div>            
+        <div class="footer-bottom">
+    <p>© 2026 BizMind. All rights reserved.</p>
+    <div class="footer-legal">
+        <a href="/legal.html">Privacy Policy</a>
+        <a href="/legal.html">Terms of Service</a>
+        <a href="/legal.html">Legal Information</a>
+    </div>
+</div>      
 </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>    
+    <a href="mailto:info@joarciniegas.cloud">
+        <script>    
     // ===================== PARTICLES =====================
     const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
     let particles = [], mouseX = 0, mouseY = 0;
