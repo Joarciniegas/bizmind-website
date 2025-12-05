@@ -839,7 +839,7 @@ body.cursor-click .neon-cursor-main {
                 <div class="contact-details">
                     <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4>Call Center</h4><p><a href="tel:+17868164553">+1 (786) 816-4553</a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4>Our Location</h4><p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p></div></div>
-                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="/cdn-cgi/l/email-protection#d5bcbbb3ba95bfbab4a7b6bcbbbcb0b2b4a6fbb6b9baa0b1"><span class="__cf_email__" data-cfemail="cca5a2aaa38ca6a3adbeafa5a2a5a9abadbfe2afa0a3b9a8">[email&#160;protected]</span></a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4>Support Hours</h4><p>Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
             </div>
@@ -981,6 +981,53 @@ document.querySelectorAll('.stat-number').forEach(stat => {
     numberObserver.observe(stat);
 });
 
+// ===================== TYPING EFFECT =====================
+(function() {
+    const typingTexts = [
+        "Automate your sales with AI agents that qualify leads instantly.",
+        "Connect WhatsApp, Facebook Messenger, Telegram, and your website.",
+        "Integrate with your CRM, calendar, and existing tools seamlessly.",
+        "Save $45K+ annually by replacing repetitive manual work.",
+        "Your AI co-workers handle support, sales, and bookings 24/7."
+    ];
+    
+    const typingElement = document.querySelector('.typing-text');
+    if (!typingElement) return;
+    
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 80;
+    
+    function type() {
+        const currentText = typingTexts[textIndex];
+        
+        if (isDeleting) {
+            typingElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 40;
+        } else {
+            typingElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 80;
+        }
+        
+        if (!isDeleting && charIndex === currentText.length) {
+            // Pause at end
+            typingSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % typingTexts.length;
+            typingSpeed = 500;
+        }
+        
+        setTimeout(type, typingSpeed);
+    }
+    
+    type();
+})();
+
 document.querySelectorAll('a[href^="#"]').forEach(a => { 
     a.addEventListener('click', function(e) { 
         e.preventDefault(); 
@@ -992,12 +1039,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 <script>
   (function () {
-    // Detectar si es dispositivo móvil o táctil
+    // Detectar si es dispositivo móvil REAL (no laptops con touchscreen)
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth <= 768;
     
-    // No ejecutar en móviles o pantallas pequeñas
-    if (isMobile || isTouchDevice || window.innerWidth <= 768) return;
+    // No ejecutar solo si es móvil O pantalla pequeña (permitir laptops con touchscreen)
+    if (isMobile || isSmallScreen) return;
     
     const main  = document.querySelector('.neon-cursor-main');
     const trail = document.querySelector('.neon-cursor-trail');
@@ -1153,6 +1200,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
                 msgBox.classList.remove("sending");
                 msgBox.classList.add("success");
                 form.reset();
-            </script>
+            </script>    
     </body>
 </html>
+    
