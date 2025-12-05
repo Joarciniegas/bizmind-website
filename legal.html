@@ -406,7 +406,7 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
             <div class="legal-header">
                 <h1 class="legal-title">Legal Information</h1>
                 <p class="legal-subtitle">AI-Powered Business Automation Solutions</p>
-                <span class="last-updated">Last Updated: December 2, 2024</span>
+                <span class="last-updated">Last Updated: December 2, 2025</span>
             </div>
 
             <!-- Contact Card -->
@@ -656,7 +656,7 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
 
             <!-- Footer -->
             <div class="legal-footer">
-                <p>&copy; 2024 BizMind. All rights reserved. | <a href="/cdn-cgi/l/email-protection#b5dcdbd3daf5dfdad4c7d6dcdbdcd0d2d4c69bd6d9dac0d1">Contact Us</a></p>
+                <p> &copy; <span id="year"></span> BizMind. All rights reserved. |   <a href="/cdn-cgi/l/email-protection#b5dcdbd3daf5dfdad4c7d6dcdbdcd0d2d4c69bd6d9dac0d1">Contact Us</a></p>
             </div>
         </div>
     </div>
@@ -734,5 +734,14 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
                         ctx.stroke();
                     }
     </script>
+    <script>
+  // Año automático del footer
+  document.addEventListener('DOMContentLoaded', () => {
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+      yearSpan.textContent = new Date().getFullYear();
+    }
+  });
+</script>
 </body>
 </html>
