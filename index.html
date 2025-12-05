@@ -866,80 +866,154 @@ body.cursor-click .neon-cursor-main {
             </div>
         </div>
     </section>
-        <!-- Footer -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg viewBox="0 0 50 50" fill="none" width="35" height="35"><defs><linearGradient id="fGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M25 5C15 5 8 12 8 22C8 28 11 33 16 36L16 42C16 44 18 46 20 46H30C32 46 34 44 34 42V36C39 33 42 28 42 22C42 12 35 5 25 5Z" stroke="url(#fGrad)" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="3" fill="url(#fGrad)"/><circle cx="32" cy="18" r="3" fill="url(#fGrad)"/><circle cx="25" cy="28" r="3" fill="url(#fGrad)"/></svg>
+                    <span class="footer-logo-text">BizMind</span>
+                </div>
+                <p>Transforming businesses through intelligent automation and AI-powered solutions.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">fb</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="#dealermind">DealerMind™</a></li>
+                    <li><a href="#products">BizMind™</a></li>
+                    <li><a href="#products">AI Ad Campaigns</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">AI Agents</a></li>
+                    <li><a href="#">Lead Qualification</a></li>
+                    <li><a href="#">CRM Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="footer-bottom">
-    <p>© 2026 BizMind. All rights reserved.</p>
-    <div class="footer-legal">
-        <a href="/legal.html">Privacy Policy</a>
-        <a href="/legal.html">Terms of Service</a>
-        <a href="/legal.html">Legal Information</a>
-    </div>
-</div>      
-</div>
-    <a href="mailto:info@joarciniegas.cloud">
-        <script>    
-    // ===================== PARTICLES =====================
-    const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
-    let particles = [], mouseX = 0, mouseY = 0;
-    function resizeP() { pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
-    resizeP(); window.addEventListener('resize', resizeP);
-    class Particle { constructor() { this.x = Math.random() * pCanvas.width; this.y = Math.random() * pCanvas.height; this.size = Math.random() * 1.5 + 0.3; this.speedX = (Math.random() - 0.5) * 0.3; this.speedY = (Math.random() - 0.5) * 0.3; this.opacity = Math.random() * 0.3 + 0.1; }
-        update() { this.x += this.speedX; this.y += this.speedY; const dx = mouseX - this.x, dy = mouseY - this.y, d = Math.sqrt(dx*dx+dy*dy); if(d < 100) { this.x -= dx * 0.01; this.y -= dy * 0.01; } if(this.x < 0) this.x = pCanvas.width; if(this.x > pCanvas.width) this.x = 0; if(this.y < 0) this.y = pCanvas.height; if(this.y > pCanvas.height) this.y = 0; }
-        draw() { pCtx.beginPath(); pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); pCtx.fillStyle = `rgba(0,240,255,${this.opacity})`; pCtx.fill(); }
+            <p>© 2026 BizMind. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="/legal.html#privacy">Privacy Policy</a>
+                <a href="/legal.html#terms">Terms of Service</a>
+                <a href="/legal.html">Legal Information</a>
+            </div>
+        </div>
+    </footer>    
+    <script>
+// ===================== PARTICLES =====================
+const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
+let particles = [], mouseX = 0, mouseY = 0;
+
+function resizeP() { 
+    pCanvas.width = window.innerWidth; 
+    pCanvas.height = window.innerHeight; 
+}
+resizeP(); 
+window.addEventListener('resize', resizeP);
+
+// ... (todo tu código de partículas, meteoros, glow dots, typing, counters, scroll, nav)
+
+document.querySelectorAll('a[href^="#"]').forEach(a => { 
+    a.addEventListener('click', function(e) { 
+        e.preventDefault(); 
+        const t = document.querySelector(this.getAttribute('href')); 
+        if(t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    }); 
+});
+</script>
+
+<script>
+  (function () {
+    const main  = document.querySelector('.neon-cursor-main');
+    const trail = document.querySelector('.neon-cursor-trail');
+    const glow  = document.querySelector('.neon-cursor-glow');
+
+    if (!main || !trail || !glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let isClicking = false;
+
+    function updatePosition(x, y) {
+      const mainX  = x - 5;
+      const mainY  = y - 5;
+      const trailX = x - 13;
+      const trailY = y - 13;
+      const glowX  = x - 30;
+      const glowY  = y - 30;
+
+      const mainScale = isClicking ? 0.85 : 1;
+
+      main.style.transform  = `translate3d(${mainX}px, ${mainY}px, 0) scale(${mainScale})`;
+      trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0)`;
+      glow.style.transform  = `translate3d(${glowX}px, ${glowY}px, 0)`;
     }
-    for(let i = 0; i < 50; i++) particles.push(new Particle());
-    function connectP() { for(let i = 0; i < particles.length; i++) for(let j = i+1; j < particles.length; j++) { const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, d = Math.sqrt(dx*dx+dy*dy); if(d < 80) { pCtx.beginPath(); pCtx.moveTo(particles[i].x, particles[i].y); pCtx.lineTo(particles[j].x, particles[j].y); pCtx.strokeStyle = `rgba(0,240,255,${(80-d)/80*0.08})`; pCtx.lineWidth = 0.5; pCtx.stroke(); } } }
-    function animP() { pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height); particles.forEach(p => { p.update(); p.draw(); }); connectP(); requestAnimationFrame(animP); }
-    animP();
-    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-    
-    // ===================== METEORS =====================
-    const mCanvas = document.getElementById('meteors-canvas'), mCtx = mCanvas.getContext('2d');
-    function resizeM() { mCanvas.width = window.innerWidth; mCanvas.height = window.innerHeight; }
-    resizeM(); window.addEventListener('resize', resizeM);
-    let meteors = [];
-    class Meteor { constructor() { this.reset(); }
-        reset() { this.x = Math.random() * mCanvas.width * 1.5; this.y = -10; this.length = Math.random() * 80 + 40; this.speed = Math.random() * 8 + 4; this.opacity = Math.random() * 0.5 + 0.2; }
-        update() { this.x -= this.speed * 0.7; this.y += this.speed; if(this.y > mCanvas.height + 100) this.reset(); }
-        draw() { const grad = mCtx.createLinearGradient(this.x, this.y, this.x + this.length * 0.7, this.y - this.length); grad.addColorStop(0, `rgba(0,240,255,${this.opacity})`); grad.addColorStop(1, 'rgba(0,240,255,0)'); mCtx.beginPath(); mCtx.moveTo(this.x, this.y); mCtx.lineTo(this.x + this.length * 0.7, this.y - this.length); mCtx.strokeStyle = grad; mCtx.lineWidth = 1.5; mCtx.stroke(); }
-    }
-    for(let i = 0; i < 8; i++) { const m = new Meteor(); m.y = Math.random() * mCanvas.height; meteors.push(m); }
-    function animM() { mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height); meteors.forEach(m => { m.update(); m.draw(); }); if(Math.random() > 0.98 && meteors.length < 15) meteors.push(new Meteor()); requestAnimationFrame(animM); }
-    animM();
-    
-    // ===================== GLOWING DOTS =====================
-    const gCanvas = document.getElementById('glow-dots-canvas'), gCtx = gCanvas.getContext('2d');
-    function resizeG() { gCanvas.width = window.innerWidth; gCanvas.height = window.innerHeight; }
-    resizeG(); window.addEventListener('resize', resizeG);
-    let glowDots = [];
-    class GlowDot { constructor() { this.x = Math.random() * gCanvas.width; this.y = Math.random() * gCanvas.height; this.baseSize = Math.random() * 2 + 1; this.phase = Math.random() * Math.PI * 2; this.speed = Math.random() * 0.02 + 0.01; this.color = ['#00f0ff', '#7c3aed', '#f0f'][Math.floor(Math.random() * 3)]; }
-        update() { this.phase += this.speed; }
-        draw() { const size = this.baseSize * (1 + Math.sin(this.phase) * 0.5); const opacity = 0.3 + Math.sin(this.phase) * 0.3; gCtx.beginPath(); gCtx.arc(this.x, this.y, size, 0, Math.PI * 2); gCtx.fillStyle = this.color; gCtx.globalAlpha = opacity; gCtx.shadowBlur = 15; gCtx.shadowColor = this.color; gCtx.fill(); gCtx.globalAlpha = 1; gCtx.shadowBlur = 0; }
-    }
-    for(let i = 0; i < 40; i++) glowDots.push(new GlowDot());
-    function animG() { gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height); glowDots.forEach(d => { d.update(); d.draw(); }); requestAnimationFrame(animG); }
-    animG();
-    
-    // ===================== TYPING =====================
-    const typingTexts = ['> Initializing AI systems...', '> DealerMind™: Online 24/7', '> Lead qualification: Active', '> Appointment booking: Ready', '> const success = AI.transform(business);'];
-    let textIdx = 0, charIdx = 0, isDeleting = false;
-    const typingEl = document.querySelector('.typing-text');
-    function typeEffect() { const txt = typingTexts[textIdx]; if(isDeleting) { typingEl.textContent = txt.substring(0, charIdx - 1); charIdx--; } else { typingEl.textContent = txt.substring(0, charIdx + 1); charIdx++; } let speed = isDeleting ? 25 : 60; if(!isDeleting && charIdx === txt.length) { speed = 2000; isDeleting = true; } else if(isDeleting && charIdx === 0) { isDeleting = false; textIdx = (textIdx + 1) % typingTexts.length; speed = 400; } setTimeout(typeEffect, speed); }
-    typeEffect();
-    
-    // ===================== COUNTERS =====================
-    const counterObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) { const c = e.target, t = parseInt(c.dataset.target), pre = c.dataset.prefix || '', suf = c.dataset.suffix || ''; let cur = 0; const inc = t / 40, timer = setInterval(() => { cur += inc; if(cur >= t) { c.textContent = pre + t + suf; clearInterval(timer); } else { c.textContent = pre + Math.floor(cur) + suf; } }, 40); counterObs.unobserve(c); } }); }, { threshold: 0.5 });
-    document.querySelectorAll('.stat-number').forEach(c => counterObs.observe(c));
-    
-    // ===================== SCROLL ANIMATIONS =====================
-    const scrollObs = new IntersectionObserver(entries => { entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }, i * 80); }); }, { threshold: 0.1 });
-    document.querySelectorAll('.feature-card,.product-card,.dealermind-card,.pricing-card,.contact-item').forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(25px)'; el.style.transition = 'opacity 0.5s,transform 0.5s'; scrollObs.observe(el); });
-    
-    // ===================== NAV =====================
-    const nav = document.getElementById('navbar');
-    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
-    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
- </script>
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      updatePosition(mouseX, mouseY);
+      document.body.classList.remove('cursor-hidden');
+    });
+
+    window.addEventListener('mouseleave', () => {
+      document.body.classList.add('cursor-hidden');
+    });
+
+    window.addEventListener('mouseenter', (e) => {
+      document.body.classList.remove('cursor-hidden');
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      updatePosition(mouseX, mouseY);
+    });
+
+    window.addEventListener('mousedown', () => {
+      isClicking = true;
+      document.body.classList.add('cursor-click');
+      updatePosition(mouseX, mouseY);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isClicking = false;
+      document.body.classList.remove('cursor-click');
+      updatePosition(mouseX, mouseY);
+    });
+
+    const hoverSelector = 'a, button, input, textarea, [data-hover="true"], .btn-primary, .btn-secondary';
+
+    window.addEventListener('mouseover', (e) => {
+      if (e.target.matches(hoverSelector)) {
+        document.body.classList.add('cursor-hover');
+      }
+    });
+
+    window.addEventListener('mouseout', (e) => {
+      if (e.target.matches(hoverSelector)) {
+        document.body.classList.remove('cursor-hover');
+      }
+    });
+
+    // posición inicial centrada
+    updatePosition(mouseX, mouseY);
+  })();
+</script>
  <script>
   (function () {
     const main  = document.querySelector('.neon-cursor-main');
@@ -1100,8 +1174,4 @@ body.cursor-click .neon-cursor-main {
                 msgBox.classList.remove("sending");
                 msgBox.classList.add("success");
                 form.reset();
-            } catch (err) {
-                msgBox.textContent = "⚠️ No se pudo enviar. Intenta de nuevo.";
             </script>
-    </body>
-</html>
