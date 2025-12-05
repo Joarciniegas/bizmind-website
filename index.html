@@ -484,6 +484,15 @@ body.cursor-hidden .neon-cursor-glow {
     opacity: 0;
 }
 
+/* Ocultar cursor personalizado en dispositivos móviles y táctiles */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+    .neon-cursor-main, 
+    .neon-cursor-trail, 
+    .neon-cursor-glow {
+        display: none !important;
+    }
+}
+
 /* hover en elementos interactivos */
 body.cursor-hover .neon-cursor-main {
     box-shadow:
@@ -928,7 +937,49 @@ function resizeP() {
 resizeP(); 
 window.addEventListener('resize', resizeP);
 
-// ... (todo tu código de partículas, meteoros, glow dots, typing, counters, scroll, nav)
+// ===================== COUNTER ANIMATION =====================
+const animateNumber = (element) => {
+    const target = parseInt(element.getAttribute('data-target'));
+    const prefix = element.getAttribute('data-prefix') || '';
+    const suffix = element.getAttribute('data-suffix') || '';
+    const duration = 2000;
+    const start = 0;
+    const increment = target / (duration / 16);
+    let current = start;
+    
+    const updateNumber = () => {
+        current += increment;
+        if (current < target) {
+            element.textContent = prefix + Math.floor(current) + suffix;
+            requestAnimationFrame(updateNumber);
+        } else {
+            element.textContent = prefix + target + suffix;
+        }
+    };
+    
+    updateNumber();
+};
+
+// Intersection Observer para animar cuando sea visible
+const observerOptions = {
+    threshold: 0.5,
+    rootMargin: '0px'
+};
+
+const observerCallback = (entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+            entry.target.classList.add('animated');
+            animateNumber(entry.target);
+        }
+    });
+};
+
+const numberObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+document.querySelectorAll('.stat-number').forEach(stat => {
+    numberObserver.observe(stat);
+});
 
 document.querySelectorAll('a[href^="#"]').forEach(a => { 
     a.addEventListener('click', function(e) { 
@@ -941,6 +992,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 <script>
   (function () {
+    // Detectar si es dispositivo móvil o táctil
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // No ejecutar en móviles o pantallas pequeñas
+    if (isMobile || isTouchDevice || window.innerWidth <= 768) return;
+    
     const main  = document.querySelector('.neon-cursor-main');
     const trail = document.querySelector('.neon-cursor-trail');
     const glow  = document.querySelector('.neon-cursor-glow');
@@ -1011,85 +1069,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 
     // posición inicial centrada
-    updatePosition(mouseX, mouseY);
-  })();
-</script>
- <script>
-  (function () {
-    const main  = document.querySelector('.neon-cursor-main');
-    const trail = document.querySelector('.neon-cursor-trail');
-    const glow  = document.querySelector('.neon-cursor-glow');
-
-    if (!main || !trail || !glow) return;
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let isClicking = false;
-
-    function updatePosition(x, y) {
-      // tamaños:
-      // main:  10px  -> offset 5
-      // trail: 26px  -> offset 13
-      // glow:  60px  -> offset 30
-      const mainX  = x - 5;
-      const mainY  = y - 5;
-      const trailX = x - 13;
-      const trailY = y - 13;
-      const glowX  = x - 30;
-      const glowY  = y - 30;
-
-      const mainScale = isClicking ? 0.85 : 1;
-
-      main.style.transform  = `translate3d(${mainX}px, ${mainY}px, 0) scale(${mainScale})`;
-      trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0)`;
-      glow.style.transform  = `translate3d(${glowX}px, ${glowY}px, 0)`;
-    }
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      updatePosition(mouseX, mouseY);
-      document.body.classList.remove('cursor-hidden');
-    });
-
-    window.addEventListener('mouseleave', () => {
-      document.body.classList.add('cursor-hidden');
-    });
-
-    window.addEventListener('mouseenter', (e) => {
-      document.body.classList.remove('cursor-hidden');
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      updatePosition(mouseX, mouseY);
-    });
-
-    window.addEventListener('mousedown', () => {
-      isClicking = true;
-      document.body.classList.add('cursor-click');
-      updatePosition(mouseX, mouseY);
-    });
-
-    window.addEventListener('mouseup', () => {
-      isClicking = false;
-      document.body.classList.remove('cursor-click');
-      updatePosition(mouseX, mouseY);
-    });
-
-    const hoverSelector = 'a, button, input, textarea, [data-hover="true"], .btn-primary, .btn-secondary';
-
-    window.addEventListener('mouseover', (e) => {
-      if (e.target.matches(hoverSelector)) {
-        document.body.classList.add('cursor-hover');
-      }
-    });
-
-    window.addEventListener('mouseout', (e) => {
-      if (e.target.matches(hoverSelector)) {
-        document.body.classList.remove('cursor-hover');
-      }
-    });
-
-    // posicion inicial centrada
     updatePosition(mouseX, mouseY);
   })();
 </script>
@@ -1175,3 +1154,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
                 msgBox.classList.add("success");
                 form.reset();
             </script>
+    </body>
+</html>
