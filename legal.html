@@ -103,24 +103,29 @@
             z-index: 5;
         }
 
-        /* ============ IGATION ============ */
-         { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
-        .scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
-        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 45px; height: 45px; }
-        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .logo-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; }
-        .-links { display: flex; gap: 35px; list-style: none; }
-        .-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
-        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-cta { padding: 10px 25px; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
-        .nav-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gradient-1); transition: left 0.3s; z-index: -1; }
-        .nav-cta:hover { color: var(--dark); border-color: transparent; }
-        .nav-cta:hover::before { left: 0; }
-        .mobile-menu-btn { display: none; }
+/* ============ NAVIGATION ============ */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,0,20,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); transition: all 0.3s; }
+nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-icon { width: 45px; height: 45px; }
+.logo-text { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 35px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gradient-1); transition: width 0.3s; }
+.nav-links a:hover { color: var(--primary); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { padding: 10px 25px; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; border-radius: 25px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+.nav-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--gradient-1); transition: left 0.3s; z-index: -1; }
+.nav-cta:hover { color: var(--dark); border-color: transparent; }
+.nav-cta:hover::before { left: 0; }
+.mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-size: 1.5rem; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
 
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .mobile-menu-btn { display: block; }
+}
         /* ============ MAIN CONTENT ============ */
         .main-content {
             position: relative;
@@ -375,26 +380,24 @@
 
     <!-- Navigation -->
     <nav id="navbar">
-        <a href="/" class="logo">
+        <div class="logo">
             <div class="logo-icon">
                 <svg viewBox="0 0 50 50" fill="none"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00f0ff"/><stop offset="50%" style="stop-color:#7c3aed"/><stop offset="100%" style="stop-color:#f0f"/></linearGradient></defs><path d="M25 5C15 5 8 12 8 22C8 28 11 33 16 36L16 42C16 44 18 46 20 46H30C32 46 34 44 34 42V36C39 33 42 28 42 22C42 12 35 5 25 5Z" stroke="url(#logoGrad)" stroke-width="2" fill="none"/><circle cx="18" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="32" cy="18" r="3" fill="url(#logoGrad)"/><circle cx="25" cy="28" r="3" fill="url(#logoGrad)"/><line x1="18" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="32" y1="18" x2="25" y2="28" stroke="url(#logoGrad)" stroke-width="1"/><line x1="18" y1="18" x2="32" y2="18" stroke="url(#logoGrad)" stroke-width="1"/></svg>
             </div>
-            <div>
-                <div class="logo-text">BizMind</div>
-                <div class="logo-tagline">AI Agency</div>
-            </div>
-        </a>
-            <ul class="nav-links">
-                <li><a href="/#features">Features</a></li>
-                <li><a href="/#products">Solutions</a></li>
-                <li><a href="/#dealermind">DealerMind</a></li>
-                <li><a href="/#pricing">Pricing</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#contact">Contact</a></li>
-            </ul>
-            <button class="nav-cta">Chat With AI</button>
-            <button class="mobile-menu-btn">☰</button>
+            <div><div class="logo-text">BizMind</div><div class="logo-tagline">AI Agency</div></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Solutions</a></li>
+            <li><a href="#dealermind">DealerMind</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Chat With AI</button>
+        <button class="mobile-menu-btn">☰</button>
     </nav>
+
 
     <!-- Main Content -->
     <div class="main-content">
