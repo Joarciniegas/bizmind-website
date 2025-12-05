@@ -300,7 +300,7 @@
         .product-icon-large { font-size: 7rem; position: relative; z-index: 2; }
         
         .marquee-section { padding: 40px 0; overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.5); }
-        .marquee-track { display: flex; animation: marquee 15s linear infinite; }
+        .marquee-track { display: flex; animation: marquee 10s linear infinite; }
         .marquee-content { display: flex; gap: 80px; padding-right: 80px; flex-shrink: 0; align-items: center; }
         .marquee-item { 
             font-family: 'Fira Code', 'Space Mono', monospace; 
@@ -1018,11 +1018,11 @@ document.querySelectorAll('.stat-number').forEach(stat => {
 // ===================== TYPING EFFECT =====================
 (function() {
     const typingTexts = [
-        "{{ Automate your sales with AI agents that qualify leads instantly. }}",
-        "{{ Connect WhatsApp, Facebook Messenger, Telegram, and your website. }}",
-        "{{ Integrate with your CRM, calendar, and existing tools seamlessly. }}",
-        "{{ Save $45K+ annually by replacing repetitive manual work. }}",
-        "{{ Your AI co-workers handle support, sales, and bookings 24/7. }}"
+        "{Automate your sales with AI agents that qualify leads instantly}",
+        "{Connect WhatsApp, Facebook Messenger, Telegram, and your website}",
+        "{Integrate with your CRM, calendar, and existing tools seamlessly}",
+        "{Save $45K+ annually by replacing repetitive manual work}",
+        "{Your AI co-workers handle support, sales, and bookings 24/7}"
     ];
     
     const typingElement = document.querySelector('.typing-text');
