@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BizMind AI Agency | We Build AI Agents That Actually Grow Your Business</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f0ff;
@@ -196,8 +196,26 @@
         .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 15px; }
         .hero h1 .gradient { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-subtitle { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 20px; }
-        .typing-container { font-family: 'Space Mono', monospace; font-size: 0.95rem; color: var(--primary); margin-bottom: 25px; min-height: 50px; padding: 12px 18px; background: rgba(0,240,255,0.03); border-left: 3px solid var(--primary); border-radius: 0 8px 8px 0; }
-        .typing-cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--primary); margin-left: 2px; animation: blink 0.7s infinite; vertical-align: middle; }
+        .typing-container { 
+            font-family: 'Fira Code', 'Space Mono', monospace; 
+            font-size: 1.05rem; 
+            color: #00ff41; 
+            margin-bottom: 25px; 
+            min-height: 50px; 
+            padding: 12px 18px; 
+            background: rgba(0, 20, 0, 0.4); 
+            border-left: 3px solid #00ff41; 
+            border-radius: 0 8px 8px 0; 
+        }
+        .typing-cursor { 
+            display: inline-block; 
+            width: 2px; 
+            height: 1.1em; 
+            background: #00ff41; 
+            margin-left: 2px; 
+            animation: blink 0.7s infinite; 
+            vertical-align: middle; 
+        }
         @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
         .hero-description { font-size: 1.1rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 35px; }
         .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
@@ -281,11 +299,27 @@
         .product-glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; filter: blur(60px); opacity: 0.4; }
         .product-icon-large { font-size: 7rem; position: relative; z-index: 2; }
         
-        .marquee-section { padding: 20px 0; overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.3); }
-        .marquee-track { display: flex; animation: marquee 30s linear infinite; }
-        .marquee-content { display: flex; gap: 60px; padding-right: 60px; flex-shrink: 0; }
-        .marquee-item { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.4); white-space: nowrap; letter-spacing: 2px; }
-        .marquee-item span { color: var(--primary); }
+        .marquee-section { padding: 40px 0; overflow: hidden; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.5); }
+        .marquee-track { display: flex; animation: marquee 15s linear infinite; }
+        .marquee-content { display: flex; gap: 80px; padding-right: 80px; flex-shrink: 0; align-items: center; }
+        .marquee-item { 
+            font-family: 'Fira Code', 'Space Mono', monospace; 
+            font-size: 2.0rem; 
+            font-weight: 600;
+            white-space: nowrap; 
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px currentColor;
+        }
+        /* 3 colores neón llamativos que hacen contraste */
+        .marquee-color-1 { color: #00ff41; } /* Verde Matrix */
+        .marquee-color-2 { color: #ff0080; } /* Rosa Magenta */
+        .marquee-color-3 { color: #00d4ff; } /* Cyan Eléctrico */
+        .marquee-separator { 
+            font-family: 'Fira Code', monospace;
+            font-size: 3rem;
+            color: #fff;
+            opacity: 0.3;
+        }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
         .dealermind-section { background: linear-gradient(180deg, transparent 0%, rgba(0,240,255,0.02) 50%, transparent 100%); }
@@ -719,20 +753,20 @@ body.cursor-click .neon-cursor-main {
     <div class="marquee-section">
         <div class="marquee-track">
             <div class="marquee-content">
-                <span class="marquee-item">AI Solutions for Business</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Connect & Convert</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Scale with Intelligence</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Your Digital Workforce</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">BizMind AI</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">DealerMind Revolution</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item marquee-color-1">{AI Solutions for Business}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-2">{Connect & Convert}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-3">{Scale with Intelligence}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-1">{Your Digital Workforce}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-2">{BizMind AI}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-3">{DealerMind Revolution}</span><span class="marquee-separator">/</span>
             </div>
             <div class="marquee-content">
-                <span class="marquee-item">AI Solutions for Business</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Connect & Convert</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Scale with Intelligence</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">Your Digital Workforce</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">BizMind AI</span><span class="marquee-item"><span>/</span></span>
-                <span class="marquee-item">DealerMind Revolution</span><span class="marquee-item"><span>/</span></span>
+                <span class="marquee-item marquee-color-1">{AI Solutions for Business}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-2">{Connect & Convert}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-3">{Scale with Intelligence}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-1">{Your Digital Workforce}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-2">{BizMind AI}</span><span class="marquee-separator">/</span>
+                <span class="marquee-item marquee-color-3">{DealerMind Revolution}</span><span class="marquee-separator">/</span>
             </div>
         </div>
     </div>
@@ -839,7 +873,7 @@ body.cursor-click .neon-cursor-main {
                 <div class="contact-details">
                     <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4>Call Center</h4><p><a href="tel:+17868164553">+1 (786) 816-4553</a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4>Our Location</h4><p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p></div></div>
-                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="mailto:info@joarciniegas.cloud">info@joarciniegas.cloud</a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5"><span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span></a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4>Support Hours</h4><p>Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
             </div>
@@ -925,7 +959,7 @@ body.cursor-click .neon-cursor-main {
             </div>
         </div>
     </footer>    
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===================== PARTICLES =====================
 const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
 let particles = [], mouseX = 0, mouseY = 0;
@@ -984,11 +1018,11 @@ document.querySelectorAll('.stat-number').forEach(stat => {
 // ===================== TYPING EFFECT =====================
 (function() {
     const typingTexts = [
-        "Automate your sales with AI agents that qualify leads instantly.",
-        "Connect WhatsApp, Facebook Messenger, Telegram, and your website.",
-        "Integrate with your CRM, calendar, and existing tools seamlessly.",
-        "Save $45K+ annually by replacing repetitive manual work.",
-        "Your AI co-workers handle support, sales, and bookings 24/7."
+        "{{ Automate your sales with AI agents that qualify leads instantly. }}",
+        "{{ Connect WhatsApp, Facebook Messenger, Telegram, and your website. }}",
+        "{{ Integrate with your CRM, calendar, and existing tools seamlessly. }}",
+        "{{ Save $45K+ annually by replacing repetitive manual work. }}",
+        "{{ Your AI co-workers handle support, sales, and bookings 24/7. }}"
     ];
     
     const typingElement = document.querySelector('.typing-text');
@@ -997,7 +1031,7 @@ document.querySelectorAll('.stat-number').forEach(stat => {
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingSpeed = 80;
+    let typingSpeed = 50; // Más rápido: 50ms como escribir en teclado
     
     function type() {
         const currentText = typingTexts[textIndex];
@@ -1005,21 +1039,20 @@ document.querySelectorAll('.stat-number').forEach(stat => {
         if (isDeleting) {
             typingElement.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
-            typingSpeed = 40;
+            typingSpeed = 30; // Borrado más rápido
         } else {
             typingElement.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
-            typingSpeed = 80;
+            typingSpeed = 50; // Escritura como teclado
         }
         
         if (!isDeleting && charIndex === currentText.length) {
-            // Pause at end
-            typingSpeed = 2000;
+            typingSpeed = 1500; // Pausa 1.5 segundos
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             textIndex = (textIndex + 1) % typingTexts.length;
-            typingSpeed = 500;
+            typingSpeed = 400;
         }
         
         setTimeout(type, typingSpeed);
@@ -1200,7 +1233,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
                 msgBox.classList.remove("sending");
                 msgBox.classList.add("success");
                 form.reset();
-            </script>    
-    </body>
+            } catch (err) {
+                msgBox.textContent = "❌ Error al enviar. Intenta de nuevo o escribe a info@joarciniegas.cloud";
+                msgBox.classList.remove("sending");
+                msgBox.classList.add("error");
+            }
+        });
+    });
+</script>
+</body>
 </html>
-    
