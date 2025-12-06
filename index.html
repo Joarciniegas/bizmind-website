@@ -186,6 +186,150 @@
         .nav-cta:hover { color: var(--dark); border-color: transparent; }
         .nav-cta:hover::before { left: 0; }
         
+        /* Language Toggle Switch - Estilo Moderno con Chispas Mágicas */
+        .language-switch-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .lang-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .lang-label.active {
+            color: #00f0ff;
+            text-shadow: 0 0 10px rgba(0,240,255,0.5);
+        }
+        
+        /* Toggle Switch */
+        .language-switch {
+            position: relative;
+            width: 70px;
+            height: 34px;
+            background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(124,58,237,0.1));
+            border: 2px solid rgba(0,240,255,0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+            box-shadow: 0 0 15px rgba(0,240,255,0.2),
+                        inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .language-switch:hover {
+            border-color: rgba(0,240,255,0.5);
+            box-shadow: 0 0 25px rgba(0,240,255,0.4),
+                        inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Slider (círculo que se mueve) */
+        .switch-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(135deg, #00f0ff, #7c3aed);
+            border-radius: 50%;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0,240,255,0.6),
+                        0 4px 8px rgba(0,0,0,0.3),
+                        inset 0 1px 2px rgba(255,255,255,0.3);
+        }
+        
+        .switch-flag {
+            font-size: 1rem;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+        
+        /* Estado activo (español) */
+        .language-switch.active {
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(124,58,237,0.1));
+            border-color: rgba(255,0,255,0.3);
+        }
+        
+        .language-switch.active .switch-slider {
+            transform: translateX(36px);
+            background: linear-gradient(135deg, #f0f, #7c3aed);
+            box-shadow: 0 0 15px rgba(255,0,255,0.6),
+                        0 4px 8px rgba(0,0,0,0.3),
+                        inset 0 1px 2px rgba(255,255,255,0.3);
+        }
+        
+        /* Chispas mágicas */
+        .magic-sparks {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Animación de chispas al hacer clic */
+        @keyframes sparkle {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        /* Partícula de chispa */
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #00f0ff, transparent);
+            border-radius: 50%;
+            animation: sparkle 0.6s ease-out forwards;
+            box-shadow: 0 0 6px #00f0ff;
+        }
+        
+        .spark.purple {
+            background: radial-gradient(circle, #f0f, transparent);
+            box-shadow: 0 0 6px #f0f;
+        }
+        
+        .spark.cyan {
+            background: radial-gradient(circle, #7c3aed, transparent);
+            box-shadow: 0 0 6px #7c3aed;
+        }
+        
+        /* Brillo del switch al cambiar */
+        @keyframes switchGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(0,240,255,0.2),
+                            inset 0 2px 4px rgba(0,0,0,0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0,240,255,0.6),
+                            0 0 50px rgba(124,58,237,0.4),
+                            inset 0 2px 4px rgba(0,0,0,0.3);
+            }
+        }
+        
+        .language-switch.switching {
+            animation: switchGlow 0.6s ease-out;
+        }
+        
         /* ============ HERO ============ */
         .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; padding: 120px 50px 80px; }
         .hero-content { max-width: 1400px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
@@ -748,28 +892,42 @@ body.cursor-click .neon-cursor-main {
             <div><div class="logo-text">BizMind</div><div class="logo-tagline">AI Agency</div></div>
         </div>
         <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#products">Solutions</a></li>
-            <li><a href="#dealermind">DealerMind</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#features" data-translate="nav-features">Features</a></li>
+            <li><a href="#products" data-translate="nav-solutions">Solutions</a></li>
+            <li><a href="#dealermind" data-translate="nav-dealermind">DealerMind</a></li>
+            <li><a href="#pricing" data-translate="nav-pricing">Pricing</a></li>
+            <li><a href="#about" data-translate="nav-about">About</a></li>
+            <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
         </ul>
-        <button class="nav-cta">Chat With AI</button>
+        <button class="nav-cta" data-translate="nav-cta">Chat With AI</button>
+        
+        <!-- Language Toggle Switch -->
+        <div class="language-switch-container">
+            <span class="lang-label" data-lang="en">EN</span>
+            <div class="language-switch" id="languageToggle" title="Switch Language / Cambiar Idioma">
+                <div class="switch-slider">
+                    <span class="switch-flag">🇺🇸</span>
+                </div>
+                <!-- Chispas mágicas -->
+                <div class="magic-sparks"></div>
+            </div>
+            <span class="lang-label" data-lang="es">ES</span>
+        </div>
+        
         <button class="mobile-menu-btn">☰</button>
     </nav>
 
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-badge"><span class="pulse"></span> Unleashing the Potential of AI</div>
-                <h1>We Build the <span class="gradient">AI Agents</span> That Actually Grow Your Business.</h1>
-                <h2 class="hero-subtitle">Meet DealerMind™ & BizMind™. Your AI Co-Workers.</h2>
+                <div class="hero-badge" data-translate="hero-badge"><span class="pulse"></span> Unleashing the Potential of AI</div>
+                <h1 data-translate="hero-title">We Build the <span class="gradient">AI Agents</span> That Actually Grow Your Business.</h1>
+                <h2 class="hero-subtitle" data-translate="hero-subtitle">Meet DealerMind™ & BizMind™. Your AI Co-Workers.</h2>
                 <div class="typing-container"><span class="typing-text"></span><span class="typing-cursor"></span></div>
-                <p class="hero-description">We connect all your customer channels. Your website, WhatsApp API, Facebook Messenger, and Telegram integrate directly into your sales, support, and CRM systems. 24/7 automation that never sleeps.</p>
+                <p class="hero-description" data-translate="hero-description">We connect all your customer channels. Your website, WhatsApp API, Facebook Messenger, and Telegram integrate directly into your sales, support, and CRM systems. 24/7 automation that never sleeps.</p>
                 <div class="hero-buttons">
-                    <a href="#pricing" class="btn-primary"><span>🚀</span> Get Started</a>
-                    <a href="#contact" class="btn-secondary"><span>💬</span> Chat With Our AI</a>
+                    <a href="#pricing" class="btn-primary" data-translate="hero-cta-primary"><span>🚀</span> Get Started</a>
+                    <a href="#contact" class="btn-secondary" data-translate="hero-cta-secondary"><span>💬</span> Chat With Our AI</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -812,69 +970,69 @@ body.cursor-click .neon-cursor-main {
 
     <section class="section" id="features">
         <div class="section-header">
-            <div class="section-tag">Features</div>
-            <h2 class="section-title">Innovative Features of Our <span class="gradient">AI Solutions</span></h2>
-            <p class="section-description">Why hire for repetitive tasks? Invest in a digital employee that works 24/7, without the salary or overhead.</p>
+            <div class="section-tag" data-translate="features-tag">Features</div>
+            <h2 class="section-title" data-translate="features-title">Innovative Features of Our <span class="gradient">AI Solutions</span></h2>
+            <p class="section-description" data-translate="features-description">Why hire for repetitive tasks? Invest in a digital employee that works 24/7, without the salary or overhead.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card"><div class="feature-icon">🤖</div><h3 class="feature-title">AI Sales Agents</h3><p class="feature-description">Intelligent agents that qualify leads, answer questions, and book appointments automatically. Your 24/7 sales team.</p></div>
-            <div class="feature-card"><div class="feature-icon">💬</div><h3 class="feature-title">Multi-Channel Support</h3><p class="feature-description">Connect WhatsApp, Facebook Messenger, Telegram, and your website. All conversations in one dashboard.</p></div>
-            <div class="feature-card"><div class="feature-icon">🔗</div><h3 class="feature-title">CRM Integration</h3><p class="feature-description">Seamless connection with your existing CRM and business systems. Every lead captured, every action tracked.</p></div>
-            <div class="feature-card"><div class="feature-icon">📊</div><h3 class="feature-title">Live Analytics</h3><p class="feature-description">Real-time insights into customer interactions, conversion rates, and agent performance.</p></div>
-            <div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title">Instant Response</h3><p class="feature-description">No customer waits. Every inquiry gets an immediate, intelligent response that moves them through your funnel.</p></div>
-            <div class="feature-card"><div class="feature-icon">🎯</div><h3 class="feature-title">Lead Qualification</h3><p class="feature-description">AI-powered lead scoring. Your human team only talks to prospects ready to buy.</p></div>
+            <div class="feature-card"><div class="feature-icon">🤖</div><h3 class="feature-title" data-translate="feature1-title">AI Sales Agents</h3><p class="feature-description" data-translate="feature1-desc">Intelligent agents that qualify leads, answer questions, and book appointments automatically. Your 24/7 sales team.</p></div>
+            <div class="feature-card"><div class="feature-icon">💬</div><h3 class="feature-title" data-translate="feature2-title">Multi-Channel Support</h3><p class="feature-description" data-translate="feature2-desc">Connect WhatsApp, Facebook Messenger, Telegram, and your website. All conversations in one dashboard.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔗</div><h3 class="feature-title" data-translate="feature3-title">CRM Integration</h3><p class="feature-description" data-translate="feature3-desc">Seamless connection with your existing CRM and business systems. Every lead captured, every action tracked.</p></div>
+            <div class="feature-card"><div class="feature-icon">📊</div><h3 class="feature-title" data-translate="feature4-title">Live Analytics</h3><p class="feature-description" data-translate="feature4-desc">Real-time insights into customer interactions, conversion rates, and agent performance.</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title" data-translate="feature5-title">Instant Response</h3><p class="feature-description" data-translate="feature5-desc">No customer waits. Every inquiry gets an immediate, intelligent response that moves them through your funnel.</p></div>
+            <div class="feature-card"><div class="feature-icon">🎯</div><h3 class="feature-title" data-translate="feature6-title">Lead Qualification</h3><p class="feature-description" data-translate="feature6-desc">AI-powered lead scoring. Your human team only talks to prospects ready to buy.</p></div>
         </div>
     </section>
 
     <section class="section products-section" id="products">
         <div class="section-header">
-            <div class="section-tag">Our Solutions</div>
-            <h2 class="section-title">AI Products <span class="gradient">Ready to Deploy</span></h2>
-            <p class="section-description">From industry-specific solutions to fully custom AI agents, we build the digital workforce your business needs.</p>
+            <div class="section-tag" data-translate="products-tag">Our Solutions</div>
+            <h2 class="section-title" data-translate="products-title">AI Products <span class="gradient">Ready to Deploy</span></h2>
+            <p class="section-description" data-translate="products-description">From industry-specific solutions to fully custom AI agents, we build the digital workforce your business needs.</p>
         </div>
         <div class="products-grid">
             <div class="product-card">
                 <div class="product-info">
-                    <div class="product-badge flagship">⭐ FLAGSHIP PRODUCT</div>
-                    <h3 class="product-name">Dealer<span>Mind™</span></h3>
-                    <p class="product-description">Our premier, industry-specific platform. DealerMind is built to generate and qualify leads for auto dealers. It answers detailed inventory questions, runs 24/7, and books qualified test-drive appointments directly from your ads or website.</p>
+                    <div class="product-badge flagship" data-translate="product1-badge">⭐ FLAGSHIP PRODUCT</div>
+                    <h3 class="product-name" data-translate="product1-name">Dealer<span>Mind™</span></h3>
+                    <p class="product-description" data-translate="product1-desc">Our premier, industry-specific platform. DealerMind is built to generate and qualify leads for auto dealers. It answers detailed inventory questions, runs 24/7, and books qualified test-drive appointments directly from your ads or website.</p>
                     <div class="product-features">
-                        <span class="product-feature">24/7 AI Sales Agent</span>
-                        <span class="product-feature">Live Inventory</span>
-                        <span class="product-feature">Auto-Booking</span>
-                        <span class="product-feature">DealerCenter Sync</span>
+                        <span class="product-feature" data-translate="product1-feat1">24/7 AI Sales Agent</span>
+                        <span class="product-feature" data-translate="product1-feat2">Live Inventory</span>
+                        <span class="product-feature" data-translate="product1-feat3">Auto-Booking</span>
+                        <span class="product-feature" data-translate="product1-feat4">DealerCenter Sync</span>
                     </div>
-                    <a href="#pricing" class="btn-primary">View DealerMind Plans</a>
+                    <a href="#pricing" class="btn-primary" data-translate="product1-cta">View DealerMind Plans</a>
                 </div>
                 <div class="product-visual"><div class="product-glow" style="background:var(--gradient-1);"></div><div class="product-icon-large">🚗</div></div>
             </div>
             <div class="product-card reverse">
                 <div class="product-info">
-                    <div class="product-badge custom">🛠️ CUSTOM BUILT</div>
-                    <h3 class="product-name">Biz<span>Mind™</span></h3>
-                    <p class="product-description">For businesses beyond the auto industry, we build your 'digital employee' from scratch. We analyze your unique workflow and train an AI agent to handle your specific sales, support, or marketing tasks.</p>
+                    <div class="product-badge custom" data-translate="product2-badge">🛠️ CUSTOM BUILT</div>
+                    <h3 class="product-name" data-translate="product2-name">Biz<span>Mind™</span></h3>
+                    <p class="product-description" data-translate="product2-desc">For businesses beyond the auto industry, we build your 'digital employee' from scratch. We analyze your unique workflow and train an AI agent to handle your specific sales, support, or marketing tasks.</p>
                     <div class="product-features">
-                        <span class="product-feature">Custom AI Agent</span>
-                        <span class="product-feature">Sales & Support</span>
-                        <span class="product-feature">System Integration</span>
-                        <span class="product-feature">Multi-Channel</span>
+                        <span class="product-feature" data-translate="product2-feat1">Custom AI Agent</span>
+                        <span class="product-feature" data-translate="product2-feat2">Sales & Support</span>
+                        <span class="product-feature" data-translate="product2-feat3">System Integration</span>
+                        <span class="product-feature" data-translate="product2-feat4">Multi-Channel</span>
                     </div>
-                    <a href="#contact" class="btn-secondary">Get a Custom Quote</a>
+                    <a href="#contact" class="btn-secondary" data-translate="product2-cta">Get a Custom Quote</a>
                 </div>
                 <div class="product-visual"><div class="product-glow" style="background:linear-gradient(135deg,#00f0ff,#7c3aed);"></div><div class="product-icon-large">🧠</div></div>
             </div>
             <div class="product-card">
                 <div class="product-info">
-                    <div class="product-badge marketing">📈 FULL SERVICE</div>
-                    <h3 class="product-name">Expert <span>Facebook Ads</span></h3>
-                    <p class="product-description">We don't just run ads; we build high-intent Facebook ad funnels specifically designed to connect to your AI agent. Stop wasting ad spend on junk leads or slow follow-ups.</p>
+                    <div class="product-badge marketing" data-translate="product3-badge">📈 FULL SERVICE</div>
+                    <h3 class="product-name" data-translate="product3-name">Expert <span>Facebook Ads</span></h3>
+                    <p class="product-description" data-translate="product3-desc">We don't just run ads; we build high-intent Facebook ad funnels specifically designed to connect to your AI agent. Stop wasting ad spend on junk leads or slow follow-ups.</p>
                     <div class="product-features">
-                        <span class="product-feature">Ad Campaigns</span>
-                        <span class="product-feature">Lead Funnels</span>
-                        <span class="product-feature">A/B Testing</span>
-                        <span class="product-feature">AI Integration</span>
+                        <span class="product-feature" data-translate="product3-feat1">Ad Campaigns</span>
+                        <span class="product-feature" data-translate="product3-feat2">Lead Funnels</span>
+                        <span class="product-feature" data-translate="product3-feat3">A/B Testing</span>
+                        <span class="product-feature" data-translate="product3-feat4">AI Integration</span>
                     </div>
-                    <a href="#contact" class="btn-secondary">Start My Campaigns</a>
+                    <a href="#contact" class="btn-secondary" data-translate="product3-cta">Start My Campaigns</a>
                 </div>
                 <div class="product-visual"><div class="product-glow" style="background:linear-gradient(135deg,#10b981,#00f0ff);"></div><div class="product-icon-large">📊</div></div>
             </div>
@@ -904,66 +1062,66 @@ body.cursor-click .neon-cursor-main {
 
     <section class="section dealermind-section" id="dealermind">
         <div class="section-header">
-            <div class="section-tag">DealerMind™</div>
-            <h2 class="section-title">Your DealerCenter Inventory, <span class="gradient">Now 24/7 Automated</span></h2>
-            <p class="section-description">The complete AI sales solution for automotive dealerships.</p>
+            <div class="section-tag" data-translate="dealermind-tag">DealerMind™</div>
+            <h2 class="section-title" data-translate="dealermind-title">The First <span class="gradient">AI Dealership Manager</span> That Actually Works</h2>
+            <p class="section-description" data-translate="dealermind-description">Built specifically for auto dealerships. DealerMind™ connects to your DealerCenter (or any DMS) and handles customer conversations across Facebook, WhatsApp, and your website.</p>
         </div>
         <div class="dealermind-grid">
-            <div class="dealermind-card"><h3>🔄 DealerCenter to Facebook</h3><p>Our system monitors your DealerCenter inventory 24/7. When a new car hits your lot, our agent instantly posts it to your Fan Page with photos, specs, and a link.</p></div>
-            <div class="dealermind-card"><h3>🔗 Live DealerCenter Integration</h3><p>Customers can ask, "Do you have that 2024 red SUV?" and get an accurate, instant answer with pricing, specs, and availability 24/7.</p></div>
-            <div class="dealermind-card"><h3>📸 Live Visuals & Auto-Booking</h3><p>The agent pulls photos from your live inventory and sends them in chat. Then books the test-drive appointment without a human touching a keyboard.</p></div>
+            <div class="dealermind-card"><h3 data-translate="dealermind1-title">🔄 DealerCenter to Facebook</h3><p data-translate="dealermind1-desc">Our system monitors your DealerCenter inventory 24/7. When a new car hits your lot, our agent instantly posts it to your Fan Page with photos, specs, and a link.</p></div>
+            <div class="dealermind-card"><h3 data-translate="dealermind2-title">🔗 Live DealerCenter Integration</h3><p data-translate="dealermind2-desc">Customers can ask, "Do you have that 2024 red SUV?" and get an accurate, instant answer with pricing, specs, and availability 24/7.</p></div>
+            <div class="dealermind-card"><h3 data-translate="dealermind3-title">📸 Live Visuals & Auto-Booking</h3><p data-translate="dealermind3-desc">The agent pulls photos from your live inventory and sends them in chat. Then books the test-drive appointment without a human touching a keyboard.</p></div>
         </div>
     </section>
 
     <section class="section pricing-section" id="pricing">
         <div class="section-header">
-            <div class="section-tag">Pricing</div>
-            <h2 class="section-title">Invest in Your <span class="gradient">Digital Workforce</span></h2>
-            <p class="section-description">Full service, hosting & 24/7 operation. A fraction of one employee's salary.</p>
+            <div class="section-tag" data-translate="pricing-tag">Pricing</div>
+            <h2 class="section-title" data-translate="pricing-title">Simple, Transparent <span class="gradient">Pricing</span></h2>
+            <p class="section-description" data-translate="pricing-description">No hidden fees. No surprises. Just powerful AI automation that pays for itself.</p>
         </div>
         <div class="pricing-grid">
             <div class="pricing-card">
                 <div class="pricing-icon">📈</div>
-                <h3 class="pricing-name">AI-Driven Ads</h3>
-                <p class="pricing-tagline">(Plus Ad Spend). We run the Facebook Ads that feed your AI.</p>
-                <div class="pricing-price"><span class="pricing-amount">$300</span><span class="pricing-period">/mo</span></div>
+                <h3 class="pricing-name" data-translate="price1-name">AI-Driven Ads</h3>
+                <p class="pricing-tagline" data-translate="price1-tagline">(Plus Ad Spend). We run the Facebook Ads that feed your AI.</p>
+                <div class="pricing-price"><span class="pricing-amount" data-translate="price1-amount">$300</span><span class="pricing-period" data-translate="price1-period">/mo</span></div>
                 <ul class="pricing-features">
-                    <li><span class="pricing-check">✓</span> Expert Facebook Ad Campaigns</li>
-                    <li><span class="pricing-check">✓</span> Direct-to-Agent Lead Funnels</li>
-                    <li><span class="pricing-check">✓</span> A/B Testing & Optimization</li>
-                    <li><span class="pricing-check">✓</span> Full Performance Reporting</li>
-                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price1-feat1">Expert Facebook Ad Campaigns</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price1-feat2">Direct-to-Agent Lead Funnels</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price1-feat3">A/B Testing & Optimization</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price1-feat4">Full Performance Reporting</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price1-feat5">WhatsApp, Web & Facebook Ready</span></li>
                 </ul>
-                <a href="#contact" class="pricing-cta secondary">Start My Campaigns</a>
+                <a href="#contact" class="pricing-cta secondary" data-translate="price1-cta">Start My Campaigns</a>
             </div>
             <div class="pricing-card featured">
-                <div class="pricing-badge">RECOMMENDED</div>
+                <div class="pricing-badge" data-translate="price2-badge">RECOMMENDED</div>
                 <div class="pricing-icon">🧠</div>
-                <h3 class="pricing-name">BizMind™</h3>
-                <p class="pricing-tagline">Full service, hosting & 24/7 operation. Replaces countless hours of manual work.</p>
-                <div class="pricing-price"><span class="pricing-amount">$500</span><span class="pricing-period">/mo</span></div>
+                <h3 class="pricing-name" data-translate="price2-name">BizMind™</h3>
+                <p class="pricing-tagline" data-translate="price2-tagline">Full service, hosting & 24/7 operation. Replaces countless hours of manual work.</p>
+                <div class="pricing-price"><span class="pricing-amount" data-translate="price2-amount">$500</span><span class="pricing-period" data-translate="price2-period">/mo</span></div>
                 <ul class="pricing-features">
-                    <li><span class="pricing-check">✓</span> Custom AI Agent</li>
-                    <li><span class="pricing-check">✓</span> Sales and Support Automation</li>
-                    <li><span class="pricing-check">✓</span> System Integration</li>
-                    <li><span class="pricing-check">✓</span> Includes Hosting & Full Support</li>
-                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price2-feat1">Custom AI Agent</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price2-feat2">Sales and Support Automation</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price2-feat3">System Integration</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price2-feat4">Includes Hosting & Full Support</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price2-feat5">WhatsApp, Web & Facebook Ready</span></li>
                 </ul>
-                <a href="#contact" class="pricing-cta primary">Build My Agent</a>
+                <a href="#contact" class="pricing-cta primary" data-translate="price2-cta">Build My Agent</a>
             </div>
             <div class="pricing-card">
                 <div class="pricing-icon">🚗</div>
-                <h3 class="pricing-name">DealerMind™</h3>
-                <p class="pricing-tagline">Full service, hosting & 24/7 operation. A fraction of one sales agent's salary.</p>
-                <div class="pricing-price"><span class="pricing-amount">$1000</span><span class="pricing-period">/mo</span></div>
+                <h3 class="pricing-name" data-translate="price3-name">DealerMind™</h3>
+                <p class="pricing-tagline" data-translate="price3-tagline">Full service, hosting & 24/7 operation. A fraction of one sales agent's salary.</p>
+                <div class="pricing-price"><span class="pricing-amount" data-translate="price3-amount">$1000</span><span class="pricing-period" data-translate="price3-period">/mo</span></div>
                 <ul class="pricing-features">
-                    <li><span class="pricing-check">✓</span> AI Sales Agent for Auto Dealers</li>
-                    <li><span class="pricing-check">✓</span> 24/7 Lead Qualification & Booking</li>
-                    <li><span class="pricing-check">✓</span> Full CRM & Inventory Integration</li>
-                    <li><span class="pricing-check">✓</span> WhatsApp, Web & Facebook Ready</li>
-                    <li><span class="pricing-check">✓</span> Dedicated Server & Priority Support</li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price3-feat1">AI Sales Agent for Auto Dealers</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price3-feat2">24/7 Lead Qualification & Booking</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price3-feat3">Full CRM & Inventory Integration</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price3-feat4">WhatsApp, Web & Facebook Ready</span></li>
+                    <li><span class="pricing-check">✓</span> <span data-translate="price3-feat5">Dedicated Server & Priority Support</span></li>
                 </ul>
-                <a href="#contact" class="pricing-cta secondary">Get DealerMind™</a>
+                <a href="#contact" class="pricing-cta secondary" data-translate="price3-cta">Get DealerMind™</a>
             </div>
         </div>
     </section>
@@ -1155,15 +1313,15 @@ body.cursor-click .neon-cursor-main {
                 </div>
             </div>
             <div class="about-content">
-                <div class="section-tag">About Us</div>
-                <h2>We Are BizMind™. Your <span class="gradient">Real-World AI Partners.</span></h2>
-                <p>Forget the academic definitions. AI is a tool, and our job is to make it work for you. We are a technology agency focused on one goal: automating your business to drive real growth and save you time.</p>
-                <p>We specialize in practical solutions. From our powerful DealerMind™ platform to custom AI agents, we build the "digital employees" that handle your sales, support, and marketing.</p>
+                <div class="section-tag" data-translate="about-tag">About Us</div>
+                <h2 data-translate="about-title">We Are BizMind™. Your <span class="gradient">Real-World AI Partners.</span></h2>
+                <p data-translate="about-p1">Forget the academic definitions. AI is a tool, and our job is to make it work for you. We are a technology agency focused on one goal: automating your business to drive real growth and save you time.</p>
+                <p data-translate="about-p2">We specialize in practical solutions. From our powerful DealerMind™ platform to custom AI agents, we build the "digital employees" that handle your sales, support, and marketing.</p>
                 <div class="about-highlights">
-                    <div class="highlight-item"><div class="highlight-icon">🎯</div><div class="highlight-text">Results-Driven</div></div>
-                    <div class="highlight-item"><div class="highlight-icon">⚡</div><div class="highlight-text">24/7 Operation</div></div>
-                    <div class="highlight-item"><div class="highlight-icon">🔒</div><div class="highlight-text">Secure & Reliable</div></div>
-                    <div class="highlight-item"><div class="highlight-icon">🤝</div><div class="highlight-text">Full Support</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">🎯</div><div class="highlight-text" data-translate="about-h1">Results-Driven</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">⚡</div><div class="highlight-text" data-translate="about-h2">24/7 Operation</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">🔒</div><div class="highlight-text" data-translate="about-h3">Secure & Reliable</div></div>
+                    <div class="highlight-item"><div class="highlight-icon">🤝</div><div class="highlight-text" data-translate="about-h4">Full Support</div></div>
                 </div>
             </div>
         </div>
@@ -1172,27 +1330,27 @@ body.cursor-click .neon-cursor-main {
     <section class="section contact-section" id="contact">
         <div class="contact-container">
             <div class="contact-info">
-                <div class="section-tag">Contact</div>
-                <h2>Ready to Build Your <span class="gradient">Digital Workforce?</span></h2>
-                <p>Let's talk. Whether you're ready to build or just have questions about automation, our team is standing by.</p>
+                <div class="section-tag" data-translate="contact-tag">Contact</div>
+                <h2 data-translate="contact-title">Ready to Build Your <span class="gradient">Digital Workforce?</span></h2>
+                <p data-translate="contact-description">Let's talk. Whether you're ready to build or just have questions about automation, our team is standing by.</p>
                 <div class="contact-details">
-                    <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4>Call Center</h4><p><a href="tel:+17868164553">+1 (786) 816-4553</a></p></div></div>
-                    <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4>Our Location</h4><p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p></div></div>
-                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4>Email</h4><p><a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5"><span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span></a></p></div></div>
-                    <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4>Support Hours</h4><p>Mon-Fri: 9AM-6PM CST</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><h4 data-translate="contact-call">Call Center</h4><p><a href="tel:+17868164553">+1 (786) 816-4553</a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><h4 data-translate="contact-location">Our Location</h4><p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4 data-translate="contact-email">Email</h4><p><a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5"><span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span></a></p></div></div>
+                    <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
             </div>
             <div class="contact-form">
-                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;">Get in Touch</h3>
+                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
             
                 <form id="contact-form">
                     <div class="form-group">
-                        <label for="fullName">Full Name *</label>
+                        <label for="fullName" data-translate="contact-name-label">Your Name</label>
                         <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
                     </div>
             
                     <div class="form-group">
-                        <label for="email">Email *</label>
+                        <label for="email" data-translate="contact-email-label">Email Address</label>
                         <input id="email" name="email" type="email" placeholder="your@email.com" required>
                     </div>
             
@@ -1202,11 +1360,11 @@ body.cursor-click .neon-cursor-main {
                     </div>
             
                     <div class="form-group">
-                        <label for="message">Message</label>
+                        <label for="message" data-translate="contact-message-label">Your Message</label>
                         <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
                     </div>
             
-                    <button type="submit" class="form-submit" id="contact-submit">Send a Message</button>
+                    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
                     <p id="contact-status" class="contact-status"></p>
                 </form>
             </div>
@@ -1270,7 +1428,7 @@ body.cursor-click .neon-cursor-main {
                     </svg>
                     <span class="footer-logo-text">BizMind</span>
                 </div>
-                <p>Transforming businesses through intelligent automation and AI-powered solutions.</p>
+                <p data-translate="footer-tagline">Transforming businesses through intelligent automation and AI-powered solutions.</p>
                 <div class="social-links">
                     <a href="#" class="social-link">in</a>
                     <a href="#" class="social-link">𝕏</a>
@@ -1278,7 +1436,7 @@ body.cursor-click .neon-cursor-main {
                 </div>
             </div>
             <div class="footer-column">
-                <h4>Products</h4>
+                <h4 data-translate="footer-products">Products</h4>
                 <ul>
                     <li><a href="#dealermind">DealerMind™</a></li>
                     <li><a href="#products">BizMind™</a></li>
@@ -1286,7 +1444,7 @@ body.cursor-click .neon-cursor-main {
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Services</h4>
+                <h4 data-translate="footer-services">Services</h4>
                 <ul>
                     <li><a href="#">AI Agents</a></li>
                     <li><a href="#">Lead Qualification</a></li>
@@ -1294,7 +1452,7 @@ body.cursor-click .neon-cursor-main {
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Company</h4>
+                <h4 data-translate="footer-company">Company</h4>
                 <ul>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -1303,7 +1461,7 @@ body.cursor-click .neon-cursor-main {
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 BizMind. All rights reserved.</p>
+            <p data-translate="footer-rights">© 2026 BizMind. All rights reserved.</p>
             <div class="footer-legal">
                 <a href="/legal.html#privacy">Privacy Policy</a>
                 <a href="/legal.html#terms">Terms of Service</a>
@@ -1592,6 +1750,429 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
             }
         });
     });
+
+    // ============ SISTEMA DE TRADUCCIÓN BILINGÜE ============
+    const translations = {
+        en: {
+            // Navegación
+            'nav-features': 'Features',
+            'nav-solutions': 'Solutions',
+            'nav-dealermind': 'DealerMind',
+            'nav-pricing': 'Pricing',
+            'nav-about': 'About',
+            'nav-contact': 'Contact',
+            'nav-cta': 'Chat With AI',
+            
+            // Hero
+            'hero-badge': 'Unleashing the Potential of AI',
+            'hero-title': 'We Build the <span class="gradient">AI Agents</span> That Actually Grow Your Business.',
+            'hero-subtitle': 'Meet DealerMind™ & BizMind™. Your AI Co-Workers.',
+            'hero-description': 'We connect all your customer channels. Your website, WhatsApp API, Facebook Messenger, and Telegram integrate directly into your sales, support, and CRM systems. 24/7 automation that never sleeps.',
+            'hero-cta-primary': '🚀 Get Started',
+            'hero-cta-secondary': '💬 Chat With Our AI',
+            
+            // Features
+            'features-tag': 'Features',
+            'features-title': 'Innovative Features of Our <span class="gradient">AI Solutions</span>',
+            'features-description': 'Why hire for repetitive tasks? Invest in a digital employee that works 24/7, without the salary or overhead.',
+            'feature1-title': 'AI Sales Agents',
+            'feature1-desc': 'Intelligent agents that qualify leads, answer questions, and book appointments automatically. Your 24/7 sales team.',
+            'feature2-title': 'Multi-Channel Support',
+            'feature2-desc': 'Connect WhatsApp, Facebook Messenger, Telegram, and your website. All conversations in one dashboard.',
+            'feature3-title': 'CRM Integration',
+            'feature3-desc': 'Seamless connection with your existing CRM and business systems. Every lead captured, every action tracked.',
+            'feature4-title': 'Live Analytics',
+            'feature4-desc': 'Real-time insights into customer interactions, conversion rates, and agent performance.',
+            'feature5-title': 'Instant Response',
+            'feature5-desc': 'No customer waits. Every inquiry gets an immediate, intelligent response that moves them through your funnel.',
+            'feature6-title': 'Lead Qualification',
+            'feature6-desc': 'AI-powered lead scoring. Your human team only talks to prospects ready to buy.',
+            
+            // Products/Solutions
+            'products-tag': 'Our Solutions',
+            'products-title': 'AI Products <span class="gradient">Ready to Deploy</span>',
+            'products-description': 'From industry-specific solutions to fully custom AI agents, we build the digital workforce your business needs.',
+            
+            // Product Cards
+            'product1-badge': '⭐ FLAGSHIP PRODUCT',
+            'product1-name': 'Dealer<span>Mind™</span>',
+            'product1-desc': 'Our premier, industry-specific platform. DealerMind is built to generate and qualify leads for auto dealers. It answers detailed inventory questions, runs 24/7, and books qualified test-drive appointments directly from your ads or website.',
+            'product1-feat1': '24/7 AI Sales Agent',
+            'product1-feat2': 'Live Inventory',
+            'product1-feat3': 'Auto-Booking',
+            'product1-feat4': 'DealerCenter Sync',
+            'product1-cta': 'View DealerMind Plans',
+            
+            'product2-badge': '🛠️ CUSTOM BUILT',
+            'product2-name': 'Biz<span>Mind™</span>',
+            'product2-desc': 'For businesses beyond the auto industry, we build your \'digital employee\' from scratch. We analyze your unique workflow and train an AI agent to handle your specific sales, support, or marketing tasks.',
+            'product2-feat1': 'Custom AI Agent',
+            'product2-feat2': 'Sales & Support',
+            'product2-feat3': 'System Integration',
+            'product2-feat4': 'Multi-Channel',
+            'product2-cta': 'Get a Custom Quote',
+            
+            'product3-badge': '📈 FULL SERVICE',
+            'product3-name': 'Expert <span>Facebook Ads</span>',
+            'product3-desc': 'We don\'t just run ads; we build high-intent Facebook ad funnels specifically designed to connect to your AI agent. Stop wasting ad spend on junk leads or slow follow-ups.',
+            'product3-feat1': 'Ad Campaigns',
+            'product3-feat2': 'Lead Funnels',
+            'product3-feat3': 'A/B Testing',
+            'product3-feat4': 'AI Integration',
+            'product3-cta': 'Start My Campaigns',
+            
+            // Pricing Cards
+            'price1-name': 'AI-Driven Ads',
+            'price1-tagline': '(Plus Ad Spend). We run the Facebook Ads that feed your AI.',
+            'price1-amount': '$300',
+            'price1-period': '/mo',
+            'price1-feat1': 'Expert Facebook Ad Campaigns',
+            'price1-feat2': 'Direct-to-Agent Lead Funnels',
+            'price1-feat3': 'A/B Testing & Optimization',
+            'price1-feat4': 'Full Performance Reporting',
+            'price1-feat5': 'WhatsApp, Web & Facebook Ready',
+            'price1-cta': 'Start My Campaigns',
+            
+            'price2-badge': 'RECOMMENDED',
+            'price2-name': 'BizMind™',
+            'price2-tagline': 'Full service, hosting & 24/7 operation. Replaces countless hours of manual work.',
+            'price2-amount': '$500',
+            'price2-period': '/mo',
+            'price2-feat1': 'Custom AI Agent',
+            'price2-feat2': 'Sales and Support Automation',
+            'price2-feat3': 'System Integration',
+            'price2-feat4': 'Includes Hosting & Full Support',
+            'price2-feat5': 'WhatsApp, Web & Facebook Ready',
+            'price2-cta': 'Build My Agent',
+            
+            'price3-name': 'DealerMind™',
+            'price3-tagline': 'Full service, hosting & 24/7 operation. A fraction of one sales agent\'s salary.',
+            'price3-amount': '$1000',
+            'price3-period': '/mo',
+            'price3-feat1': 'AI Sales Agent for Auto Dealers',
+            'price3-feat2': '24/7 Lead Qualification & Booking',
+            'price3-feat3': 'Full CRM & Inventory Integration',
+            'price3-feat4': 'WhatsApp, Web & Facebook Ready',
+            'price3-feat5': 'Dedicated Server & Priority Support',
+            'price3-cta': 'Get DealerMind™',
+            
+            // DealerMind
+            'dealermind-tag': 'DealerMind™',
+            'dealermind-title': 'The First <span class="gradient">AI Dealership Manager</span> That Actually Works',
+            'dealermind-description': 'Built specifically for auto dealerships. DealerMind™ connects to your DealerCenter (or any DMS) and handles customer conversations across Facebook, WhatsApp, and your website.',
+            'dealermind1-title': '🔄 DealerCenter to Facebook',
+            'dealermind1-desc': 'Our system monitors your DealerCenter inventory 24/7. When a new car hits your lot, our agent instantly posts it to your Fan Page with photos, specs, and a link.',
+            'dealermind2-title': '🔗 Live DealerCenter Integration',
+            'dealermind2-desc': 'Customers can ask, "Do you have that 2024 red SUV?" and get an accurate, instant answer with pricing, specs, and availability 24/7.',
+            'dealermind3-title': '📸 Live Visuals & Auto-Booking',
+            'dealermind3-desc': 'The agent pulls photos from your live inventory and sends them in chat. Then books the test-drive appointment without a human touching a keyboard.',
+            
+            // Pricing
+            'pricing-tag': 'Pricing',
+            'pricing-title': 'Simple, Transparent <span class="gradient">Pricing</span>',
+            'pricing-description': 'No hidden fees. No surprises. Just powerful AI automation that pays for itself.',
+            
+            // About
+            'about-tag': 'About Us',
+            'about-title': 'We Are BizMind™. Your <span class="gradient">Real-World AI Partners.</span>',
+            'about-p1': 'Forget the academic definitions. AI is a tool, and our job is to make it work for you. We are a technology agency focused on one goal: automating your business to drive real growth and save you time.',
+            'about-p2': 'We specialize in practical solutions. From our powerful DealerMind™ platform to custom AI agents, we build the "digital employees" that handle your sales, support, and marketing.',
+            'about-h1': 'Results-Driven',
+            'about-h2': '24/7 Operation',
+            'about-h3': 'Secure & Reliable',
+            'about-h4': 'Full Support',
+            
+            // Contact
+            'contact-tag': 'Contact',
+            'contact-title': 'Ready to Build Your <span class="gradient">Digital Workforce?</span>',
+            'contact-description': 'Let\'s talk. Whether you\'re ready to build or just have questions about automation, our team is standing by.',
+            'contact-call': 'Call Center',
+            'contact-location': 'Our Location',
+            'contact-email': 'Email',
+            'contact-hours': 'Support Hours',
+            'contact-hours-time': 'Mon-Fri: 9AM-6PM CST',
+            'contact-form-title': 'Get in Touch',
+            'contact-name-label': 'Your Name',
+            'contact-email-label': 'Email Address',
+            'contact-message-label': 'Your Message',
+            'contact-submit': 'Send Message',
+            
+            // Footer
+            'footer-tagline': 'Transforming businesses through intelligent automation and AI-powered solutions.',
+            'footer-products': 'Products',
+            'footer-services': 'Services',
+            'footer-company': 'Company',
+            'footer-rights': '© 2026 BizMind. All rights reserved.',
+        },
+        es: {
+            // Navegación
+            'nav-features': 'Características',
+            'nav-solutions': 'Soluciones',
+            'nav-dealermind': 'DealerMind',
+            'nav-pricing': 'Precios',
+            'nav-about': 'Nosotros',
+            'nav-contact': 'Contacto',
+            'nav-cta': 'Chatear con IA',
+            
+            // Hero
+            'hero-badge': 'Liberando el Potencial de la IA',
+            'hero-title': 'Construimos <span class="gradient">Agentes de IA</span> que Realmente Hacen Crecer tu Negocio.',
+            'hero-subtitle': 'Conoce DealerMind™ y BizMind™. Tus Compañeros de Trabajo IA.',
+            'hero-description': 'Conectamos todos tus canales de atención al cliente. Tu sitio web, WhatsApp API, Facebook Messenger y Telegram se integran directamente en tus sistemas de ventas, soporte y CRM. Automatización 24/7 que nunca duerme.',
+            'hero-cta-primary': '🚀 Comenzar Ahora',
+            'hero-cta-secondary': '💬 Chatear con IA',
+            
+            // Features
+            'features-tag': 'Características',
+            'features-title': 'Características Innovadoras de Nuestras <span class="gradient">Soluciones de IA</span>',
+            'features-description': '¿Por qué contratar para tareas repetitivas? Invierte en un empleado digital que trabaja 24/7, sin salario ni gastos generales.',
+            'feature1-title': 'Agentes de Ventas IA',
+            'feature1-desc': 'Agentes inteligentes que califican leads, responden preguntas y reservan citas automáticamente. Tu equipo de ventas 24/7.',
+            'feature2-title': 'Soporte Multicanal',
+            'feature2-desc': 'Conecta WhatsApp, Facebook Messenger, Telegram y tu sitio web. Todas las conversaciones en un solo panel.',
+            'feature3-title': 'Integración CRM',
+            'feature3-desc': 'Conexión perfecta con tu CRM y sistemas empresariales existentes. Cada lead capturado, cada acción rastreada.',
+            'feature4-title': 'Análisis en Vivo',
+            'feature4-desc': 'Información en tiempo real sobre interacciones con clientes, tasas de conversión y rendimiento de agentes.',
+            'feature5-title': 'Respuesta Instantánea',
+            'feature5-desc': 'Ningún cliente espera. Cada consulta recibe una respuesta inmediata e inteligente que los mueve a través de tu embudo.',
+            'feature6-title': 'Calificación de Leads',
+            'feature6-desc': 'Puntuación de leads con IA. Tu equipo humano solo habla con prospectos listos para comprar.',
+            
+            // Products/Solutions
+            'products-tag': 'Nuestras Soluciones',
+            'products-title': 'Productos de IA <span class="gradient">Listos para Implementar</span>',
+            'products-description': 'Desde soluciones específicas de la industria hasta agentes de IA totalmente personalizados, construimos la fuerza laboral digital que tu negocio necesita.',
+            
+            // Product Cards
+            'product1-badge': '⭐ PRODUCTO ESTRELLA',
+            'product1-name': 'Dealer<span>Mind™</span>',
+            'product1-desc': 'Nuestra plataforma premier específica de la industria. DealerMind está diseñado para generar y calificar leads para concesionarios de autos. Responde preguntas detalladas de inventario, funciona 24/7 y reserva citas de prueba de manejo calificadas directamente desde tus anuncios o sitio web.',
+            'product1-feat1': 'Agente de Ventas IA 24/7',
+            'product1-feat2': 'Inventario en Vivo',
+            'product1-feat3': 'Reserva Automática',
+            'product1-feat4': 'Sincronización DealerCenter',
+            'product1-cta': 'Ver Planes DealerMind',
+            
+            'product2-badge': '🛠️ PERSONALIZADO',
+            'product2-name': 'Biz<span>Mind™</span>',
+            'product2-desc': 'Para negocios más allá de la industria automotriz, construimos tu \'empleado digital\' desde cero. Analizamos tu flujo de trabajo único y entrenamos un agente de IA para manejar tus tareas específicas de ventas, soporte o marketing.',
+            'product2-feat1': 'Agente IA Personalizado',
+            'product2-feat2': 'Ventas y Soporte',
+            'product2-feat3': 'Integración de Sistemas',
+            'product2-feat4': 'Multi-Canal',
+            'product2-cta': 'Obtener Cotización',
+            
+            'product3-badge': '📈 SERVICIO COMPLETO',
+            'product3-name': 'Expertos en <span>Facebook Ads</span>',
+            'product3-desc': 'No solo ejecutamos anuncios; construimos embudos de anuncios de Facebook de alta intención diseñados específicamente para conectarse a tu agente de IA. Deja de desperdiciar gasto publicitario en leads basura o seguimientos lentos.',
+            'product3-feat1': 'Campañas Publicitarias',
+            'product3-feat2': 'Embudos de Leads',
+            'product3-feat3': 'Pruebas A/B',
+            'product3-feat4': 'Integración IA',
+            'product3-cta': 'Iniciar Mis Campañas',
+            
+            // Pricing Cards
+            'price1-name': 'Anuncios con IA',
+            'price1-tagline': '(Más gasto publicitario). Ejecutamos los anuncios de Facebook que alimentan tu IA.',
+            'price1-amount': '$300',
+            'price1-period': '/mes',
+            'price1-feat1': 'Campañas Expertas de Facebook Ads',
+            'price1-feat2': 'Embudos de Leads Directo-al-Agente',
+            'price1-feat3': 'Pruebas A/B y Optimización',
+            'price1-feat4': 'Reportes Completos de Rendimiento',
+            'price1-feat5': 'Listo para WhatsApp, Web y Facebook',
+            'price1-cta': 'Iniciar Mis Campañas',
+            
+            'price2-badge': 'RECOMENDADO',
+            'price2-name': 'BizMind™',
+            'price2-tagline': 'Servicio completo, hosting y operación 24/7. Reemplaza incontables horas de trabajo manual.',
+            'price2-amount': '$500',
+            'price2-period': '/mes',
+            'price2-feat1': 'Agente IA Personalizado',
+            'price2-feat2': 'Automatización de Ventas y Soporte',
+            'price2-feat3': 'Integración de Sistemas',
+            'price2-feat4': 'Incluye Hosting y Soporte Completo',
+            'price2-feat5': 'Listo para WhatsApp, Web y Facebook',
+            'price2-cta': 'Construir Mi Agente',
+            
+            'price3-name': 'DealerMind™',
+            'price3-tagline': 'Servicio completo, hosting y operación 24/7. Una fracción del salario de un agente de ventas.',
+            'price3-amount': '$1000',
+            'price3-period': '/mes',
+            'price3-feat1': 'Agente de Ventas IA para Concesionarios',
+            'price3-feat2': 'Calificación y Reserva de Leads 24/7',
+            'price3-feat3': 'Integración Completa CRM e Inventario',
+            'price3-feat4': 'Listo para WhatsApp, Web y Facebook',
+            'price3-feat5': 'Servidor Dedicado y Soporte Prioritario',
+            'price3-cta': 'Obtener DealerMind™',
+            
+            // DealerMind
+            'dealermind-tag': 'DealerMind™',
+            'dealermind-title': 'El Primer <span class="gradient">Gerente de Concesionario IA</span> que Realmente Funciona',
+            'dealermind-description': 'Construido específicamente para concesionarios de autos. DealerMind™ se conecta a tu DealerCenter (o cualquier DMS) y maneja conversaciones de clientes en Facebook, WhatsApp y tu sitio web.',
+            'dealermind1-title': '🔄 DealerCenter a Facebook',
+            'dealermind1-desc': 'Nuestro sistema monitorea tu inventario DealerCenter 24/7. Cuando un auto nuevo llega a tu lote, nuestro agente lo publica instantáneamente en tu Fan Page con fotos, especificaciones y enlace.',
+            'dealermind2-title': '🔗 Integración en Vivo DealerCenter',
+            'dealermind2-desc': 'Los clientes pueden preguntar "¿Tienen esa SUV roja 2024?" y obtener una respuesta precisa e instantánea con precios, especificaciones y disponibilidad 24/7.',
+            'dealermind3-title': '📸 Visuales en Vivo y Reserva Automática',
+            'dealermind3-desc': 'El agente extrae fotos de tu inventario en vivo y las envía en el chat. Luego reserva la cita de prueba de manejo sin que un humano toque el teclado.',
+            
+            // Pricing
+            'pricing-tag': 'Precios',
+            'pricing-title': '<span class="gradient">Precios</span> Simples y Transparentes',
+            'pricing-description': 'Sin tarifas ocultas. Sin sorpresas. Solo automatización de IA poderosa que se paga sola.',
+            
+            // About
+            'about-tag': 'Nosotros',
+            'about-title': 'Somos BizMind™. Tus <span class="gradient">Socios de IA del Mundo Real.</span>',
+            'about-p1': 'Olvida las definiciones académicas. La IA es una herramienta, y nuestro trabajo es hacerla funcionar para ti. Somos una agencia tecnológica enfocada en un objetivo: automatizar tu negocio para impulsar crecimiento real y ahorrarte tiempo.',
+            'about-p2': 'Nos especializamos en soluciones prácticas. Desde nuestra poderosa plataforma DealerMind™ hasta agentes de IA personalizados, construimos los "empleados digitales" que manejan tus ventas, soporte y marketing.',
+            'about-h1': 'Enfocados en Resultados',
+            'about-h2': 'Operación 24/7',
+            'about-h3': 'Seguro y Confiable',
+            'about-h4': 'Soporte Completo',
+            
+            // Contact
+            'contact-tag': 'Contacto',
+            'contact-title': '¿Listo para Construir tu <span class="gradient">Fuerza Laboral Digital?</span>',
+            'contact-description': 'Hablemos. Ya sea que estés listo para construir o solo tengas preguntas sobre automatización, nuestro equipo está de guardia.',
+            'contact-call': 'Centro de Llamadas',
+            'contact-location': 'Nuestra Ubicación',
+            'contact-email': 'Correo',
+            'contact-hours': 'Horario de Soporte',
+            'contact-hours-time': 'Lun-Vie: 9AM-6PM CST',
+            'contact-form-title': 'Ponte en Contacto',
+            'contact-name-label': 'Tu Nombre',
+            'contact-email-label': 'Correo Electrónico',
+            'contact-message-label': 'Tu Mensaje',
+            'contact-submit': 'Enviar Mensaje',
+            
+            // Footer
+            'footer-tagline': 'Transformando negocios a través de automatización inteligente y soluciones con IA.',
+            'footer-products': 'Productos',
+            'footer-services': 'Servicios',
+            'footer-company': 'Empresa',
+            'footer-rights': '© 2026 BizMind. Todos los derechos reservados.',
+        }
+    };
+
+    // Estado del idioma (por defecto inglés)
+    let currentLang = localStorage.getItem('language') || 'en';
+
+    // Actualizar labels activos
+    function updateLabels(lang) {
+        const langLabels = document.querySelectorAll('.lang-label');
+        langLabels.forEach(label => {
+            if (label.getAttribute('data-lang') === lang) {
+                label.classList.add('active');
+            } else {
+                label.classList.remove('active');
+            }
+        });
+    }
+
+    // Función para traducir la página
+    function translatePage(lang) {
+        currentLang = lang;
+        localStorage.setItem('language', lang);
+        
+        // Actualizar todos los elementos con data-translate
+        document.querySelectorAll('[data-translate]').forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang][key]) {
+                element.innerHTML = translations[lang][key];
+            }
+        });
+        
+        // Actualizar placeholders
+        document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-translate-placeholder');
+            if (translations[lang][key]) {
+                element.placeholder = translations[lang][key];
+            }
+        });
+        
+        // Actualizar toggle switch
+        const langSwitch = document.getElementById('languageToggle');
+        const switchFlag = langSwitch?.querySelector('.switch-flag');
+        
+        if (langSwitch && switchFlag) {
+            if (lang === 'en') {
+                langSwitch.classList.remove('active');
+                switchFlag.textContent = '🇺🇸';
+                langSwitch.title = 'Switch to Spanish / Cambiar a Español';
+            } else {
+                langSwitch.classList.add('active');
+                switchFlag.textContent = '🇪🇸';
+                langSwitch.title = 'Switch to English / Cambiar a Inglés';
+            }
+        }
+        
+        // Actualizar labels
+        updateLabels(lang);
+    }
+
+    // Event listener para el toggle switch de idioma
+    const languageSwitch = document.getElementById('languageToggle');
+    const langLabels = document.querySelectorAll('.lang-label');
+    
+    // Función para crear chispas mágicas
+    function createMagicSparks(container) {
+        const sparksContainer = container.querySelector('.magic-sparks');
+        const colors = ['', 'purple', 'cyan'];
+        
+        // Crear 12 chispas en diferentes direcciones
+        for (let i = 0; i < 12; i++) {
+            const spark = document.createElement('div');
+            spark.className = `spark ${colors[Math.floor(Math.random() * colors.length)]}`;
+            
+            // Posición inicial en el centro
+            spark.style.left = '50%';
+            spark.style.top = '50%';
+            
+            // Calcular dirección aleatoria
+            const angle = (i / 12) * Math.PI * 2;
+            const distance = 30 + Math.random() * 20;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            spark.style.setProperty('--tx', `${tx}px`);
+            spark.style.setProperty('--ty', `${ty}px`);
+            
+            sparksContainer.appendChild(spark);
+            
+            // Eliminar la chispa después de la animación
+            setTimeout(() => spark.remove(), 600);
+        }
+    }
+    
+    languageSwitch?.addEventListener('click', () => {
+        const newLang = currentLang === 'en' ? 'es' : 'en';
+        
+        // Agregar clase switching para animación de brillo
+        languageSwitch.classList.add('switching');
+        setTimeout(() => languageSwitch.classList.remove('switching'), 600);
+        
+        // Crear chispas mágicas
+        createMagicSparks(languageSwitch);
+        
+        // Cambiar idioma
+        translatePage(newLang);
+    });
+    
+    // También permitir click en los labels
+    langLabels.forEach(label => {
+        label.addEventListener('click', () => {
+            const targetLang = label.getAttribute('data-lang');
+            if (targetLang !== currentLang) {
+                languageSwitch.click();
+            }
+        });
+    });
+
+    // Aplicar idioma guardado al cargar la página
+    translatePage(currentLang);
 </script>
 </body>
 </html>
