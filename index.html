@@ -1581,49 +1581,60 @@ body.cursor-click .neon-cursor-main {
                 </div>
             </div>
             <div class="contact-form">
-    <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
-        Get in Touch
-    </h3>
-    <form
-        id="contact-form"
-        action="https://autobot-n8n.22ptin.easypanel.host/webhook/bizmind-contact-secure"
-        method="POST"
-    >
-        <div class="form-group">
-            <label for="name" data-translate="contact-name-label">Your Name</label>
-            <input id="name" name="name" type="text" placeholder="Your name" required>
-        </div>
+  <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
+    Get in Touch
+  </h3>
 
-        <div class="form-group">
-            <label for="email" data-translate="contact-email-label">Email Address</label>
-            <input id="email" name="email" type="email" placeholder="your@email.com" required>
-        </div>
+<div class="contact-form">
+  <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
+    Get in Touch
+  </h3>
 
-        <div class="form-group">
-            <label for="phone">WhatsApp</label>
-            <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
-        </div>
+  <form
+    id="contact-form"
+    class="contact-form-inner"
+    action="https://autobot-n8n.22ptin.easypanel.host/webhook/bizmind-contact-secure"
+    method="POST"
+  >
+    <div class="form-group">
+      <label for="name" data-translate="contact-name-label">Your Name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" required>
+    </div>
 
-        <div class="form-group">
-            <label for="company">Company</label>
-            <input id="company" name="company" type="text" placeholder="Dealer / Business name">
-        </div>
+    <div class="form-group">
+      <label for="email" data-translate="contact-email-label">Email Address</label>
+      <input id="email" name="email" type="email" placeholder="your@email.com" required>
+    </div>
 
-        <div class="form-group">
-            <label for="message" data-translate="contact-message-label">Your Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-        </div>
+    <div class="form-group">
+      <label for="phone">WhatsApp</label>
+      <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
+    </div>
 
-        <!-- origen de la página -->
-        <input type="hidden" name="page" id="page-origin" value="">
-        <!-- secreto compartido con n8n -->
-        <input type="hidden" name="secret" id="form-secret" value="">
+    <div class="form-group">
+      <label for="company">Company</label>
+      <input id="company" name="company" type="text" placeholder="Dealer / Business name">
+    </div>
 
-        <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
-            Send Message
-        </button>
-        <p id="contact-status" class="contact-status"></p>
-    </form>
+    <div class="form-group">
+      <label for="message" data-translate="contact-message-label">Your Message</label>
+      <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+    </div>
+
+    <!-- origen de la página -->
+    <input type="hidden" name="page" id="page-origin" value="">
+
+    <!-- 🕳️ honeypot invisible (anti bots) -->
+    <div style="display:none;">
+      <label for="website">Leave this field empty</label>
+      <input type="text" id="website" name="website" value="" autocomplete="off">
+    </div>
+
+    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
+      Send Message
+    </button>
+    <p id="contact-status" class="contact-status"></p>
+  </form>
 </div>
 
 <script>
@@ -1632,21 +1643,8 @@ body.cursor-click .neon-cursor-main {
     if (originInput) {
       originInput.value = window.location.href;
     }
-
-    // 🔐 Usa el mismo secreto que pusiste en n8n
-    var secretInput = document.getElementById('form-secret');
-    if (secretInput) {
-      secretInput.value = 'BIZMIND_AI_QUANTUM_NEURAL_SECRET_9fX7!pL3@zT0';
-    }
   })();
 </script>
-
-            </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="footer-content">
