@@ -2564,5 +2564,121 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
 })();
 </script>
+    <script>
+// =============== ANIMACIÓN DE COMETAS / METEOROS MEJORADA ===============
+const mCanvas = document.getElementById('meteors-canvas');
+const mCtx = mCanvas?.getContext('2d');
+if (!mCanvas || !mCtx) return; // Protección por si no existe el canvas
+
+let meteors = [];
+
+function resizeMeteorCanvas() {
+    mCanvas.width = window.innerWidth;
+    mCanvas.height = window.innerHeight;
+}
+resizeMeteorCanvas();
+window.addEventListener('resize', resizeMeteorCanvas);
+
+class Meteor {
+    constructor() {
+        this.reset();
+        this.trail = []; // Para guardar las últimas posiciones de la estela
+    }
+
+    reset() {
+        // Aparecen desde fuera de la pantalla (arriba o laterales)
+        const side = Math.random() < 0.5 ? 'left' : 'right';
+        this.x = side === 'left' 
+            ? -100 + Math.random() * -200 
+            : mCanvas.width + 100 + Math.random() * 200;
+        this.y = Math.random() * (mCanvas.height * 0.4) - 150; // Solo parte superior
+
+        this.speed = Math.random() * 8 + 10;        // Más rápido y variado
+        this.angle = Math.random() * 0.4 + 0.8;     // Entre ~45° y 70°
+        this.length = Math.random() * 120 + 80;     // Estela más larga
+        this.opacity = 1;
+        this.life = 1;
+        this.trail = [];
+    }
+
+    update() {
+        // Guardar posición para la estela
+        this.trail.push({ x: this.x, y: this.y });
+        if (this.trail.length > 30) this.trail.shift();
+
+        // Movimiento
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed;
+
+        // Desvanecer cuando sale de pantalla
+        if (this.y > mCanvas.height + 100 || this.x < -300 || this.x > mCanvas.width + 300) {
+            this.reset();
+        }
+    }
+
+    draw() {
+        // Estela con degradado
+        const gradient = mCtx.createLinearGradient(
+            this.x - this.length * Math.cos(this.angle),
+            this.y - this.length * Math.sin(this.angle),
+            this.x, this.y
+        );
+        gradient.addColorStop(0, 'rgba(0, 240, 255, 0)');
+        gradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.6)');
+        gradient.addColorStop(0.7, 'rgba(100, 200, 255, 0.9)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+
+        mCtx.strokeStyle = gradient;
+        mCtx.lineWidth = Math.random() * 2.5 + 1.5;
+        mCtx.shadowBlur = 20;
+        mCtx.shadowColor = '#00f0ff';
+
+        mCtx.beginPath();
+        mCtx.moveTo(
+            this.x - this.length * Math.cos(this.angle),
+            this.y - this.length * Math.sin(this.angle)
+        );
+        mCtx.lineTo(this.x, this.y);
+        mCtx.stroke();
+
+        // Cabeza brillante del cometa
+        mCtx.beginPath();
+        mCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        mCtx.fillStyle = '#ffffff';
+        mCtx.shadowBlur = 30;
+        mCtx.shadowColor = '#00f0ff';
+        mCtx.fill();
+
+        // Partículas pequeñas en la estela (efecto polvo)
+        for (let i = 0; i < this.trail.length; i += 3) {
+            const point = this.trail[i];
+            const opacity = (i / this.trail.length) * 0.6;
+            mCtx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+            mCtx.fillRect(point.x - 1, point.y - 1, 2, 2);
+        }
+    }
+}
+
+// Crear cometas (más cantidad = más espectáculo)
+const meteorCount = window.innerWidth < 768 ? 8 : 18;
+for (let i = 0; i < meteorCount; i++) {
+    const m = new Meteor();
+    // Espaciar ligeramente su aparición
+    setTimeout(() => meteors.push(m), i * 300);
+}
+
+function animateMeteors() {
+    mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+
+    meteors.forEach(meteor => {
+        meteor.update();
+        meteor.draw();
+    });
+
+    requestAnimationFrame(animateMeteors);
+}
+
+animateMeteors();
+</script>
 </body>
 </html>
