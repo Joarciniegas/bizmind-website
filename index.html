@@ -2609,22 +2609,22 @@ class Meteor {
         }
     }
 
-    draw() {
-        // Estela con degradado
+       draw() {
+        // Estela con degradado más suave
         const gradient = mCtx.createLinearGradient(
             this.x - this.length * Math.cos(this.angle),
             this.y - this.length * Math.sin(this.angle),
             this.x, this.y
         );
         gradient.addColorStop(0, 'rgba(0, 240, 255, 0)');
-        gradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.6)');
-        gradient.addColorStop(0.7, 'rgba(100, 200, 255, 0.9)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.3)');
+        gradient.addColorStop(0.7, 'rgba(100, 200, 255, 0.5)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.8)');
 
         mCtx.strokeStyle = gradient;
-        mCtx.lineWidth = Math.random() * 2.5 + 1.5;
-        mCtx.shadowBlur = 20;
-        mCtx.shadowColor = '#00f0ff';
+        mCtx.lineWidth = 1.2;              // Línea más delgada
+        mCtx.shadowBlur = 8;               // Menos brillo
+        mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
 
         mCtx.beginPath();
         mCtx.moveTo(
@@ -2634,23 +2634,23 @@ class Meteor {
         mCtx.lineTo(this.x, this.y);
         mCtx.stroke();
 
-        // Cabeza brillante del cometa
+        // Cabeza del cometa más suave
         mCtx.beginPath();
-        mCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-        mCtx.fillStyle = '#ffffff';
-        mCtx.shadowBlur = 30;
-        mCtx.shadowColor = '#00f0ff';
+        mCtx.arc(this.x, this.y, 2, 0, Math.PI * 2); // antes era 3
+        mCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        mCtx.shadowBlur = 12;                         // antes 30
+        mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
         mCtx.fill();
 
-        // Partículas pequeñas en la estela (efecto polvo)
+        // Partículas de la estela más discretas
         for (let i = 0; i < this.trail.length; i += 3) {
             const point = this.trail[i];
-            const opacity = (i / this.trail.length) * 0.6;
+            const opacity = (i / this.trail.length) * 0.3; // antes 0.6
             mCtx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
             mCtx.fillRect(point.x - 1, point.y - 1, 2, 2);
         }
     }
-}
+
 
 // Crear cometas (más cantidad = más espectáculo)
 const meteorCount = window.innerWidth < 768 ? 8 : 18;
