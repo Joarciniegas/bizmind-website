@@ -47,15 +47,26 @@
               — @Joarciniegas and @jailbre4ker (el que dejó esto para ti)
     ────────────────────────────────────────────────────────────
     -->
-     <!-- Google tag (gtag.js) - PEGAR AQUÍ -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNY567MB5Z"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WNY567MB5Z');
-      gtag('config', 'GT-TW5SMNNQ');
-    </script>
+     <!-- Google Consent Mode -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied'
+  });
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WNY567MB5Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WNY567MB5Z');
+</script>
     
     <!-- Favicon (inline SVG - seguro) -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f0ff'/%3E%3Cstop offset='50%25' stop-color='%237c3aed'/%3E%3Cstop offset='100%25' stop-color='%23ff00ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' fill='%23030014'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ctext x='32' y='42' font-family='Arial Black,Impact,sans-serif' font-size='28' font-weight='900' fill='url(%23g)' text-anchor='middle'%3EBM%3C/text%3E%3C/svg%3E" type="image/svg+xml">
@@ -86,6 +97,9 @@
     <link rel="dns-prefetch" href="https://formspree.io">
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    
+    
     <style>
         :root {
             --primary: #00f0ff;
@@ -745,103 +759,100 @@
             .integrations-content { flex-direction: column; text-align: center; }
         }
 
-                        .contact-status {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.7);
-}
+           .contact-status {
+                margin-top: 10px;
+                font-size: 0.85rem;
+                color: rgba(255,255,255,0.7);
+                            }
 
-.contact-status.success {
-    color: #4ade80;
-}
+            .contact-status.success {
+                color: #4ade80;
+                                    }
 
-.contact-status.error {
-    color: #f97373;
-}
+            .contact-status.error {
+                color: #f97373;
+                                  }
 
-.contact-status.sending {
-    color: #38bdf8;
-}
+            .contact-status.sending {
+                color: #38bdf8;
+                                    }
+            .neon-cursor-main,
+            .neon-cursor-trail,
+            .neon-cursor-glow {
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9999;
+                            }
 
-
-
-        .neon-cursor-main,
-.neon-cursor-trail,
-.neon-cursor-glow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-/* puntico principal */
-.neon-cursor-main {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: #ffffff;
-    box-shadow:
-        0 0 8px  rgba(255, 255, 255, 0.9),
-        0 0 18px #00f0ff,   /* primary */
-        0 0 32px #7c3aed,   /* secondary */
-        0 0 46px #ff00ff;   /* accent */
-    transition: transform 0.08s ease-out, box-shadow 0.2s ease-out;
-}
-
-/* círculo que sigue un poco más lento */
-.neon-cursor-trail {
-    width: 26px;
-    height: 26px;
-    border-radius: 999px;
-    border: 2px solid #00f0ff; /* primary */
-    box-shadow:
-        0 0 18px #00f0ff,
-        0 0 34px #7c3aed,
-        0 0 52px #ff00ff;
-    transition: transform 0.22s ease-out, opacity 0.25s ease-out;
-}
-
-/* glow grande alrededor */
-.neon-cursor-glow {
-    width: 60px;
-    height: 60px;
-    border-radius: 999px;
-    background: radial-gradient(
-        circle,
-        rgba(0, 240, 255, 0.45) 0%,   /* primary */
-        rgba(124, 58, 237, 0.35) 40%, /* secondary */
-        rgba(240, 0, 255, 0.00) 70%   /* accent fade */
-    );
-    filter: blur(3px);
-    opacity: 0.55;
-    transition: transform 0.35s ease-out, opacity 0.3s ease-out;
-}
-
-/* ocultar cuando el mouse sale de la ventana */
-body.cursor-hidden .neon-cursor-main,
-body.cursor-hidden .neon-cursor-trail,
-body.cursor-hidden .neon-cursor-glow {
-    opacity: 0;
-}
-
-/* Ocultar cursor personalizado en dispositivos móviles y táctiles */
-@media (max-width: 768px), (hover: none) and (pointer: coarse) {
-    .neon-cursor-main, 
-    .neon-cursor-trail, 
-    .neon-cursor-glow {
-        display: none !important;
-    }
-}
-
-/* hover en elementos interactivos */
-body.cursor-hover .neon-cursor-main {
-    box-shadow:
-        0 0 10px rgba(255, 255, 255, 1),
-        0 0 22px #00f0ff,
-        0 0 40px #7c3aed,
-        0 0 60px #ff00ff;
-}
+            /* puntico principal */
+            .neon-cursor-main {
+                width: 10px;
+                height: 10px;
+                border-radius: 999px;
+                background: #ffffff;
+                box-shadow:
+                    0 0 8px  rgba(255, 255, 255, 0.9),
+                    0 0 18px #00f0ff,   /* primary */
+                    0 0 32px #7c3aed,   /* secondary */
+                    0 0 46px #ff00ff;   /* accent */
+                transition: transform 0.08s ease-out, box-shadow 0.2s ease-out;
+            }
+            
+            /* círculo que sigue un poco más lento */
+            .neon-cursor-trail {
+                width: 26px;
+                height: 26px;
+                border-radius: 999px;
+                border: 2px solid #00f0ff; /* primary */
+                box-shadow:
+                    0 0 18px #00f0ff,
+                    0 0 34px #7c3aed,
+                    0 0 52px #ff00ff;
+                transition: transform 0.22s ease-out, opacity 0.25s ease-out;
+            }
+            
+            /* glow grande alrededor */
+            .neon-cursor-glow {
+                width: 60px;
+                height: 60px;
+                border-radius: 999px;
+                background: radial-gradient(
+                        circle,
+                    rgba(0, 240, 255, 0.45) 0%,   /* primary */
+                    rgba(124, 58, 237, 0.35) 40%, /* secondary */
+                    rgba(240, 0, 255, 0.00) 70%   /* accent fade */
+                );
+                filter: blur(3px);
+                opacity: 0.55;
+                    transition: transform 0.35s ease-out, opacity 0.3s ease-out;
+            }
+    
+            /* ocultar cuando el mouse sale de la ventana */
+            body.cursor-hidden .neon-cursor-main,
+            body.cursor-hidden .neon-cursor-trail,
+            body.cursor-hidden .neon-cursor-glow {
+                opacity: 0;
+            }
+            
+            /* Ocultar cursor personalizado en dispositivos móviles y táctiles */
+            @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+                .neon-cursor-main, 
+                .neon-cursor-trail, 
+                .neon-cursor-glow {
+                    display: none !important;
+                }
+            }
+            
+            /* hover en elementos interactivos */
+            body.cursor-hover .neon-cursor-main {
+                box-shadow:
+                    0 0 10px rgba(255, 255, 255, 1),
+                    0 0 22px #00f0ff,
+                    0 0 40px #7c3aed,
+                    0 0 60px #ff00ff;
+            }
 
 body.cursor-hover .neon-cursor-trail {
     box-shadow:
@@ -887,6 +898,152 @@ body.cursor-click .neon-cursor-main {
   background: rgba(56,189,248,0.3);
 }
 
+        /* Cookie Banner Styles */
+#cookieBanner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 380px;
+    background: rgba(15, 15, 35, 0.95);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 0 40px rgba(0, 240, 255, 0.1),
+        0 0 20px rgba(124, 58, 237, 0.1),
+        inset 0 0 30px rgba(255, 255, 255, 0.02);
+    z-index: 9999;
+    transform: translateY(150%);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+#cookieBanner.show {
+    transform: translateY(0);
+}
+
+#cookieBanner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(135deg, 
+        rgba(0, 240, 255, 0.2) 0%, 
+        rgba(124, 58, 237, 0.2) 50%, 
+        rgba(255, 0, 255, 0.2) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.cookie-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.cookie-icon {
+    font-size: 24px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.cookie-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cookie-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 16px;
+}
+
+.cookie-text a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.cookie-text a:hover {
+    border-bottom-color: var(--primary);
+}
+
+.cookie-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie-btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cookie-btn-accept {
+    background: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+    color: #fff;
+}
+
+.cookie-btn-accept:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 240, 255, 0.3);
+}
+
+.cookie-btn-decline {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cookie-btn-decline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    #cookieBanner {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .cookie-buttons {
+        flex-direction: column;
+    }
+    
+    .cookie-btn {
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -2336,6 +2493,58 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
     // Aplicar idioma guardado al cargar la página
     translatePage(currentLang);
+</script>
+    <!-- Cookie Consent Banner -->
+<div id="cookieBanner">
+    <div class="cookie-header">
+        <span class="cookie-icon">🍪</span>
+        <h3 class="cookie-title">Cookies & Analytics</h3>
+    </div>
+    <p class="cookie-text">
+        We use cookies and analytics to improve your experience. <a href="#privacy">Learn more</a>
+    </p>
+    <div class="cookie-buttons">
+        <button class="cookie-btn cookie-btn-accept" id="acceptCookies">Accept</button>
+        <button class="cookie-btn cookie-btn-decline" id="declineCookies">Decline</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    const banner = document.getElementById('cookieBanner');
+    
+    if (!cookieConsent) {
+        setTimeout(() => banner.classList.add('show'), 1000);
+    } else if (cookieConsent === 'accepted') {
+        enableAnalytics();
+    }
+    
+    document.getElementById('acceptCookies').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        enableAnalytics();
+        hideBanner();
+    });
+    
+    document.getElementById('declineCookies').addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'declined');
+        hideBanner();
+    });
+    
+    function hideBanner() {
+        banner.classList.remove('show');
+        setTimeout(() => banner.style.display = 'none', 500);
+    }
+    
+    function enableAnalytics() {
+        gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
+        });
+    }
+})();
 </script>
 </body>
 </html>
