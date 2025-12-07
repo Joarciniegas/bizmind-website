@@ -60,4 +60,12 @@
     <priority>0.7</priority>
   </url>
   
+  <!-- Legal Page -->
+  <url>
+    <loc>https://joarciniegas.cloud/legal.html</loc>
+    <lastmod>2025-12-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
 </urlset>
