@@ -1580,46 +1580,33 @@ body.cursor-click .neon-cursor-main {
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
             </div>
-            <div class="contact-form">
-  <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
-    Get in Touch
-  </h3>
+           <form
+  id="contact-form"
+  class="contact-form-inner"
+  action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
+  method="POST"
+>
+  <!-- tus campos: name, email, phone, company, message... -->
+  <input type="hidden" name="page" id="page-origin" value="">
+  <div style="display:none;">
+    <label for="website">Leave this field empty</label>
+    <input type="text" id="website" name="website" value="" autocomplete="off">
+  </div>
 
-<div class="contact-form">
-  <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
-    Get in Touch
-  </h3>
+  <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
+    Send Message
+  </button>
+  <p id="contact-status" class="contact-status"></p>
+</form>
 
-  <form
-    id="contact-form"
-    class="contact-form-inner"
-    action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
-    method="POST"
-  >
-    <div class="form-group">
-      <label for="name" data-translate="contact-name-label">Your Name</label>
-      <input id="name" name="name" type="text" placeholder="Your name" required>
-    </div>
-
-    <div class="form-group">
-      <label for="email" data-translate="contact-email-label">Email Address</label>
-      <input id="email" name="email" type="email" placeholder="your@email.com" required>
-    </div>
-
-    <div class="form-group">
-      <label for="phone">WhatsApp</label>
-      <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
-    </div>
-
-    <div class="form-group">
-      <label for="company">Company</label>
-      <input id="company" name="company" type="text" placeholder="Dealer / Business name">
-    </div>
-
-    <div class="form-group">
-      <label for="message" data-translate="contact-message-label">Your Message</label>
-      <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-    </div>
+<script>
+  (function () {
+    var originInput = document.getElementById('page-origin');
+    if (originInput) {
+      originInput.value = window.location.href;
+    }
+  })();
+</script>
 
     <!-- origen de la página -->
     <input type="hidden" name="page" id="page-origin" value="">
