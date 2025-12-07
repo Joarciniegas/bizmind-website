@@ -1581,32 +1581,66 @@ body.cursor-click .neon-cursor-main {
                 </div>
             </div>
             <div class="contact-form">
-                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
-            
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="fullName" data-translate="contact-name-label">Your Name</label>
-                        <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="email" data-translate="contact-email-label">Email Address</label>
-                        <input id="email" name="email" type="email" placeholder="your@email.com" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="subject">Subject *</label>
-                        <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="message" data-translate="contact-message-label">Your Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
-                    </div>
-            
-                    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
-                    <p id="contact-status" class="contact-status"></p>
-                </form>
+    <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">
+        Get in Touch
+    </h3>
+    <form
+        id="contact-form"
+        action="https://autobot-n8n.22ptin.easypanel.host/webhook/bizmind-contact-secure"
+        method="POST"
+    >
+        <div class="form-group">
+            <label for="name" data-translate="contact-name-label">Your Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email" data-translate="contact-email-label">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">WhatsApp</label>
+            <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
+        </div>
+
+        <div class="form-group">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text" placeholder="Dealer / Business name">
+        </div>
+
+        <div class="form-group">
+            <label for="message" data-translate="contact-message-label">Your Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+        </div>
+
+        <!-- origen de la página -->
+        <input type="hidden" name="page" id="page-origin" value="">
+        <!-- secreto compartido con n8n -->
+        <input type="hidden" name="secret" id="form-secret" value="">
+
+        <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
+            Send Message
+        </button>
+        <p id="contact-status" class="contact-status"></p>
+    </form>
+</div>
+
+<script>
+  (function () {
+    var originInput = document.getElementById('page-origin');
+    if (originInput) {
+      originInput.value = window.location.href;
+    }
+
+    // 🔐 Usa el mismo secreto que pusiste en n8n
+    var secretInput = document.getElementById('form-secret');
+    if (secretInput) {
+      secretInput.value = 'BIZMIND_FORM_SECRET_cambia_esto_por_un_valor_largo_123!@#';
+    }
+  })();
+</script>
+
             </div>
 
             </div>
