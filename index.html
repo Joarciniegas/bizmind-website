@@ -1048,7 +1048,24 @@ body.cursor-click .neon-cursor-main {
         width: 100%;
     }
 }
-    </style>
+    
+/* ==== Scroll Reveal Effects ==== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    filter: blur(6px);
+    transition:
+        opacity 0.8s ease-out,
+        transform 0.8s ease-out,
+        filter 0.8s ease-out;
+}
+
+.scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+</style>
 </head>
 <body>
       <!-- Google Tag Manager (noscript) -->
@@ -1157,7 +1174,7 @@ body.cursor-click .neon-cursor-main {
         <button class="mobile-menu-btn">☰</button>
     </nav>
 
-    <section class="hero">
+    <section class="hero scroll-reveal">
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-badge" data-translate="hero-badge"><span class="pulse"></span> Unleashing the Potential of AI</div>
@@ -1185,7 +1202,7 @@ body.cursor-click .neon-cursor-main {
         <div class="scroll-indicator"><div class="scroll-mouse"></div>SCROLL</div>
     </section>
 
-    <div class="integrations-banner">
+    <div class="integrations-banner scroll-reveal">
         <div class="integrations-content">
             <div class="integrations-text"><h3>SEAMLESS INTEGRATIONS</h3></div>
             <div class="integrations-logos">
@@ -1199,7 +1216,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </div>
 
-    <section class="stats-section">
+    <section class="stats-section scroll-reveal">
         <div class="stats-container">
             <div class="stat-card"><div class="stat-number" data-target="95" data-suffix="%">0</div><div class="stat-label">Task Automation</div></div>
             <div class="stat-card"><div class="stat-number" data-target="45" data-prefix="$" data-suffix="K+">0</div><div class="stat-label">Annual Savings</div></div>
@@ -1208,7 +1225,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
 
-    <section class="section" id="features">
+    <section class="section scroll-reveal" id="features">
         <div class="section-header">
             <div class="section-tag" data-translate="features-tag">Features</div>
             <h2 class="section-title" data-translate="features-title">Innovative Features of Our <span class="gradient">AI Solutions</span></h2>
@@ -1224,7 +1241,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
 
-    <section class="section products-section" id="products">
+    <section class="section products-section scroll-reveal" id="products">
         <div class="section-header">
             <div class="section-tag" data-translate="products-tag">Our Solutions</div>
             <h2 class="section-title" data-translate="products-title">AI Products <span class="gradient">Ready to Deploy</span></h2>
@@ -1300,7 +1317,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </div>
 
-    <section class="section dealermind-section" id="dealermind">
+    <section class="section dealermind-section scroll-reveal" id="dealermind">
         <div class="section-header">
             <div class="section-tag" data-translate="dealermind-tag">DealerMind™</div>
             <h2 class="section-title" data-translate="dealermind-title">The First <span class="gradient">AI Dealership Manager</span> That Actually Works</h2>
@@ -1313,7 +1330,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
 
-    <section class="section pricing-section" id="pricing">
+    <section class="section pricing-section scroll-reveal" id="pricing">
         <div class="section-header">
             <div class="section-tag" data-translate="pricing-tag">Pricing</div>
             <h2 class="section-title" data-translate="pricing-title">Simple, Transparent <span class="gradient">Pricing</span></h2>
@@ -1366,7 +1383,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
 
-    <section class="section about-section" id="about">
+    <section class="section about-section scroll-reveal" id="about">
         <div class="about-container">
             <div class="about-visual">
                 <div class="about-frame">
@@ -1567,7 +1584,7 @@ body.cursor-click .neon-cursor-main {
         </div>
     </section>
 
-    <section class="section contact-section" id="contact">
+    <section class="section contact-section scroll-reveal" id="contact">
         <div class="contact-container">
             <div class="contact-info">
                 <div class="section-tag" data-translate="contact-tag">Contact</div>
@@ -1579,57 +1596,41 @@ body.cursor-click .neon-cursor-main {
                     <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4 data-translate="contact-email">Email</h4><p><a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5"><span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span></a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
-           </div>
-           <!-- Footer -->
-             <form
-  id="contact-form"
-  class="contact-form-inner"
-  action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
-  method="POST"
->
-  <div class="form-group">
-    <label for="name" data-translate="contact-name-label">Your Name</label>
-    <input id="name" name="name" type="text" placeholder="Your name" required>
-  </div>
+            </div>
+            <div class="contact-form">
+                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
+            
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="fullName" data-translate="contact-name-label">Your Name</label>
+                        <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="email" data-translate="contact-email-label">Email Address</label>
+                        <input id="email" name="email" type="email" placeholder="your@email.com" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="message" data-translate="contact-message-label">Your Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+                    </div>
+            
+                    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
+                    <p id="contact-status" class="contact-status"></p>
+                </form>
+            </div>
 
-  <div class="form-group">
-    <label for="email" data-translate="contact-email-label">Email Address</label>
-    <input id="email" name="email" type="email" placeholder="your@email.com" required>
-  </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="form-group">
-    <label for="phone">WhatsApp</label>
-    <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
-  </div>
-
-  <div class="form-group">
-    <label for="company">Company</label>
-    <input id="company" name="company" type="text" placeholder="Dealer / Business name">
-  </div>
-
-  <div class="form-group">
-    <label for="message" data-translate="contact-message-label">Your Message</label>
-    <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-  </div>
-
-  <!-- origen de la página (útil para ti) -->
-  <input type="hidden" name="page" id="page-origin" value="">
-
-  <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
-    Send Message
-  </button>
-  <p id="contact-status" class="contact-status"></p>
-</form>
-
-<script>
-  (function () {
-    var originInput = document.getElementById('page-origin');
-    if (originInput) {
-      originInput.value = window.location.href;
-    }
-  })();
-</script>    
-          <!-- Footer -->
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
@@ -2011,7 +2012,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         const submitBtn = document.getElementById('contact-submit');
 
         // 🔴 CAMBIA ESTA URL POR TU WEBHOOK DE N8N
-        const WEBHOOK_URL = 'https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact';
+        const WEBHOOK_URL = 'https://TU-DOMINIO-N8N/webhook/contacto-bizmind';
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -2060,7 +2061,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         document.body.appendChild(msgBox);
 
         // CAMBIA ESTA URL si ya tienes un webhook o endpoint
-        const WEBHOOK_URL = "hhttps://autobot-n8n.22ptin.easypanel.host/webhook/website-contact";
+        const WEBHOOK_URL = "https://tu-dominio-n8n/webhook/contacto";
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -2691,6 +2692,29 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   }
 
   animateMeteors();
+})();
+</script>
+
+<script>
+(function () {
+  const items = document.querySelectorAll('.scroll-reveal');
+  if (!items.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.18,
+      rootMargin: '0px 0px -10% 0px'
+    }
+  );
+
+  items.forEach(el => observer.observe(el));
 })();
 </script>
 </body>
