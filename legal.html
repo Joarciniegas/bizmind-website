@@ -3,7 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Information | BizMind AI Agency</title>
+    <title>Legal Information - Terms & Privacy | BizMind AI Agency</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self';">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="BizMind AI Agency legal information, terms of service, privacy policy, and refund policy for DealerMind™ and BizMind™ AI automation services.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://joarciniegas.cloud/legal.html">
+    
+    <!-- Favicon (inline SVG - seguro) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f0ff'/%3E%3Cstop offset='50%25' stop-color='%237c3aed'/%3E%3Cstop offset='100%25' stop-color='%23ff00ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' fill='%23030014'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Ctext x='32' y='42' font-family='Arial Black,Impact,sans-serif' font-size='28' font-weight='900' fill='url(%23g)' text-anchor='middle'%3EBM%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <meta name="theme-color" content="#030014">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joarciniegas.cloud/legal.html">
+    <meta property="og:title" content="Legal Information | BizMind AI Agency">
+    <meta property="og:description" content="Terms of service, privacy policy, and legal information for BizMind AI Agency services.">
+    <meta property="og:image" content="https://joarciniegas.cloud/BizMind-Logo-HORIZONTAL-Con-Texto.svg">
+    
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -121,11 +150,97 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
 .nav-cta:hover::before { left: 0; }
 .mobile-menu-btn { display: none; background: transparent; border: 1px solid var(--primary); color: var(--primary); font-size: 1.5rem; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
 
+/* ============ NEON CURSOR ============ */
+.neon-cursor-main,
+.neon-cursor-trail,
+.neon-cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.neon-cursor-main {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.9),
+        0 0 18px #00f0ff,
+        0 0 32px #7c3aed,
+        0 0 46px #ff00ff;
+    transition: transform 0.08s ease-out, box-shadow 0.2s ease-out;
+}
+
+.neon-cursor-trail {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    border: 2px solid #00f0ff;
+    box-shadow:
+        0 0 18px #00f0ff,
+        0 0 34px #7c3aed,
+        0 0 52px #ff00ff;
+    transition: transform 0.22s ease-out, opacity 0.25s ease-out;
+}
+
+.neon-cursor-glow {
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    background: radial-gradient(
+        circle,
+        rgba(0, 240, 255, 0.45) 0%,
+        rgba(124, 58, 237, 0.35) 40%,
+        rgba(240, 0, 255, 0.00) 70%
+    );
+    filter: blur(3px);
+    opacity: 0.55;
+    transition: transform 0.35s ease-out, opacity 0.3s ease-out;
+}
+
+body.cursor-hidden .neon-cursor-main,
+body.cursor-hidden .neon-cursor-trail,
+body.cursor-hidden .neon-cursor-glow {
+    opacity: 0;
+}
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+    .neon-cursor-main, 
+    .neon-cursor-trail, 
+    .neon-cursor-glow {
+        display: none !important;
+    }
+}
+
+body.cursor-hover .neon-cursor-main {
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 1),
+        0 0 22px #00f0ff,
+        0 0 40px #7c3aed,
+        0 0 60px #ff00ff;
+}
+
+body.cursor-hover .neon-cursor-trail {
+    box-shadow:
+        0 0 24px #00f0ff,
+        0 0 46px #7c3aed,
+        0 0 70px #ff00ff;
+}
+
+body.cursor-click .neon-cursor-main {
+    transform: translate3d(var(--cursor-x, -50%), var(--cursor-y, -50%), 0) scale(0.85);
+}
+
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .nav-cta { display: none; }
     .mobile-menu-btn { display: block; }
 }
+
+
         /* ============ MAIN CONTENT ============ */
         .main-content {
             position: relative;
@@ -367,6 +482,11 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
     </style>
 </head>
 <body>
+    <!-- NEON CURSOR -->
+    <div class="neon-cursor-main"></div>
+    <div class="neon-cursor-trail"></div>
+    <div class="neon-cursor-glow"></div>
+
     <!-- Background Layers -->
     <div class="bg-container">
         <div class="glow-orb orb-1"></div>
@@ -733,6 +853,112 @@ nav.scrolled { padding: 10px 50px; background: rgba(3,0,20,0.95); }
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
+                }
+            }
+        }
+
+        // Initialize
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        animate();
+    </script>
+
+    <!-- Neon Cursor Script -->
+    <script>
+    (function () {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isSmallScreen = window.innerWidth <= 768;
+        
+        if (isMobile || isSmallScreen) return;
+        
+        const main = document.querySelector('.neon-cursor-main');
+        const trail = document.querySelector('.neon-cursor-trail');
+        const glow = document.querySelector('.neon-cursor-glow');
+
+        if (!main || !trail || !glow) return;
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let isClicking = false;
+
+        function updatePosition(x, y) {
+            const mainX = x - 5;
+            const mainY = y - 5;
+            const trailX = x - 13;
+            const trailY = y - 13;
+            const glowX = x - 30;
+            const glowY = y - 30;
+
+            const mainScale = isClicking ? 0.85 : 1;
+
+            main.style.transform = `translate3d(${mainX}px, ${mainY}px, 0) scale(${mainScale})`;
+            trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0)`;
+            glow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            updatePosition(mouseX, mouseY);
+            document.body.classList.remove('cursor-hidden');
+        });
+
+        window.addEventListener('mouseleave', () => {
+            document.body.classList.add('cursor-hidden');
+        });
+
+        window.addEventListener('mouseenter', (e) => {
+            document.body.classList.remove('cursor-hidden');
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            updatePosition(mouseX, mouseY);
+        });
+
+        window.addEventListener('mousedown', () => {
+            isClicking = true;
+            document.body.classList.add('cursor-click');
+            updatePosition(mouseX, mouseY);
+        });
+
+        window.addEventListener('mouseup', () => {
+            isClicking = false;
+            document.body.classList.remove('cursor-click');
+            updatePosition(mouseX, mouseY);
+        });
+
+        const hoverSelector = 'a, button, input, textarea, [data-hover="true"]';
+
+        window.addEventListener('mouseover', (e) => {
+            if (e.target.matches(hoverSelector)) {
+                document.body.classList.add('cursor-hover');
+            }
+        });
+
+        window.addEventListener('mouseout', (e) => {
+            if (e.target.matches(hoverSelector)) {
+                document.body.classList.remove('cursor-hover');
+            }
+        });
+
+        updatePosition(mouseX, mouseY);
+    })();
     </script>
 </body>
 </html>
