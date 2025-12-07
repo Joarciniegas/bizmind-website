@@ -2558,121 +2558,124 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
     <script>
 // =============== ANIMACIÓN DE COMETAS / METEOROS MEJORADA ===============
-(function() {
-const mCanvas = document.getElementById('meteors-canvas');
-const mCtx = mCanvas?.getContext('2d');
-if (!mCanvas || !mCtx) return; // Protección por si no existe el canvas
+(function () {
+  const mCanvas = document.getElementById('meteors-canvas');
+  const mCtx = mCanvas?.getContext('2d');
+  if (!mCanvas || !mCtx) return;
 
-let meteors = [];
+  let meteors = [];
 
-function resizeMeteorCanvas() {
+  function resizeMeteorCanvas() {
     mCanvas.width = window.innerWidth;
     mCanvas.height = window.innerHeight;
-}
-resizeMeteorCanvas();
-window.addEventListener('resize', resizeMeteorCanvas);
+  }
+  resizeMeteorCanvas();
+  window.addEventListener('resize', resizeMeteorCanvas);
 
-class Meteor {
+  class Meteor {
     constructor() {
-        this.reset();
-        this.trail = []; // Para guardar las últimas posiciones de la estela
+      this.reset();
+      this.trail = [];
     }
 
     reset() {
-        // Aparecen desde fuera de la pantalla (arriba o laterales)
-        const side = Math.random() < 0.5 ? 'left' : 'right';
-        this.x = side === 'left' 
-            ? -100 + Math.random() * -200 
-            : mCanvas.width + 100 + Math.random() * 200;
-        this.y = Math.random() * (mCanvas.height * 0.4) - 150; // Solo parte superior
+      const side = Math.random() < 0.5 ? 'left' : 'right';
+      this.x =
+        side === 'left'
+          ? -100 + Math.random() * -200
+          : mCanvas.width + 100 + Math.random() * 200;
+      this.y = Math.random() * (mCanvas.height * 0.4) - 150;
 
-        this.speed = Math.random() * 8 + 10;        // Más rápido y variado
-        this.angle = Math.random() * 0.4 + 0.8;     // Entre ~45° y 70°
-        this.length = Math.random() * 120 + 80;     // Estela más larga
-        this.opacity = 1;
-        this.life = 1;
-        this.trail = [];
+      this.speed = Math.random() * 8 + 10;
+      this.angle = Math.random() * 0.4 + 0.8;
+      this.length = Math.random() * 120 + 80;
+      this.opacity = 1;
+      this.life = 1;
+      this.trail = [];
     }
 
     update() {
-        // Guardar posición para la estela
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 30) this.trail.shift();
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 30) this.trail.shift();
 
-        // Movimiento
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed;
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
 
-        // Desvanecer cuando sale de pantalla
-        if (this.y > mCanvas.height + 100 || this.x < -300 || this.x > mCanvas.width + 300) {
-            this.reset();
-        }
+      this.life -= 0.003;
+      this.opacity = Math.max(this.life, 0);
+
+      if (
+        this.y > mCanvas.height + 100 ||
+        this.x < -300 ||
+        this.x > mCanvas.width + 300
+      ) {
+        this.reset();
+      }
     }
 
-       draw() {
-        // Estela con degradado más suave
-        const gradient = mCtx.createLinearGradient(
-            this.x - this.length * Math.cos(this.angle),
-            this.y - this.length * Math.sin(this.angle),
-            this.x, this.y
-        );
-        gradient.addColorStop(0, 'rgba(0, 240, 255, 0)');
-        gradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.3)');
-        gradient.addColorStop(0.7, 'rgba(100, 200, 255, 0.5)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.8)');
+    draw() {
+      // Estela más suave
+      const gradient = mCtx.createLinearGradient(
+        this.x - this.length * Math.cos(this.angle),
+        this.y - this.length * Math.sin(this.angle),
+        this.x,
+        this.y
+      );
+      gradient.addColorStop(0, 'rgba(0, 240, 255, 0)');
+      gradient.addColorStop(0.3, 'rgba(0, 240, 255, 0.3)');
+      gradient.addColorStop(0.7, 'rgba(100, 200, 255, 0.5)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0.8)');
 
-        mCtx.strokeStyle = gradient;
-        mCtx.lineWidth = 1.2;              // Línea más delgada
-        mCtx.shadowBlur = 8;               // Menos brillo
-        mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
+      mCtx.strokeStyle = gradient;
+      mCtx.lineWidth = 1.2;
+      mCtx.shadowBlur = 8;
+      mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
 
-        mCtx.beginPath();
-        mCtx.moveTo(
-            this.x - this.length * Math.cos(this.angle),
-            this.y - this.length * Math.sin(this.angle)
-        );
-        mCtx.lineTo(this.x, this.y);
-        mCtx.stroke();
+      mCtx.beginPath();
+      mCtx.moveTo(
+        this.x - this.length * Math.cos(this.angle),
+        this.y - this.length * Math.sin(this.angle)
+      );
+      mCtx.lineTo(this.x, this.y);
+      mCtx.stroke();
 
-        // Cabeza del cometa más suave
-        mCtx.beginPath();
-        mCtx.arc(this.x, this.y, 2, 0, Math.PI * 2); // antes era 3
-        mCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-        mCtx.shadowBlur = 12;                         // antes 30
-        mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
-        mCtx.fill();
+      // Cabeza del cometa más suave
+      mCtx.beginPath();
+      mCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      mCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      mCtx.shadowBlur = 12;
+      mCtx.shadowColor = 'rgba(0, 240, 255, 0.6)';
+      mCtx.fill();
 
-        // Partículas de la estela más discretas
-        for (let i = 0; i < this.trail.length; i += 3) {
-            const point = this.trail[i];
-            const opacity = (i / this.trail.length) * 0.3; // antes 0.6
-            mCtx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
-            mCtx.fillRect(point.x - 1, point.y - 1, 2, 2);
-        }
+      // Partículas de la estela más discretas
+      for (let i = 0; i < this.trail.length; i += 3) {
+        const point = this.trail[i];
+        const opacity = (i / this.trail.length) * 0.3;
+        mCtx.fillStyle = `rgba(0, 240, 255, ${opacity})`;
+        mCtx.fillRect(point.x - 1, point.y - 1, 2, 2);
+      }
     }
+  }
 
-
-// Crear cometas (más cantidad = más espectáculo)
-const meteorCount = window.innerWidth < 768 ? 8 : 18;
-for (let i = 0; i < meteorCount; i++) {
+  const meteorCount = window.innerWidth < 768 ? 4 : 10;
+  for (let i = 0; i < meteorCount; i++) {
     const m = new Meteor();
-    // Espaciar ligeramente su aparición
     setTimeout(() => meteors.push(m), i * 300);
-}
+  }
 
-function animateMeteors() {
+  function animateMeteors() {
     mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
 
-    meteors.forEach(meteor => {
-        meteor.update();
-        meteor.draw();
+    meteors.forEach((meteor) => {
+      meteor.update();
+      meteor.draw();
     });
 
     requestAnimationFrame(animateMeteors);
-}
+  }
 
-animateMeteors();
-})(); // Close IIFE
+  animateMeteors();
+})();
 </script>
 </body>
 </html>
