@@ -10,6 +10,10 @@
 /*.html
   Cache-Control: public, max-age=3600, must-revalidate
 
+/legal.html
+  Cache-Control: public, max-age=86400, must-revalidate
+  X-Robots-Tag: index, follow
+
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 
