@@ -1580,55 +1580,120 @@ body.cursor-click .neon-cursor-main {
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
            </div>
-           <!-- Footer -->
-             <form
-  id="contact-form"
-  class="contact-form-inner"
-  action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
-  method="POST"
->
-  <div class="form-group">
-    <label for="name" data-translate="contact-name-label">Your Name</label>
-    <input id="name" name="name" type="text" placeholder="Your name" required>
+            <section class="section contact-section" id="contact">
+  <div class="contact-container">
+    <div class="contact-info">
+      <div class="section-tag" data-translate="contact-tag">Contact</div>
+      <h2 data-translate="contact-title">
+        Ready to Build Your <span class="gradient">Digital Workforce?</span>
+      </h2>
+      <p data-translate="contact-description">
+        Let's talk. Whether you're ready to build or just have questions about automation, our team is standing by.
+      </p>
+
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-text">
+            <h4 data-translate="contact-call">Call Center</h4>
+            <p><a href="tel:+17868164553">+1 (786) 816-4553</a></p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-text">
+            <h4 data-translate="contact-location">Our Location</h4>
+            <p>21515 Pebble Pine Ct<br>Cypress, TX 77433</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-text">
+            <h4 data-translate="contact-email">Email</h4>
+            <p>
+              <a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5">
+                <span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span>
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-text">
+            <h4 data-translate="contact-hours">Support Hours</h4>
+            <p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ FORMULARIO LIMPIO, ALINEADO A LA DERECHA -->
+    <div class="contact-form">
+      <h3
+        style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;"
+        data-translate="contact-form-title"
+      >
+        Get in Touch
+      </h3>
+
+      <form
+        id="contact-form"
+        class="contact-form-inner"
+        action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
+        method="POST"
+      >
+        <div class="form-group">
+          <label for="name" data-translate="contact-name-label">Your Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email" data-translate="contact-email-label">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">WhatsApp</label>
+          <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
+        </div>
+
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Dealer / Business name">
+        </div>
+
+        <div class="form-group">
+          <label for="message" data-translate="contact-message-label">Your Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Tell us about your project..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- origen de la página (solo para tu referencia en n8n) -->
+        <input type="hidden" name="page" id="page-origin" value="">
+
+        <button
+          type="submit"
+          class="form-submit"
+          id="contact-submit"
+          data-translate="contact-submit"
+        >
+          Send Message
+        </button>
+
+        <!-- Este texto ya no se usa con JS, pero no estorba si lo quieres usar luego -->
+        <p id="contact-status" class="contact-status"></p>
+      </form>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label for="email" data-translate="contact-email-label">Email Address</label>
-    <input id="email" name="email" type="email" placeholder="your@email.com" required>
-  </div>
-
-  <div class="form-group">
-    <label for="phone">WhatsApp</label>
-    <input id="phone" name="phone" type="tel" placeholder="+1 832 555 1234">
-  </div>
-
-  <div class="form-group">
-    <label for="company">Company</label>
-    <input id="company" name="company" type="text" placeholder="Dealer / Business name">
-  </div>
-
-  <div class="form-group">
-    <label for="message" data-translate="contact-message-label">Your Message</label>
-    <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
-  </div>
-
-  <!-- origen de la página (útil para ti) -->
-  <input type="hidden" name="page" id="page-origin" value="">
-
-  <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
-    Send Message
-  </button>
-  <p id="contact-status" class="contact-status"></p>
-</form>
-
-<script>
-  (function () {
-    var originInput = document.getElementById('page-origin');
-    if (originInput) {
-      originInput.value = window.location.href;
-    }
-  })();
-</script>    
+</section>
+           
           <!-- Footer -->
     <footer>
         <div class="footer-content">
