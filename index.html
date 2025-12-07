@@ -7,16 +7,15 @@
     
     <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     <meta http-equiv="Content-Security-Policy" content="
           default-src 'self';
-          script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com;
+          script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com https://static.cloudflareinsights.com;
           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
           font-src 'self' https://fonts.gstatic.com data:;
           img-src 'self' data: https:;
-          connect-src 'self' https://formspree.io https://www.google-analytics.com https://www.googletagmanager.com;">
+          connect-src 'self' https://formspree.io https://www.google-analytics.com https://www.googletagmanager.com https://cloudflareinsights.com;">
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="BizMind AI Agency builds AI agents and chatbots for car dealerships and businesses in Houston, Texas. DealerMind™ automates sales 24/7 with WhatsApp, Facebook integration. Starting at $500/month.">
@@ -2566,6 +2565,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
     <script>
 // =============== ANIMACIÓN DE COMETAS / METEOROS MEJORADA ===============
+(function() {
 const mCanvas = document.getElementById('meteors-canvas');
 const mCtx = mCanvas?.getContext('2d');
 if (!mCanvas || !mCtx) return; // Protección por si no existe el canvas
@@ -2679,6 +2679,7 @@ function animateMeteors() {
 }
 
 animateMeteors();
+})(); // Close IIFE
 </script>
 </body>
 </html>
