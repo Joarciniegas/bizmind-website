@@ -1579,8 +1579,9 @@ body.cursor-click .neon-cursor-main {
                     <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-text"><h4 data-translate="contact-email">Email</h4><p><a href="/cdn-cgi/l/email-protection#a1c8cfc7cee1cbcec0d3c2c8cfc8c4c6c0d28fc2cdced4c5"><span class="__cf_email__" data-cfemail="670e090108270d080615040e090e0200061449040b081203">[email&#160;protected]</span></a></p></div></div>
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
-            </div>
-           <form
+           </div>
+           <!-- Footer -->
+             <form
   id="contact-form"
   class="contact-form-inner"
   action="https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact"
@@ -1611,14 +1612,8 @@ body.cursor-click .neon-cursor-main {
     <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
   </div>
 
-  <!-- origen de la página -->
+  <!-- origen de la página (útil para ti) -->
   <input type="hidden" name="page" id="page-origin" value="">
-
-  <!-- 🕳️ honeypot invisible (anti bots) -->
-  <div style="display:none;">
-    <label for="website">Leave this field empty</label>
-    <input type="text" id="website" name="website" value="" autocomplete="off">
-  </div>
 
   <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
     Send Message
@@ -1633,33 +1628,8 @@ body.cursor-click .neon-cursor-main {
       originInput.value = window.location.href;
     }
   })();
-</script>
-
-    <!-- origen de la página -->
-    <input type="hidden" name="page" id="page-origin" value="">
-
-    <!-- 🕳️ honeypot invisible (anti bots) -->
-    <div style="display:none;">
-      <label for="website">Leave this field empty</label>
-      <input type="text" id="website" name="website" value="" autocomplete="off">
-    </div>
-
-    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">
-      Send Message
-    </button>
-    <p id="contact-status" class="contact-status"></p>
-  </form>
-</div>
-
-<script>
-  (function () {
-    var originInput = document.getElementById('page-origin');
-    if (originInput) {
-      originInput.value = window.location.href;
-    }
-  })();
-</script>
-    <!-- Footer -->
+</script>    
+          <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
