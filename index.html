@@ -37,21 +37,20 @@
     default-src 'self';
     script-src 'self' 'unsafe-inline' 
         https://www.googletagmanager.com 
-        https://www.google-analytics.com 
         https://static.cloudflareinsights.com 
-        https://ajax.cloudflare.com;
+        https://ajax.cloudflare.com 
+        https://www.google-analytics.com;
     connect-src 'self' 
+        https://autobot-n8n.22ptin.easypanel.host 
         https://www.google-analytics.com 
         https://stats.g.doubleclick.net 
         https://www.googletagmanager.com 
-        https://region1.google-analytics.com
-        https://autobot-n8n.22ptin.easypanel.host 
-        https://formspree.io;
+        https://region1.google-analytics.com 
+        https://cloudflareinsights.com 
+        https://static.cloudflareinsights.com;
     img-src 'self' data: blob: 
-        https://pub-42ffc20aff46430488c144275d68f09e.r2.dev 
-        https://www.googletagmanager.com 
-        https://*.google-analytics.com 
-        https://*.googletagmanager.com;
+        https: 
+        http:;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com data:;
     frame-src 'self' https://www.googletagmanager.com;
@@ -1619,79 +1618,97 @@ body.cursor-click .neon-cursor-main {
                     <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-text"><h4 data-translate="contact-hours">Support Hours</h4><p data-translate="contact-hours-time">Mon-Fri: 9AM-6PM CST</p></div></div>
                 </div>
             </div>
+
+               
             <div class="contact-form">
-           <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
-
-           <form id="contact-form">
-               <div class="form-group">
-                   <label for="fullName" data-translate="contact-name-label">Your Name</label>
-                   <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
-               </div>
-
+    <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
+    
+    <form id="contact-form">
+        <div class="form-group">
+            <label for="fullName" data-translate="contact-name-label">Your Name</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
+        </div>
         <div class="form-group">
             <label for="email" data-translate="contact-email-label">Email Address</label>
             <input id="email" name="email" type="email" placeholder="your@email.com" required>
         </div>
-
         <div class="form-group">
             <label for="phone">WhatsApp / Phone</label>
             <input id="phone" name="phone" type="tel" placeholder="+1 832 000 0000">
         </div>
-
         <div class="form-group">
             <label for="subject">Subject *</label>
             <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
         </div>
-
         <div class="form-group">
             <label for="message" data-translate="contact-message-label">Your Message</label>
             <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
         </div>
-
         <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
         <p id="contact-status" class="contact-status"></p>
     </form>
-    // WEBHOOK 100% REAL Y CORRECTO
-   <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
-    const WEBHOOK_URL = 'https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact';
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const data = {
-            name: form.fullName.value.trim(),
-            email: form.email.value.trim(),
-            subject: form.subject?.value.trim() || 'Contacto desde BizMind',
-            message: form.message.value.trim(),
-            source: 'bizmind-website'
-        };
-        let status = document.getElementById('contact-status');
-        if (!status) {
-            status = document.createElement('div');
-            status.id = 'contact-status';
-            form.appendChild(status);
-        }
-        try {
-            status.textContent = 'Enviando...';
-            status.className = 'sending';
-            const res = await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            if (!res.ok) throw new Error();
-            status.textContent = '¡Mensaje enviado con éxito! Te contactaremos en menos de 24 h';
-            status.className = 'success';
-            form.reset();
-        } catch (err) {
-            status.textContent = 'Error al enviar. Escríbeme directo a info@joarciniegas.cloud';
-            status.className = 'error';
-        }
+    <style>
+    #contact-status {
+        margin-top: 15px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+        min-height: 20px;
+    }
+    #contact-status.sending { color: #00f0ff; background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); }
+    #contact-status.success { color: #00ff41; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.3); }
+    #contact-status.error { color: #ff0080; background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); }
+    </style>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById('contact-form');
+        if (!form) return;
+
+        const WEBHOOK_URL = 'https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact';
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                name: form.fullName.value.trim(),
+                email: form.email.value.trim(),
+                phone: form.phone.value.trim(),
+                subject: form.subject.value.trim() || 'Contacto desde BizMind',
+                message: form.message.value.trim(),
+                source: 'bizmind-website'
+            };
+
+            const status = document.getElementById('contact-status');
+
+            try {
+                status.textContent = 'Enviando...';
+                status.className = 'contact-status sending';
+
+                const res = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    status.textContent = '¡Mensaje enviado con éxito! Te contactaremos en menos de 24 h';
+                    status.className = 'contact-status success';
+                    form.reset();
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                status.textContent = 'Error al enviar. Escríbeme directo a info@joarciniegas.cloud';
+                status.className = 'contact-status error';
+            }
+        });
     });
-});
-</script>
+    </script>
+</div>
 </div>
                 
             </div>
