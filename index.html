@@ -27,11 +27,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Automation Agency | DealerMind™ Chatbot | BizMind</title>
  
-     <!-- Security Headers -->
+    <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
-    
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://fonts.googleapis.com https://static.cloudflareinsights.com;
+      connect-src 'self' https://formspree.io https://autobot-n8n.22ptin.easypanel.host;
+      img-src 'self' data: https://pub-42ffc20aff46430488c144275d68f09e.r2.dev https://www.googletagmanager.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com data:;
+    ">
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="BizMind AI Agency builds AI agents and chatbots for car dealerships and businesses in Houston, Texas. DealerMind™ automates sales 24/7 with WhatsApp, Facebook integration. Starting at $500/month.">
     <meta name="keywords" content="AI automation agency Houston, AI chatbot car dealerships, business automation Texas, AI agents small business, DealerMind, WhatsApp automation, Facebook Messenger bot, Cypress TX AI, automated lead generation">
@@ -43,7 +53,7 @@
     <meta name="geo.placename" content="Cypress, Houston">
     <meta name="geo.position" content="29.9686;-95.6989">
      
-    <!-- Google Consent Mode (opcional, pero bien tenerlo) -->
+    <!-- Google Consent Mode -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -75,33 +85,31 @@
     <meta name="theme-color" content="#030014"> 
 
     <!-- Social Preview Card (Open Graph + Twitter) -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://joarciniegas.cloud/">
-<meta property="og:title" content="BizMind AI Agency - AI Agents That Print Money While You Sleep">
-<meta property="og:description" content="AI automation for car dealerships & businesses in Houston, TX. DealerMind™ handles sales 24/7 via WhatsApp & Facebook. From $500/month.">
-<meta property="og:image" content="https://pub-42ffc20aff46430488c144275d68f09e.r2.dev/bizmind-preview.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joarciniegas.cloud/">
+    <meta property="og:title" content="BizMind AI Agency - AI Agents That Print Money While You Sleep">
+    <meta property="og:description" content="AI automation for car dealerships & businesses in Houston, TX. DealerMind™ handles sales 24/7 via WhatsApp & Facebook. From $500/month.">
+    <meta property="og:image" content="https://pub-42ffc20aff46430488c144275d68f09e.r2.dev/bizmind-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-<!-- Twitter / X Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@joarciniegas">
-<meta name="twitter:creator" content="@joarciniegas">
-<meta name="twitter:url" content="https://joarciniegas.cloud/">
-<meta name="twitter:title" content="BizMind AI Agency - AI Agents That Print Money While You Sleep">
-<meta name="twitter:description" content="AI automation for car dealerships & businesses in Houston, TX. DealerMind™ handles sales 24/7 via WhatsApp & Facebook. From $500/month.">
-<meta name="twitter:image" content="https://pub-42ffc20aff46430488c144275d68f09e.r2.dev/bizmind-preview.png">
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@joarciniegas">
+    <meta name="twitter:creator" content="@joarciniegas">
+    <meta name="twitter:url" content="https://joarciniegas.cloud/">
+    <meta name="twitter:title" content="BizMind AI Agency - AI Agents That Print Money While You Sleep">
+    <meta name="twitter:description" content="AI automation for car dealerships & businesses in Houston, TX. DealerMind™ handles sales 24/7 via WhatsApp & Facebook. From $500/month.">
+    <meta name="twitter:image" content="https://pub-42ffc20aff46430488c144275d68f09e.r2.dev/bizmind-preview.png">
 
-<!-- Performance Optimization -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link rel="dns-prefetch" href="https://formspree.io">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://formspree.io">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+
         :root {
             --primary: #00f0ff;
             --secondary: #7c3aed;
