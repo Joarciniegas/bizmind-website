@@ -1621,6 +1621,46 @@ body.cursor-click .neon-cursor-main {
                     <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
                     <p id="contact-status" class="contact-status"></p>
                 </form>
+                   <script>
+  const form = document.getElementById('contact-form');
+  const statusEl = document.getElementById('contact-status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    statusEl.textContent = 'Sending...';
+
+    const payload = {
+      fullName: document.getElementById('fullName').value,
+      email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value,
+      page: window.location.href
+    };
+
+    try {
+      const res = await fetch('https://autobot-n8n.22ptin.easypanel.host/webhook-test/website-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        statusEl.textContent = 'Message sent ✅';
+        form.reset();
+      } else {
+        statusEl.textContent = 'Error sending the message ❌';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Connection error ❌';
+    }
+  });
+</script>
+
+
+                   
             </div>
 
             </div>
