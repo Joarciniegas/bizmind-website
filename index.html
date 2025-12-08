@@ -1053,6 +1053,11 @@ body.cursor-click .neon-cursor-main {
 </style>
 </head>
 <body>
+    <!-- ============ CUSTOM CURSOR ELEMENTS ============ -->
+    <div class="neon-cursor-main"></div>
+    <div class="neon-cursor-trail"></div>
+    <div class="neon-cursor-glow"></div>
+    
     <!-- ============ BACKGROUND LAYERS ============ -->
     <div class="bg-container">
         <div class="glow-orb orb-1"></div>
@@ -1614,64 +1619,177 @@ body.cursor-click .neon-cursor-main {
         font-weight: 600;
         font-size: 0.95rem;
         min-height: 20px;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(-10px);
     }
-    #contact-status.sending { color: #00f0ff; background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); }
-    #contact-status.success { color: #00ff41; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.3); }
-    #contact-status.error { color: #ff0080; background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); }
+    #contact-status.sending { 
+        color: #00f0ff; 
+        background: rgba(0,240,255,0.15); 
+        border: 1px solid rgba(0,240,255,0.4);
+        box-shadow: 0 0 20px rgba(0,240,255,0.2);
+    }
+    #contact-status.success { 
+        color: #00ff41; 
+        background: rgba(0,255,65,0.15); 
+        border: 1px solid rgba(0,255,65,0.4);
+        box-shadow: 0 0 20px rgba(0,255,65,0.2);
+    }
+    #contact-status.error { 
+        color: #ff0080; 
+        background: rgba(255,0,128,0.15); 
+        border: 1px solid rgba(255,0,128,0.4);
+        box-shadow: 0 0 20px rgba(255,0,128,0.2);
+    }
+    
+    /* Animación del botón mientras envía */
+    #contact-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 0.8; }
+    }
     </style>
 
     <script>
+    // ============ FORMULARIO DE CONTACTO MEJORADO ============
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById('contact-form');
         if (!form) return;
 
         const WEBHOOK_URL = 'https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact';
+        const submitBtn = document.getElementById('contact-submit');
+        const status = document.getElementById('contact-status');
+        
+        let isSubmitting = false;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+            
+            // Evitar envíos múltiples
+            if (isSubmitting) return;
+            
+            // Validar campos requeridos
+            const fullName = form.fullName.value.trim();
+            const email = form.email.value.trim();
+            const subject = form.subject.value.trim();
+            const message = form.message.value.trim();
+            
+            if (!fullName || !email || !subject) {
+                showStatus('Por favor completa todos los campos requeridos (*)', 'error');
+                return;
+            }
+            
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showStatus('Por favor ingresa un email válido', 'error');
+                return;
+            }
+            
+            // Preparar datos
             const data = {
-                name: form.fullName.value.trim(),
-                email: form.email.value.trim(),
-                phone: form.phone.value.trim(),
-                subject: form.subject.value.trim() || 'Contacto desde BizMind',
-                message: form.message.value.trim(),
-                source: 'bizmind-website'
+                fullName: fullName,
+                name: fullName, // Por compatibilidad
+                email: email,
+                phone: form.phone.value.trim() || 'No proporcionado',
+                subject: subject || 'Contacto desde BizMind',
+                message: message || 'Sin mensaje',
+                source: 'bizmind-website',
+                page: window.location.href,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
             };
 
-            const status = document.getElementById('contact-status');
+            // Deshabilitar botón y cambiar estado
+            isSubmitting = true;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            showStatus('📤 Enviando tu mensaje...', 'sending');
 
             try {
-                status.textContent = 'Enviando...';
-                status.className = 'contact-status sending';
-
                 const res = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify(data)
                 });
 
-                if (res.ok) {
-                    status.textContent = '¡Mensaje enviado con éxito! Te contactaremos en menos de 24 h';
-                    status.className = 'contact-status success';
+                if (res.ok || res.status === 200) {
+                    // Éxito
+                    showStatus('✅ ¡Mensaje enviado con éxito! Te contactaremos en menos de 24 horas.', 'success');
                     form.reset();
+                    
+                    // Ocultar mensaje después de 8 segundos
+                    setTimeout(() => {
+                        hideStatus();
+                    }, 8000);
+                    
+                    // GTM tracking (si existe)
+                    if (typeof dataLayer !== 'undefined') {
+                        dataLayer.push({
+                            'event': 'form_submission',
+                            'form_name': 'contact_form',
+                            'form_status': 'success'
+                        });
+                    }
                 } else {
-                    throw new Error();
+                    throw new Error(`HTTP ${res.status}`);
                 }
             } catch (err) {
-                status.textContent = 'Error al enviar. Escríbeme directo a info@joarciniegas.cloud';
-                status.className = 'contact-status error';
+                console.error('Form submission error:', err);
+                showStatus('❌ Error al enviar. Por favor intenta de nuevo o escríbenos a: info@joarciniegas.cloud', 'error');
+                
+                // GTM tracking error
+                if (typeof dataLayer !== 'undefined') {
+                    dataLayer.push({
+                        'event': 'form_submission',
+                        'form_name': 'contact_form',
+                        'form_status': 'error'
+                    });
+                }
+            } finally {
+                // Re-habilitar botón
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+        
+        // Función para mostrar mensaje de estado
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `contact-status ${type}`;
+            status.style.opacity = '1';
+            status.style.transform = 'translateY(0)';
+        }
+        
+        // Función para ocultar mensaje
+        function hideStatus() {
+            status.style.opacity = '0';
+            status.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                status.textContent = '';
+                status.className = 'contact-status';
+            }, 300);
+        }
+        
+        // Limpiar mensajes al empezar a escribir
+        form.addEventListener('input', function() {
+            if (status.className.includes('error')) {
+                hideStatus();
             }
         });
     });
     </script>
 </div>
 </div>
-                
-            </div>
-
-            </div>
-        </div>
     </section>
 
     <!-- Footer -->
@@ -1770,7 +1888,8 @@ body.cursor-click .neon-cursor-main {
             </div>
         </div>
     </footer>    
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
 // ===================== PARTICLES =====================
 const pCanvas = document.getElementById('particles-canvas'), pCtx = pCanvas.getContext('2d');
 let particles = [], mouseX = 0, mouseY = 0;
@@ -2047,14 +2166,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     updatePosition(mouseX, mouseY);
   })();
 </script>
+
 <script>
-    (function () {
-        const form = document.getElementById('contact-form');
-        if (!form) return;
-
-        const statusEl = document.getElementById('contact-status');
-        const submitBtn = document.getElementById('contact-submit');
-
     // ============ SISTEMA DE TRADUCCIÓN BILINGÜE ============
     const translations = {
         en: {
@@ -2658,8 +2771,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 })();
 </script>
 
-      // Efecto Reveal    
 <script>
+// Efecto Reveal
 (function () {
   const items = document.querySelectorAll('.scroll-reveal');
   if (!items.length || !('IntersectionObserver' in window)) return;
@@ -2681,17 +2794,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   items.forEach(el => observer.observe(el));
 })();
 </script>
-       <!-- Google Consent Mode -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'analytics_storage': 'denied',
-    'ad_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied'
-  });
-</script>
 
 <!-- Google Tag Manager -->
 <script>
@@ -2708,11 +2810,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 <!-- End Google Tag Manager -->
         <!-- Google Tag Manager (noscript) -->
-      <script>
+      <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PK5KB938"
             height="0" width="0"
             style="display:none;visibility:hidden"></iframe>
-      </script>
+      </noscript>
       <!-- End Google Tag Manager (noscript) -->
 </body>
 </html>
