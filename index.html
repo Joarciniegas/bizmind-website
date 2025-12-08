@@ -1595,69 +1595,78 @@ body.cursor-click .neon-cursor-main {
                 </div>
             </div>
             <div class="contact-form">
-                <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
-            
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="fullName" data-translate="contact-name-label">Your Name</label>
-                        <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="email" data-translate="contact-email-label">Email Address</label>
-                        <input id="email" name="email" type="email" placeholder="your@email.com" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="subject">Subject *</label>
-                        <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="message" data-translate="contact-message-label">Your Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
-                    </div>
-            
-                    <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
-                    <p id="contact-status" class="contact-status"></p>
-                </form>
-                   <script>
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('contact-status');
+           <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+           <form id="contact-form">
+               <div class="form-group">
+                   <label for="fullName" data-translate="contact-name-label">Your Name</label>
+                   <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
+               </div>
 
-    statusEl.textContent = 'Sending...';
+        <div class="form-group">
+            <label for="email" data-translate="contact-email-label">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="your@email.com" required>
+        </div>
 
-    const payload = {
-      fullName: document.getElementById('fullName').value,
-      email: document.getElementById('email').value,
-      subject: document.getElementById('subject').value,
-      message: document.getElementById('message').value,
-      page: window.location.href
-    };
+        <div class="form-group">
+            <label for="phone">WhatsApp / Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+1 832 000 0000">
+        </div>
 
-    try {
-      const res = await fetch('https://autobot-n8n.22ptin.easypanel.host/webhook-test/website-contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        <div class="form-group">
+            <label for="subject">Subject *</label>
+            <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
+        </div>
+
+        <div class="form-group">
+            <label for="message" data-translate="contact-message-label">Your Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
+        <p id="contact-status" class="contact-status"></p>
+    </form>
+
+    <script>
+      const form = document.getElementById('contact-form');
+      const statusEl = document.getElementById('contact-status');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        statusEl.textContent = 'Sending...';
+
+        const payload = {
+          fullName: document.getElementById('fullName').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          subject: document.getElementById('subject').value,
+          message: document.getElementById('message').value,
+          page: window.location.href
+        };
+
+        try {
+          const res = await fetch('https://autobot-n8n.22ptin.easypanel.host/webhook-test/website-contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            statusEl.textContent = 'Message sent ✅';
+            form.reset();
+          } else {
+            statusEl.textContent = 'Error sending the message ❌';
+          }
+        } catch (err) {
+          statusEl.textContent = 'Connection error ❌';
+        }
       });
+    </script>
+</div>
 
-      if (res.ok) {
-        statusEl.textContent = 'Message sent ✅';
-        form.reset();
-      } else {
-        statusEl.textContent = 'Error sending the message ❌';
-      }
-    } catch (err) {
-      statusEl.textContent = 'Connection error ❌';
-    }
-  });
-</script>
 
 
                    
