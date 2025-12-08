@@ -46,22 +46,16 @@
         https://www.googletagmanager.com 
         https://region1.google-analytics.com
         https://autobot-n8n.22ptin.easypanel.host 
-        https://tu-dominio-n8n 
         https://formspree.io;
     img-src 'self' data: blob: 
         https://pub-42ffc20aff46430488c144275d68f09e.r2.dev 
         https://www.googletagmanager.com 
         https://*.google-analytics.com 
         https://*.googletagmanager.com;
-    style-src 'self' 'unsafe-inline' 
-        https://fonts.googleapis.com;
-    font-src 'self' 
-        https://fonts.gstatic.com 
-        data:;
-    frame-src 'self' 
-        https://www.googletagmanager.com;
-    worker-src 'self' 
-        blob:;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com data:;
+    frame-src 'self' https://www.googletagmanager.com;
+    worker-src 'self' blob:;
 ">
 
 <!-- SEO Meta Tags -->
@@ -1657,50 +1651,49 @@ body.cursor-click .neon-cursor-main {
         <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
         <p id="contact-status" class="contact-status"></p>
     </form>
+    // WEBHOOK 100% REAL Y CORRECTO
+   <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    const WEBHOOK_URL = 'https://autobot-n8n.22ptin.easypanel.host/webhook/website-contact';
 
-    <script>
-      const form = document.getElementById('contact-form');
-      const statusEl = document.getElementById('contact-status');
-
-      form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        statusEl.textContent = 'Sending...';
-
-        const payload = {
-          fullName: document.getElementById('fullName').value,
-          email: document.getElementById('email').value,
-          phone: document.getElementById('phone').value,
-          subject: document.getElementById('subject').value,
-          message: document.getElementById('message').value,
-          page: window.location.href
+        const data = {
+            name: form.fullName.value.trim(),
+            email: form.email.value.trim(),
+            subject: form.subject?.value.trim() || 'Contacto desde BizMind',
+            message: form.message.value.trim(),
+            source: 'bizmind-website'
         };
-
-        try {
-          const res = await fetch('https://autobot-n8n.22ptin.easypanel.host/webhook-test/website-contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            statusEl.textContent = 'Message sent ✅';
-            form.reset();
-          } else {
-            statusEl.textContent = 'Error sending the message ❌';
-          }
-        } catch (err) {
-          statusEl.textContent = 'Connection error ❌';
+        let status = document.getElementById('contact-status');
+        if (!status) {
+            status = document.createElement('div');
+            status.id = 'contact-status';
+            form.appendChild(status);
         }
-      });
-    </script>
+        try {
+            status.textContent = 'Enviando...';
+            status.className = 'sending';
+            const res = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error();
+            status.textContent = '¡Mensaje enviado con éxito! Te contactaremos en menos de 24 h';
+            status.className = 'success';
+            form.reset();
+        } catch (err) {
+            status.textContent = 'Error al enviar. Escríbeme directo a info@joarciniegas.cloud';
+            status.className = 'error';
+        }
+    });
+});
+</script>
 </div>
-
-
-
-                   
+                
             </div>
 
             </div>
@@ -2087,87 +2080,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
         const statusEl = document.getElementById('contact-status');
         const submitBtn = document.getElementById('contact-submit');
-
-        // 🔴 CAMBIA ESTA URL POR TU WEBHOOK DE N8N
-        const WEBHOOK_URL = 'https://TU-DOMINIO-N8N/webhook/contacto-bizmind';
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const payload = {
-                fullName: form.fullName.value.trim(),
-                email: form.email.value.trim(),
-                subject: form.subject.value.trim(),
-                message: form.message.value.trim(),
-                source: 'bizmind-website'
-            };
-
-            statusEl.textContent = 'Sending...';
-            statusEl.classList.remove('success', 'error');
-            statusEl.classList.add('sending');
-            submitBtn.disabled = true;
-
-            try {
-                const res = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!res.ok) throw new Error('Request failed');
-
-                statusEl.textContent = 'Thanks! We will contact you shortly.';
-                statusEl.classList.remove('sending');
-                statusEl.classList.add('success');
-                form.reset();
-            } catch (err) {
-                statusEl.textContent = 'There was an error. Please try again or email info@joarciniegas.cloud';
-                statusEl.classList.remove('sending');
-                statusEl.classList.add('error');
-            } finally {
-                submitBtn.disabled = false;
-            }
-        });
-    })();
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("#contact-form");
-        const msgBox = document.createElement("div");
-        msgBox.className = "form-toast";
-        document.body.appendChild(msgBox);
-
-        // CAMBIA ESTA URL si ya tienes un webhook o endpoint
-        const WEBHOOK_URL = "https://tu-dominio-n8n/webhook/contacto";
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            msgBox.textContent = "Enviando...";
-            msgBox.classList.add("visible", "sending");
-
-            const data = Object.fromEntries(new FormData(form).entries());
-
-            try {
-                const res = await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                });
-
-                if (!res.ok) throw new Error("Error al enviar");
-
-                msgBox.textContent = "✅ ¡Mensaje enviado con éxito!";
-                msgBox.classList.remove("sending");
-                msgBox.classList.add("success");
-                form.reset();
-            } catch (err) {
-                msgBox.textContent = "❌ Error al enviar. Intenta de nuevo o escribe a info@joarciniegas.cloud";
-                msgBox.classList.remove("sending");
-                msgBox.classList.add("error");
-            }
-        });
-    });
 
     // ============ SISTEMA DE TRADUCCIÓN BILINGÜE ============
     const translations = {
@@ -2772,6 +2684,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 })();
 </script>
 
+      // Efecto Reveal    
 <script>
 (function () {
   const items = document.querySelectorAll('.scroll-reveal');
