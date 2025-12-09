@@ -2941,19 +2941,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
      <!-- 🚀 BizMind Chatwoot Widget -->
       <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    function openBizMindChat() {
-      if (window.$chatwoot) {
-        if (typeof window.$chatwoot.changeVisibility === 'function') {
-          window.$chatwoot.changeVisibility('open');
-        } else if (typeof window.$chatwoot.toggle === 'function') {
-          window.$chatwoot.toggle();
-        }
-      } else {
-        console.warn('Chatwoot todavía no está cargado.');
-      }
+  window.chatwootSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Chat with us"};
+  (function(d,t) {
+    var BASE_URL="https://autobot-chatwoot.22ptin.easypanel.host";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'tM5mn7LLmxSvuKsyWnWag7J9',
+        baseUrl: BASE_URL
+      })
     }
-  });
+  })(document,"script");
 </script>
+
 </body>
 </html>
