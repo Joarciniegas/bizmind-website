@@ -2940,21 +2940,29 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       <!-- End Google Tag Manager (noscript) -->
 
      <!-- 🚀 BizMind Chatwoot Widget -->
-      <script>
-  window.chatwootSettings = {"position":"right","type":"expanded_bubble","launcherTitle":"Chat with us"};
-  (function(d,t) {
-    var BASE_URL="https://autobot-chatwoot.22ptin.easypanel.host";
-    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=BASE_URL+"/packs/js/sdk.js";
-    g.async = true;
-    s.parentNode.insertBefore(g,s);
-    g.onload=function(){
-      window.chatwootSDK.run({
-        websiteToken: 'tM5mn7LLmxSvuKsyWnWag7J9',
-        baseUrl: BASE_URL
-      })
-    }
-  })(document,"script");
-</script>
+          <!-- 🚀 BizMind Chatwoot Widget -->
+    <script>
+      window.chatwootSettings = {
+        position: "right",
+        type: "standard",
+        launcherTitle: "Chat with BizMind AI 🤖 (EN/ES)",
+        locale: "en",
+        showPopoutButton: false
+      };
+
+      (function(d,t) {
+        var BASE_URL = "https://autobot-chatwoot.22ptin.easypanel.host";
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = BASE_URL + "/packs/js/sdk.js";
+        g.async = true;
+        s.parentNode.insertBefore(g,s);
+        g.onload = function() {
+          window.chatwootSDK.run({
+            websiteToken: "tM5mn7LLmxSvuKsyWnWag7J9",
+            baseUrl: BASE_URL
+          });
+        };
+      })(document,"script");
+    </script>
 </body>
 </html>
