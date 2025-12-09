@@ -48,8 +48,8 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
 
-  <!-- Content Security Policy (CSP) - CORREGIDO -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://ajax.cloudflare.com https://cdn-cgi; connect-src 'self' https://autobot-n8n.22ptin.easypanel.host https://www.google-analytics.com https://stats.g.doubleclick.net https://www.googletagmanager.com https://region1.google-analytics.com https://cloudflareinsights.com https://static.cloudflareinsights.com; img-src 'self' data: blob: https: http:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.googletagmanager.com; worker-src 'self' blob:;">
+  <!-- Content Security Policy (CSP) - DESACTIVADO COMPLETAMENTE -->
+  <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://ajax.cloudflare.com https://cdn-cgi; connect-src 'self' https://autobot-n8n.22ptin.easypanel.host https://www.google-analytics.com https://stats.g.doubleclick.net https://www.googletagmanager.com https://region1.google-analytics.com https://cloudflareinsights.com https://static.cloudflareinsights.com; img-src 'self' data: blob: https: http:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.googletagmanager.com; worker-src 'self' blob:;"> -->
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="BizMind AI Agency builds AI agents and chatbots for car dealerships and businesses in Houston, Texas. DealerMind™ automates sales 24/7 with WhatsApp, Facebook integration. Starting at $500/month.">
@@ -1066,6 +1066,10 @@ body.cursor-click .neon-cursor-main {
     filter: blur(0);
 }
 </style>
+
+<!-- Cloudflare Turnstile Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </head>
 <body>
     <!-- ============ CUSTOM CURSOR ELEMENTS ============ -->
@@ -1600,27 +1604,65 @@ body.cursor-click .neon-cursor-main {
             <div class="contact-form">
     <h3 style="font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-bottom:25px;" data-translate="contact-form-title">Get in Touch</h3>
     
-    <form id="contact-form">
+    <form id="contact-form" novalidate>
         <div class="form-group">
-            <label for="fullName" data-translate="contact-name-label">Your Name</label>
-            <input id="fullName" name="fullName" type="text" placeholder="Your name" required>
+            <label for="fullName" data-translate="contact-name-label">Your Name *</label>
+            <input id="fullName" 
+                   name="fullName" 
+                   type="text" 
+                   placeholder="John Doe" 
+                   required
+                   minlength="2"
+                   maxlength="100"
+                   pattern="[a-zA-ZÀ-ÿ\s'-]+"
+                   title="Solo letras, espacios, guiones y apóstrofes">
         </div>
         <div class="form-group">
-            <label for="email" data-translate="contact-email-label">Email Address</label>
-            <input id="email" name="email" type="email" placeholder="your@email.com" required>
+            <label for="email" data-translate="contact-email-label">Email Address *</label>
+            <input id="email" 
+                   name="email" 
+                   type="email" 
+                   placeholder="your@email.com" 
+                   required
+                   maxlength="100"
+                   title="Ingresa un email válido (ejemplo: nombre@dominio.com)">
         </div>
         <div class="form-group">
             <label for="phone">WhatsApp / Phone</label>
-            <input id="phone" name="phone" type="tel" placeholder="+1 832 000 0000">
+            <input id="phone" 
+                   name="phone" 
+                   type="tel" 
+                   placeholder="+1 832 000 0000"
+                   pattern="[\+]?[0-9\s\-\(\)]{10,20}"
+                   title="10-15 dígitos, puede incluir +, espacios, guiones y paréntesis">
         </div>
         <div class="form-group">
             <label for="subject">Subject *</label>
-            <input id="subject" name="subject" type="text" placeholder="How can we help?" required>
+            <input id="subject" 
+                   name="subject" 
+                   type="text" 
+                   placeholder="How can we help?" 
+                   required
+                   minlength="3"
+                   maxlength="200"
+                   title="Mínimo 3 caracteres">
         </div>
         <div class="form-group">
             <label for="message" data-translate="contact-message-label">Your Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+            <textarea id="message" 
+                      name="message" 
+                      placeholder="Tell us about your project..."
+                      maxlength="2000"
+                      rows="5"></textarea>
         </div>
+        
+        <!-- Cloudflare Turnstile (Anti-bot invisible) -->
+        <div class="cf-turnstile" 
+             data-sitekey="0x4AAAAAACFgptNkSfKrAcqB"
+             data-theme="light"
+             data-callback="onTurnstileSuccess"
+             style="margin: 20px 0;"></div>
+        
         <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
         <p id="contact-status" class="contact-status"></p>
     </form>
@@ -1681,6 +1723,13 @@ body.cursor-click .neon-cursor-main {
         const status = document.getElementById('contact-status');
         
         let isSubmitting = false;
+        let turnstileToken = null;
+        
+        // Callback de Turnstile
+        window.onTurnstileSuccess = function(token) {
+            turnstileToken = token;
+            console.log('✅ Turnstile validated');
+        };
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1688,21 +1737,73 @@ body.cursor-click .neon-cursor-main {
             // Evitar envíos múltiples
             if (isSubmitting) return;
             
-            // Validar campos requeridos
-            const fullName = form.fullName.value.trim();
-            const email = form.email.value.trim();
-            const subject = form.subject.value.trim();
-            const message = form.message.value.trim();
-            
-            if (!fullName || !email || !subject) {
-                showStatus('Por favor completa todos los campos requeridos (*)', 'error');
+            // VALIDAR TURNSTILE
+            if (!turnstileToken) {
+                showStatus('⚠️ Por favor completa la verificación de seguridad', 'error');
                 return;
             }
             
-            // Validar email
+            // Obtener valores
+            const fullName = form.fullName.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const subject = form.subject.value.trim();
+            const message = form.message.value.trim();
+            
+            // ========== VALIDACIONES MEJORADAS ==========
+            
+            // 1. Validar campos requeridos
+            if (!fullName || !email || !subject) {
+                showStatus('❌ Por favor completa todos los campos requeridos (*)', 'error');
+                return;
+            }
+            
+            // 2. Validar nombre (mínimo 2 caracteres, solo letras y espacios)
+            if (fullName.length < 2) {
+                showStatus('❌ El nombre debe tener al menos 2 caracteres', 'error');
+                return;
+            }
+            
+            if (!/^[a-zA-ZÀ-ÿ\s'-]+$/.test(fullName)) {
+                showStatus('❌ El nombre solo puede contener letras', 'error');
+                return;
+            }
+            
+            // 3. Validar email (formato correcto)
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                showStatus('Por favor ingresa un email válido', 'error');
+                showStatus('❌ Por favor ingresa un email válido (ejemplo: tu@email.com)', 'error');
+                return;
+            }
+            
+            // Validar que no sea un email temporal/falso común
+            const disposableEmails = ['tempmail', 'guerrillamail', '10minutemail', 'throwaway', 'fakemailgenerator'];
+            if (disposableEmails.some(domain => email.toLowerCase().includes(domain))) {
+                showStatus('⚠️ Por favor usa un email válido y permanente', 'error');
+                return;
+            }
+            
+            // 4. Validar teléfono (si se proporciona)
+            if (phone) {
+                // Remover espacios, guiones y paréntesis para validar
+                const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+                
+                // Debe tener al menos 10 dígitos
+                if (!/^\+?[0-9]{10,15}$/.test(cleanPhone)) {
+                    showStatus('❌ Por favor ingresa un número de teléfono válido (10-15 dígitos)', 'error');
+                    return;
+                }
+            }
+            
+            // 5. Validar subject (mínimo 3 caracteres)
+            if (subject.length < 3) {
+                showStatus('❌ El asunto debe tener al menos 3 caracteres', 'error');
+                return;
+            }
+            
+            // 6. Validar mensaje (si existe, mínimo 10 caracteres)
+            if (message && message.length < 10 && message.length > 0) {
+                showStatus('⚠️ El mensaje es muy corto. Cuéntanos más sobre tu proyecto', 'error');
                 return;
             }
             
@@ -1711,13 +1812,14 @@ body.cursor-click .neon-cursor-main {
                 fullName: fullName,
                 name: fullName, // Por compatibilidad
                 email: email,
-                phone: form.phone.value.trim() || 'No proporcionado',
-                subject: subject || 'Contacto desde BizMind',
+                phone: phone || 'No proporcionado',
+                subject: subject,
                 message: message || 'Sin mensaje',
                 source: 'bizmind-website',
                 page: window.location.href,
                 timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent
+                userAgent: navigator.userAgent,
+                turnstileToken: turnstileToken
             };
 
             // Deshabilitar botón y cambiar estado
@@ -1740,6 +1842,7 @@ body.cursor-click .neon-cursor-main {
                     // Éxito
                     showStatus('✅ ¡Mensaje enviado con éxito! Te contactaremos en menos de 24 horas.', 'success');
                     form.reset();
+                    turnstileToken = null; // Resetear token
                     
                     // Ocultar mensaje después de 8 segundos
                     setTimeout(() => {
