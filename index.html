@@ -1614,7 +1614,7 @@ body.cursor-click .neon-cursor-main {
                    required
                    minlength="2"
                    maxlength="100"
-                   pattern="[a-zA-ZÀ-ÿ\s\-']+"
+                   pattern="[a-zA-ZÀ-ÿ\s'-]+"
                    title="Solo letras, espacios, guiones y apóstrofes">
         </div>
         <div class="form-group">
@@ -1656,12 +1656,14 @@ body.cursor-click .neon-cursor-main {
                       rows="5"></textarea>
         </div>
         
-        <!-- Cloudflare Turnstile (Anti-bot invisible) -->
+        <!-- Cloudflare Turnstile (TEMPORALMENTE DESACTIVADO - DEBUGGING) -->
+        <!--
         <div class="cf-turnstile" 
              data-sitekey="0x4AAAAAACFgptNkSfKrAcqB"
              data-theme="light"
              data-callback="onTurnstileSuccess"
              style="margin: 20px 0;"></div>
+        -->
         
         <button type="submit" class="form-submit" id="contact-submit" data-translate="contact-submit">Send Message</button>
         <p id="contact-status" class="contact-status"></p>
@@ -1737,11 +1739,13 @@ body.cursor-click .neon-cursor-main {
             // Evitar envíos múltiples
             if (isSubmitting) return;
             
-            // VALIDAR TURNSTILE
+            // VALIDAR TURNSTILE (TEMPORALMENTE DESACTIVADO)
+            /*
             if (!turnstileToken) {
                 showStatus('⚠️ Por favor completa la verificación de seguridad', 'error');
                 return;
             }
+            */
             
             // Obtener valores
             const fullName = form.fullName.value.trim();
