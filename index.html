@@ -2940,29 +2940,39 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       <!-- End Google Tag Manager (noscript) -->
 
      <!-- 🚀 BizMind Chatwoot Widget -->
-          <!-- 🚀 BizMind Chatwoot Widget -->
-    <script>
-      window.chatwootSettings = {
-        position: "right",
-        type: "standard",
-        launcherTitle: "Chat with BizMind AI 🤖 (EN/ES)",
-        locale: "en",
-        showPopoutButton: false
-      };
+      <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function openBizMindChat() {
+      if (window.$chatwoot) {
+        if (typeof window.$chatwoot.changeVisibility === 'function') {
+          window.$chatwoot.changeVisibility('open');
+        } else if (typeof window.$chatwoot.toggle === 'function') {
+          window.$chatwoot.toggle();
+        }
+      } else {
+        console.warn('Chatwoot todavía no está cargado.');
+      }
+    }
 
-      (function(d,t) {
-        var BASE_URL = "https://autobot-chatwoot.22ptin.easypanel.host";
-        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-        g.src = BASE_URL + "/packs/js/sdk.js";
-        g.async = true;
-        s.parentNode.insertBefore(g,s);
-        g.onload = function() {
-          window.chatwootSDK.run({
-            websiteToken: "tM5mn7LLmxSvuKsyWnWag7J9",
-            baseUrl: BASE_URL
-          });
-        };
-      })(document,"script");
-    </script>
+    // Botón del menú: "Chat With AI"
+    const navCta = document.querySelector('.nav-cta');
+    if (navCta) {
+      navCta.addEventListener('click', function (e) {
+        e.preventDefault();
+        openBizMindChat();
+      });
+    }
+
+    // Botón del hero: "Chat With Our AI"
+    const heroChatBtn = document.querySelector('.btn-secondary[data-translate="hero-cta-secondary"]');
+    if (heroChatBtn) {
+      heroChatBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openBizMindChat();
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
