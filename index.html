@@ -1158,7 +1158,7 @@ body.cursor-click .neon-cursor-main {
             <li><a href="#about" data-translate="nav-about">About</a></li>
             <li><a href="#contact" data-translate="nav-contact">Contact</a></li>
         </ul>
-        <button class="nav-cta" data-translate="nav-cta">Chat With AI</button>
+        <!-- Botón "Chat With AI" eliminado, solo usamos el chat flotante -->
         
         <!-- Language Toggle Switch -->
         <div class="language-switch-container">
@@ -1186,7 +1186,7 @@ body.cursor-click .neon-cursor-main {
                 <p class="hero-description" data-translate="hero-description">We connect all your customer channels. Your website, WhatsApp API, Facebook Messenger, and Telegram integrate directly into your sales, support, and CRM systems. 24/7 automation that never sleeps.</p>
                 <div class="hero-buttons">
                     <a href="#pricing" class="btn-primary" data-translate="hero-cta-primary"><span>🚀</span> Get Started</a>
-                    <a href="#contact" class="btn-secondary" data-translate="hero-cta-secondary"><span>💬</span> Chat With Our AI</a>
+                    <!-- Botón "Chat With Our AI" eliminado, solo usamos el chat flotante -->
                 </div>
             </div>
             <div class="hero-visual">
@@ -2954,22 +2954,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       }
     }
 
-    // Botón del menú: "Chat With AI"
-    const navCta = document.querySelector('.nav-cta');
-    if (navCta) {
-      navCta.addEventListener('click', function (e) {
-        e.preventDefault();
-        openBizMindChat();
-      });
+    });
     }
-
-    // Botón del hero: "Chat With Our AI"
-    const heroChatBtn = document.querySelector('.btn-secondary[data-translate="hero-cta-secondary"]');
-    if (heroChatBtn) {
-      heroChatBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        openBizMindChat();
-      });
     }
   });
 </script>
